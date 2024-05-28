@@ -164,11 +164,4 @@
           (call-interactively 'org-cycle))
       (message "No '#+end' found in the buffer"))))
 
-;; Bind in normal mode
-(define-key evil-normal-state-map (kbd "M-<tab>") 'my-search-and-tab)
-
-;; Bind in insert mode
-(define-key evil-insert-state-map (kbd "M-<tab>") 'my-search-and-tab)
-
-
 (provide 'init-org)

@@ -284,29 +284,6 @@ Up^^             Down^^           Miscellaneous           % 2(mc/num-cursors) cu
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 
-(use-package evil-escape  
-  :ensure t  
-  :init  
-  (setq evil-escape-key-sequence "jk"  
-        evil-escape-delay 0.15)  
-  :config  
-  (define-key evil-normal-state-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
-  (define-key evil-normal-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
-  (define-key evil-insert-state-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
-  (define-key evil-insert-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
-  (evil-escape-mode 1))
-
-;; 确保 Evil 模式已安装并启用
-(require 'evil)
-(evil-mode 1)
-;; 解决tevil函数报错
-(fset 'evil-redirect-digit-argument 'ignore) ;; before evil-org loaded
-;; evil 使tab失效
-(add-hook 'org-mode-hook 'my-org-evil-setup)
-(defun my-org-evil-setup ()
-  (define-key evil-normal-state-map (kbd "TAB") 'org-cycle))
-
-
 (use-package doom-themes
   :ensure t
   :config

@@ -2,12 +2,12 @@
 ;; ----- amx-history -----
 (
  eval-buffer
+ backward-up-list
  counsel-minibuffer-history
  load-theme
  package-autoremove
  list-packages
  package-upgrade
- treemacs-version
 )
 
 ;; ----- amx-data -----
@@ -65,7 +65,7 @@
  (describe-variable . 5)
  (line-number-mode . 2)
  (list-packages . 14)
- (eval-buffer . 171)
+ (eval-buffer . 174)
  (flycheck-mode . 1)
  (my-evil-delete-inner-word . 6)
  (org-agenda-switch-to . 2)
@@ -94,4 +94,5 @@
  (treemacs-advanced-helpful-hydra . 2)
  (treemacs-version . 1)
  (counsel-minibuffer-history . 1)
+ (backward-up-list . 1)
 )
