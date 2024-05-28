@@ -1,0 +1,23 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("org-capture-last-stored-marker"
+ (filename . "~/Documents/capture/journal.org")
+ (front-context-string . "**  gkdjkfj\nEnte")
+ (rear-context-string . "-11-01 三 22:05]\n")
+ (position . 352)
+ (last-modified 25922 23390 734841 0))
+("org-refile-last-stored"
+ (filename . "~/Documents/capture/journal.org")
+ (front-context-string . "**  gkdjkfj\nEnte")
+ (rear-context-string . "-11-01 三 22:05]\n")
+ (position . 352)
+ (last-modified 25922 23390 734570 0))
+("org-capture-last-stored"
+ (filename . "~/Documents/capture/gtd.org")
+ (front-context-string . "** TODO 编程配置单独拆分")
+ (rear-context-string . "示例][个人C代码运行示例]]\n")
+ (position . 1633)
+ (last-modified 26195 25110 103009 0))
+)

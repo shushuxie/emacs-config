@@ -1,0 +1,16 @@
+(undo-tree-save-format-version . 1)
+"a685cf3db3bea0bb5bf4307252ea322b3435c4c0"
+[nil nil nil nil (26196 44831 554961 0) 0 nil]
+([nil nil ((1 . 51) (#("* Default
+** typora
+ - path :: ~/Documents/typora
+" 0 50 (fontified nil)) . 1) (t 26196 40075 596573 565000)) nil (26196 44831 554957 0) 0 nil])
+([nil nil ((1 . 51) (#("* Default
+** typora
+ - path :: ~/Documents/typora
+" 0 50 (fontified nil)) . 1) (t 26196 44831 556762 651000)) nil (26196 44910 691931 0) 0 nil])
+([nil current ((1 . 51) (#("* Default
+** typora
+ - path :: ~/Documents/typora
+" 0 50 (fontified nil)) . 1) (t 26196 44910 693671 237000)) nil (26196 46556 387092 0) 0 nil])
+nil

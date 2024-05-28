@@ -1,0 +1,88 @@
+ls
+./a
+eixt
+quit
+ls
+ll
+ls -l
+rename-file emacs学习.md  ./emacs资料/emacs学习.md
+mkdir eamcs资料
+ls
+mv emacs学习.md  eamcs资料/
+ls
+mv eamcs资料/ emacs资料/
+mv eamcs资料/ emacs资料
+ls
+cd emacs资料/
+ls
+ls -la
+cd ..
+ls -l
+cd emacs资料/
+ls
+ls
+emacs -nw 插件的基本使用.md 
+ls
+003isNumber
+ls
+./003isNumber 
+ll
+ls
+mkdir emacs
+ll
+ls
+ls -l
+cd emacs/
+touch emacs-base.org
+touch README.org
+ll
+ls
+emacs emacs-base.org 
+pwd
+cd pwd
+ls
+ll
+ls
+ll
+ls
+gcc -o hello.c hello
+gcc hello.c -o hello
+vim hello.c
+gcc hello.c -o hello
+ll
+ls
+./ hello
+hello
+./hello
+ll
+ls
+./hello 
+ll
+ls 
+gcc hello.c -o hello
+./hello 
+gcc 1-romaParseIntegra.c -o romaParse
+ls 
+./romaParse LVIII
+ls 
+cat 1-romaParseIntegra.c 
+ls 
+gcc 1-romaParseIntegra.c -o romaParse
+ls -la
+data-debug-new-buffer 
+date
+./romaParse III
+./romaParse IV
+gcc 1-romaParseIntegra.c -o romaParse
+./romaParse IV
+gcc 1-romaParseIntegra.c -o romaParse
+./romaParse IV
+./romaParse MCMXCIV
+ls 
+gcc 4-reverNums.c -o reverNums
+ls -la
+clear 
+ls 
+./ reverNums 
+./reverNums 
+eixt
