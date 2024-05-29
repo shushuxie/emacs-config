@@ -1,6 +1,4 @@
 
-(setq custome-file (expand-file-name "file-dir"))
-(load custome-file 'no-error 'no-message)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -11,7 +9,7 @@
  '(org-agenda-files
    '("~/Documents/typora/emacs/gtd管理日程.org" "/Users/xieshuqiang/Documents/typora/emacs/emacs使用技巧.org" "/Users/xieshuqiang/Documents/capture/gtd.org" "/Users/xieshuqiang/Documents/capture/smallThings.org" "/Users/xieshuqiang/Documents/capture/note.org" "/Users/xieshuqiang/Documents/capture/journal.org"))
  '(package-selected-packages
-   '(doom-themes treemacs-magit treemacs-icons-dired treemacs-evil treemacs-projectile which-key pyim org-appear pangu-spacing cal-china-x dracula-theme org-bullets modus-themes valign yasnippet-snippets yasnippet rainbow-delimiters highlight-symbol dashboard multiple-cursors undo-tree marginalia good-scroll mwim ace-jump-mode ace-window amx ztree use-package magit lsp-ui lsp-ivy flycheck-pkg-config evil dap-mode counsel-projectile company-tabnine))
+   '(evil-mc evil-leader doom-themes treemacs-magit treemacs-icons-dired treemacs-evil treemacs-projectile which-key pyim org-appear pangu-spacing cal-china-x dracula-theme org-bullets modus-themes valign yasnippet-snippets yasnippet rainbow-delimiters highlight-symbol dashboard multiple-cursors undo-tree marginalia good-scroll mwim ace-jump-mode ace-window amx ztree use-package magit lsp-ui lsp-ivy flycheck-pkg-config evil dap-mode counsel-projectile company-tabnine))
  '(setq org-default-notes-file t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -28,5 +26,3 @@
  '(outline-8 ((t (:weight semi-bold))))
  '(outline-9 ((t (:weight semi-bold)))))
 
-
-(provide 'custome)

@@ -41,45 +41,40 @@
     "fr" 'recentf-open-files             ;; 最近打开的文件
 
     ;; 缓冲区操作
-    "bb" 'switch-to-buffer               ;; 切换缓冲区
+    "bb" 'ivy-switch-buffer               ;; 切换缓冲区
     "bd" 'kill-this-buffer               ;; 关闭当前缓冲区
     "bn" 'next-buffer                    ;; 下一个缓冲区
     "bp" 'previous-buffer                ;; 上一个缓冲区
     "bl" 'list-buffers                   ;; 列出所有缓冲区
 
     ;; 窗口操作
-    "wv" 'split-window-right             ;; 垂直分割窗口
-    "ws" 'split-window-below             ;; 水平分割窗口
-    "wd" 'delete-window                  ;; 关闭窗口
-    "wo" 'delete-other-windows           ;; 只保留当前窗口
-    "wm" 'maximize-window                ;; 最大化窗口
+    "ov" 'split-window-right             ;; 垂直分割窗口
+    "os" 'split-window-below             ;; 水平分割窗口
+    "od" 'delete-window                  ;; 关闭窗口
+    "oo" 'delete-other-windows           ;; 只保留当前窗口
+    "om" 'maximize-window                ;; 最大化窗口
+    "aw" 'ace-swap-window
+    "af" 'ace-maximize-window
+    ;;"ac" 'aya-create  ;; 代码片段
     "wu" 'winner-undo                    ;; 撤销窗口布局变化
     "wr" 'winner-redo                    ;; 重做窗口布局变化
 
+
     ;; treemacs操作
     "tt" 'treemacs                       ;; 打开 Treemacs
+    "tn" 'tab-new                        ;; 新建tab也
     "tf" 'treemacs-find-file             ;; 在 Treemacs 中找到当前文件
-    "tr" 'treemacs-refresh               ;; 刷新 Treemacs
     "tp" 'treemacs-projectile            ;; 打开 Treemacs Projectile
     "to" 'treemacs-display-current-project-exclusively ;; 仅显示当前项目
 
     ;; Treemacs 标签操作
     "ta" 'treemacs-add-project-to-workspace           ;; 添加项目到工作区
     "td" 'treemacs-remove-project-from-workspace      ;; 从工作区中移除项目
-    "tn" 'treemacs-create-workspace                   ;; 创建新的工作区
-    ;;"trw" 'treemacs-rename-workspace                  ;; 重命名工作区
-    "ts" 'treemacs-switch-workspace                   ;; 切换工作区
-    "tw" 'treemacs-toggle-show-dotfiles               ;; 显示/隐藏隐藏文件
-    "tl" 'treemacs-toggle-fixed-width                 ;; 切换 Treemacs 窗口宽度
-    "tb" 'treemacs-visit-node-horizontal-split        ;; 水平分割窗口中访问节点
-    "tv" 'treemacs-visit-node-vertical-split          ;; 垂直分割窗口中访问节点
-
-
-
+    "aa" 'clipboard-kill-ring-save ; used frequently
+    "pp" 'clipboard-yank ; used frequently
 
     ;; 项目管理
     "pf" 'projectile-find-file           ;; 在项目中查找文件
-    "pp" 'projectile-switch-project      ;; 切换项目,
     "pd" 'projectile-find-dir            ;; 在项目中查找目录
     "pr" 'projectile-recentf             ;; 最近项目文件
     "pg" 'projectile-grep                ;; grep搜索项目文件
@@ -101,7 +96,11 @@
     ;; Org mode
     "oa" 'org-agenda                     ;; 打开 Org agenda
     "oc" 'org-capture                    ;; 打开 Org capture
-
+    "c<" 'org-do-promote ; `C-c C-<'
+    "c>" 'org-do-demote ; `C-c C->'
+    "cxi" 'org-clock-in ; `C-c C-x C-i'
+    "cxo" 'org-clock-out ; `C-c C-x C-o'
+    "cxr" 'org-clock-report ; `C-c C-x C-r'
     ;; 其他常用操作
     "at" 'ansi-term                      ;; 打开终端
     "am" 'eshell                         ;; 打开 Eshell
@@ -117,16 +116,24 @@
     "hf" 'describe-function              ;; 显示函数的描述
     "hv" 'describe-variable              ;; 显示变量的描述
     "hm" 'describe-mode                  ;; 显示当前模式的描述
+    ;; 窗口选择
+    "0" 'winum-select-window-0-or-10
+    "1" 'winum-select-window-1
+    "2" 'winum-select-window-2
+    "3" 'winum-select-window-3
+    "4" 'winum-select-window-4
+    "5" 'winum-select-window-5
+    "6" 'winum-select-window-6
+    "7" 'winum-select-window-7
+    "8" 'winum-select-window-8
+    "9" 'winum-select-window-9
     ))
 
 ;; Bind in normal mode
 (define-key evil-normal-state-map (kbd "M-<tab>") 'my-search-and-tab)
-
-;; Bind in insert mode
 (define-key evil-insert-state-map (kbd "M-<tab>") 'my-search-and-tab)
 
-
-;; vim输入法切换
+;; vim 输入法
 ;(defun my-evil-insert-state-input-method ()
     ;"Switch to Chinese input method in insert state."
     ;(set-input-method "chinese-py"))
