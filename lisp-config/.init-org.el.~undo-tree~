@@ -1,6 +1,0 @@
-(undo-tree-save-format-version . 1)
-"4e09046c3a43b19f5217f62c295b5ed1e53cd3ad"
-[nil nil nil nil (26196 46555 242099 0) 0 nil]
-([nil current ((#("
-" 0 1 (fontified t)) . 5335) (t 26195 525 944002 934000)) nil (26196 46555 242094 0) 0 nil])
-nil

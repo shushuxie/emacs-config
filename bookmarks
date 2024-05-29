@@ -16,8 +16,8 @@
  (last-modified 25922 23390 734570 0))
 ("org-capture-last-stored"
  (filename . "~/Documents/capture/gtd.org")
- (front-context-string . "** TODO 编程配置单独拆分")
- (rear-context-string . "示例][个人C代码运行示例]]\n")
- (position . 1633)
- (last-modified 26195 25110 103009 0))
+ (front-context-string . "** TODO evil mul")
+ (rear-context-string . "TODO rgerp 如何使用\n")
+ (position . 2105)
+ (last-modified 26199 20202 597515 0))
 )
