@@ -1,3 +1,39 @@
+(require 'org)
+;; 隐藏加粗样式的符号
+(setq org-hide-emphasis-markers t)
+
+
+;; 更改行间距        
+(with-eval-after-load 'org
+  (setq line-spacing 0.25))
+     
+   (defface org-bold
+  '((t :foreground "#d2268b"
+     :background "#fefefe"
+     :weight bold
+     :underline t
+     :overline t))
+  "Face for org-mode bold."
+  :group 'org-faces )
+
+
+;; 隐藏强调标记
+(setq org-hide-emphasis-markers t)
+
+;; 自定义强调样式
+(setq org-emphasis-alist
+      '(("*" org-bold)
+        ("/" italic)
+        ("_" underline)
+        ("=" org-verbatim verbatim)
+        ("~" org-code verbatim)
+        ("+" (:strike-through t))))
+
+;; 设置加粗和原文样式的背景颜色
+(set-face-background 'org-bold "#fefefe")
+(set-face-background 'org-verbatim "#fefefe")
+
+
 ;;; todo技巧
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
@@ -88,52 +124,8 @@
         org-appear-autosubmarkers t
         org-appear-autolinks nil))
 
-;; 更改行间距        
-(with-eval-after-load 'org
-  (setq line-spacing 0.25))
+
      
-   (defface org-bold
-  '((t :foreground "#d2268b"
-     :background "#fefefe"
-     :weight bold
-     :underline t
-     :overline t))
-  "Face for org-mode bold."
-  :group 'org-faces )
-
-;; 更改加粗样式
-(setq org-emphasis-alist
-      '(("*" org-bold)
-        ("/" italic)
-        ("_" underline)
-        ("=" ;; (:background "maroon" :foreground "white")
-         org-verbatim verbatim)
-        ("~" ;; (:background "deep sky blue" :foreground "MidnightBlue")
-         org-code verbatim)
-        ("+" (:strike-through t))))
-(set-face-background 'org-bold "#fefefe")
-(set-face-background 'org-verbatim "#fefefe")
-     
-;; 一些样式替换
-(defun my-add-pretty-symbols ()
-  "Make some words display as Unicode symbols"
-  (setq prettify-symbols-alist
-        (append prettify-symbols-alist
-                '(
-                  ("\\pagebreak" . 128204)  ; 🔖
-                  ("->" . 8594)             ; →
-                  ("=>" . 8658)             ; ⇒
-                  ))))
-
-(defun my-enable-prettify-symbols ()
-  "Enable prettify symbols mode and add pretty symbols."
-  (prettify-symbols-mode 1)
-  (my-add-pretty-symbols))
-
-(add-hook 'org-mode-hook 'my-enable-prettify-symbols)
-;; 如果需要在其他模式下使用，可以继续添加其他模式的 hook
-;; (add-hook 'prog-mode-hook 'my-enable-prettify-symbols)  ;; 示例：在编程模式下也启用
-    
   ;; 中英文混排table显示 
 (use-package valign
   :config

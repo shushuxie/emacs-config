@@ -1,3 +1,7 @@
 *.lan~
 *.~undo-tree~
 /elpa/
+eshell/lastdir
+history
+recentf
+

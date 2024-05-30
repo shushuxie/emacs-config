@@ -12,14 +12,14 @@
 (setq-default word-wrap t);;文本自动换行显示
 
 ;;; custom org emhasis color
-(require 'org)
-(setq org-emphasis-alist
-      (cons '("+" '(:strike-through t :foreground "gray"))
-	    (delete* "+" org-emphasis-alist :key 'car :test 'equal)))
-
-(setq org-emphasis-alist
-      (cons '("*" '(:emphasis t :foreground "red"))
-	                (delete* "*" org-emphasis-alist :key 'car :test 'equal)))
+;(require 'org)
+;(setq org-emphasis-alist
+      ;(cons '("+" '(:strike-through t :foreground "gray"))
+	    ;(delete* "+" org-emphasis-alist :key 'car :test 'equal)))
+;
+;(setq org-emphasis-alist
+      ;(cons '("*" '(:emphasis t :foreground "red"))
+	                ;(delete* "*" org-emphasis-alist :key 'car :test 'equal)))
 
 ;;;; end
 (setq valign-fancy-bar t) ;表格支持像素级对齐

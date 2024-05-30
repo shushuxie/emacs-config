@@ -16,8 +16,8 @@
  (last-modified 25922 23390 734570 0))
 ("org-capture-last-stored"
  (filename . "~/Documents/capture/gtd.org")
- (front-context-string . "** TODO evil mul")
- (rear-context-string . "TODO rgerp 如何使用\n")
- (position . 2105)
- (last-modified 26199 20202 597515 0))
+ (front-context-string . "** TODO bind src")
+ (rear-context-string . " mulity cursors\n")
+ (position . 2133)
+ (last-modified 26199 23625 401270 0))
 )

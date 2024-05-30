@@ -86,3 +86,23 @@ ls
 ./ reverNums 
 ./reverNums 
 eixt
+git status
+git rm --cached
+git rm --cached *.undo-tree*
+git rm --cached lisp-config/*.undo-tree*
+git rm --cached lisp-config/*.~undo-tree~
+git status 
+git rm --cached recentf 
+git rm --cached history 
+git rm --cached eshell/lastdir
+git status
+git rm --cached elpa/archives/nongnu/archive-contents
+git status
+git status 
+git rm --cached bookmarks.~undo-tree~
+git rm --cached 'bookmarks.~undo-tree~'
+git push 
+cd .emacs.d/
+git push -v origin refs/heads/master:refs/heads/master
+git pull
+git push -v origin refs/heads/master:refs/heads/master
