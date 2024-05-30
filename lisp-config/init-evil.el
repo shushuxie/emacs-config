@@ -47,6 +47,11 @@
     "bp" 'previous-buffer                ;; 上一个缓冲区
     "bl" 'list-buffers                   ;; 列出所有缓冲区
 
+    ;; org-structure
+    "<" 'org-insert-structure-template   ;; 插入模版
+    "'" 'org-edit-special                ;; 特殊编辑
+    "|" 'org-table-create                ;; 插入table
+
     ;; 窗口操作
     "ov" 'split-window-right             ;; 垂直分割窗口
     "os" 'split-window-below             ;; 水平分割窗口
@@ -59,6 +64,22 @@
     "wu" 'winner-undo                    ;; 撤销窗口布局变化
     "wr" 'winner-redo                    ;; 重做窗口布局变化
 
+    ;; 窗口选择
+    "0" 'winum-select-window-0-or-10
+    "1" 'winum-select-window-1
+    "2" 'winum-select-window-2
+    "3" 'winum-select-window-3
+    "4" 'winum-select-window-4
+    "5" 'winum-select-window-5
+    "6" 'winum-select-window-6
+    "7" 'winum-select-window-7
+    "8" 'winum-select-window-8
+    "9" 'winum-select-window-9
+    "hh" 'evil-window-left
+    "jj" 'evil-window-down
+    "kk" 'evil-window-up
+    "ll" 'evil-window-right
+    "nn" 'evil-window-new
 
     ;; treemacs操作
     "tt" 'treemacs                       ;; 打开 Treemacs
@@ -116,17 +137,6 @@
     "hf" 'describe-function              ;; 显示函数的描述
     "hv" 'describe-variable              ;; 显示变量的描述
     "hm" 'describe-mode                  ;; 显示当前模式的描述
-    ;; 窗口选择
-    "0" 'winum-select-window-0-or-10
-    "1" 'winum-select-window-1
-    "2" 'winum-select-window-2
-    "3" 'winum-select-window-3
-    "4" 'winum-select-window-4
-    "5" 'winum-select-window-5
-    "6" 'winum-select-window-6
-    "7" 'winum-select-window-7
-    "8" 'winum-select-window-8
-    "9" 'winum-select-window-9
     ))
 
 ;; Bind in normal mode
