@@ -53,11 +53,11 @@
     "|" 'org-table-create                ;; 插入table
 
     ;; 窗口操作
-    "ov" 'split-window-right             ;; 垂直分割窗口
-    "os" 'split-window-below             ;; 水平分割窗口
-    "od" 'delete-window                  ;; 关闭窗口
+    "wv" 'split-window-right             ;; 垂直分割窗口
+    "ws" 'split-window-below             ;; 水平分割窗口
+    "wd" 'delete-window                  ;; 关闭窗口
     "oo" 'delete-other-windows           ;; 只保留当前窗口
-    "om" 'maximize-window                ;; 最大化窗口
+    "wm" 'maximize-window                ;; 最大化窗口
     "aw" 'ace-swap-window
     "af" 'ace-maximize-window
     ;;"ac" 'aya-create  ;; 代码片段
@@ -75,11 +75,6 @@
     "7" 'winum-select-window-7
     "8" 'winum-select-window-8
     "9" 'winum-select-window-9
-    "hh" 'evil-window-left
-    "jj" 'evil-window-down
-    "kk" 'evil-window-up
-    "ll" 'evil-window-right
-    "nn" 'evil-window-new
 
     ;; treemacs操作
     "tt" 'treemacs                       ;; 打开 Treemacs
@@ -105,18 +100,25 @@
     "gr" 'xref-find-references           ;; 查找引用
     "gb" 'xref-pop-marker-stack          ;; 返回上一个位置
 
-    ;; 代码编辑
-    "ci" 'evilnc-comment-or-uncomment-lines ;; 注释或取消注释行
-    "cc" 'comment-line                   ;; 注释行
-    "cu" 'uncomment-region               ;; 取消注释区域
-
     ;; 搜索
     "ss" 'swiper                         ;; Swiper 搜索
     "sg" 'rgrep                          ;; 在项目中进行正则搜索
 
     ;; Org mode
-    "oa" 'org-agenda                     ;; 打开 Org agenda
-    "oc" 'org-capture                    ;; 打开 Org capture
+    "nw" 'widen                          ;;展开折叠
+    "ns" 'org-narrow-to-subtree             ;;只显示子树
+    "nb" 'org-narrow-to-block
+    "ne" 'org-narrow-to-element
+    "hh" 'evil-window-left
+    "ca" 'org-agenda                     ;; 打开 Org agenda
+    "cc" 'org-capture                    ;; 打开 Org capture
+    "cl" 'org-store-link                 ;; 添加链接
+    "co" 'org-open-at-point              ;; 打开链接
+    "cn" 'org-next-visible-heading       ;; next headline
+    "cp" 'org-previous-visible-heading   ;; 上一个可见标题
+    "cf" 'org-forward-heading-same-level ;; 下一个同级标题
+    "cb" 'org-backward-heading-same-level;; 前一个同级标题 
+    "ck" 'org-kill-note-or-show-branches ;; 折叠当前等级headline
     "c<" 'org-do-promote ; `C-c C-<'
     "c>" 'org-do-demote ; `C-c C->'
     "cxi" 'org-clock-in ; `C-c C-x C-i'

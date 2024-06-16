@@ -145,6 +145,15 @@
 ;
 ;(add-hook 'evil-insert-state-entry-hook 'my-input-method)
 
+;; 定义键盘符号替换函数
+(defun my-keyboard-translate ()
+  (keyboard-translate ?± ?`)
+  (keyboard-translate ?§ ?~))
+
+;; 在 Emacs 启动时调用键盘符号替换函数
+(add-hook 'after-init-hook 'my-keyboard-translate)
+
+
 ;; 行内折叠代码块
 (defun my-search-and-tab ()
   "Search for '#+' and trigger TAB key."
