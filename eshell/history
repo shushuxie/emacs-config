@@ -106,3 +106,11 @@ cd .emacs.d/
 git push -v origin refs/heads/master:refs/heads/master
 git pull
 git push -v origin refs/heads/master:refs/heads/master
+ls 
+ll
+ls -l
+./testProgram 
+lldb testProgram 
+ls 
+lldb tes2 
+lldb tes2 

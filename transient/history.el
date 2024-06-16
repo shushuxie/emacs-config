@@ -16,4 +16,6 @@
   ("--edit")
   nil)
  (magit-run nil)
- (magit-status-jump nil))
+ (magit-stash nil)
+ (magit-status-jump nil)
+ (magit-tag nil))

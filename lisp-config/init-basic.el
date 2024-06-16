@@ -28,6 +28,14 @@
 (require 'org-tempo) ;解决<c无法创建代码块问题
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; globe kbd
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c k") 'counsel-ag)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(global-set-key (kbd "C-j") nil)
+(global-set-key (kbd "M-/") 'hippie-expand)
 
 
 ;; explore file

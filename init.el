@@ -2,13 +2,14 @@
 (setq gc-cons-threshold (* 50 1000 1000)) ;垃圾回收50M启动
 ;;; 配置文件加载路径
 (add-to-list 'load-path "~/.emacs.d/lisp-config")
+(setq custom-file "~/.emacs.d/lisp-config/custome.el")
+(load custom-file)
 (require 'init-basic)
 (require 'init-packages)
 (require 'init-org)
+(require 'init-latex)
 (require 'init-evil)
-
-(setq custom-file "~/.emacs.d/lisp-config/custome.el")
-(load custom-file)
+(require 'init-program)
 (setq-default word-wrap t);;文本自动换行显示
 
 ;;; custom org emhasis color
@@ -36,4 +37,5 @@
 
 (setq org-babel-python-command "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3")
 
+(setq dap-lldb-debug-program '("/usr/local/bin/lldb-mi"))
 

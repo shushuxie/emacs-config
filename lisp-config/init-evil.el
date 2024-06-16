@@ -100,6 +100,8 @@
     "gr" 'xref-find-references           ;; 查找引用
     "gb" 'xref-pop-marker-stack          ;; 返回上一个位置
 
+    "ll" 'org-preview-latex-fragment     ;; latex公式预览
+
     ;; 搜索
     "ss" 'swiper                         ;; Swiper 搜索
     "sg" 'rgrep                          ;; 在项目中进行正则搜索

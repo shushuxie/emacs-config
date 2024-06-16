@@ -1,7 +1,4 @@
 (require 'org)
-;; 隐藏加粗样式的符号
-(setq org-hide-emphasis-markers t)
-
 
 ;; 更改行间距        
 (with-eval-after-load 'org
@@ -69,19 +66,19 @@
         (0.0 . org-upcoming-distant-deadline)));紧迫感线条
 
 ;;; code block
-   (defun my/org-mode-setup ()
-  "Custom setup for `org-mode`."
-  (outline-minor-mode 1)
-  (hs-minor-mode 1)
-
-  ;; Define key bindings for folding and unfolding
-  (define-key org-mode-map (kbd "C-c TAB") 'hs-toggle-hiding)
-  (define-key org-mode-map (kbd "C-c C-S-TAB") 'hs-show-all)
-  (define-key org-mode-map (kbd "C-c C-S-<tab>") 'hs-show-all)
-  (define-key org-mode-map (kbd "C-c C-M-TAB") 'hs-hide-all)
-  (define-key org-mode-map (kbd "C-c C-M-<tab>") 'hs-hide-all))
-
-(add-hook 'org-mode-hook 'my/org-mode-setup)
+   ;(defun my/org-mode-setup ()
+  ;"Custom setup for `org-mode`."
+  ;(outline-minor-mode 1)
+  ;(hs-minor-mode 1)
+;
+  ;;; Define key bindings for folding and unfolding
+  ;(define-key org-mode-map (kbd "C-c TAB") 'hs-toggle-hiding)
+  ;(define-key org-mode-map (kbd "C-c C-S-TAB") 'hs-show-all)
+  ;(define-key org-mode-map (kbd "C-c C-S-<tab>") 'hs-show-all)
+  ;(define-key org-mode-map (kbd "C-c C-M-TAB") 'hs-hide-all)
+  ;(define-key org-mode-map (kbd "C-c C-M-<tab>") 'hs-hide-all))
+;
+;(add-hook 'org-mode-hook 'my/org-mode-setup)
  
 ;;; list 样式
 (font-lock-add-keywords
@@ -164,5 +161,52 @@
           (goto-char (match-beginning 0))
           (call-interactively 'org-cycle))
       (message "No '#+end' found in the buffer"))))
+
+;; 忽略 org-element-cache 警告
+(require 'warnings)
+
+;; 忽略 org-element-cache 警告
+(add-hook 'after-init-hook
+          (lambda ()
+            (with-eval-after-load 'org
+              (add-to-list 'warning-suppress-types '(org-element-cache)))))
+;; 禁用提示音
+(defun my-disable-bell-in-org-mode ()
+  "Disable bell in Org mode."
+  (setq-local ring-bell-function 'ignore))
+
+(add-hook 'org-mode-hook #'my-disable-bell-in-org-mode)
+
+;;; 代码块默认折叠
+;; 确保所有代码块默认折叠
+(setq org-startup-folded 'content)
+(setq org-startup-with-inline-images t)
+(setq org-startup-with-latex-preview t)
+(setq org-hide-block-startup t)
+
+(defun my-org-mode-setup ()
+  "Custom configurations for Org mode."
+  ;; 遍历所有代码块并折叠
+  (org-babel-map-src-blocks nil
+    (org-hide-block-all)))
+
+(add-hook 'org-mode-hook 'my-org-mode-setup)
+;;;===============================
+
+;; 绑定 Ctrl-c Ctrl-, 到 org-insert-structure-template
+;(global-set-key (kbd "C-c C-,") 'org-insert-structure-template)
+
+;; 绑定 Ctrl-c Ctrl-， 到 org-insert-structure-template
+(global-set-key (kbd "C-c C-，") 'org-insert-structure-template)
+
+
+(setq org-latex-create-formula-image-program 'dvisvgm)
+(setq org-latex-pdf-process
+      '("pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"))
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0)) ; 调整公式的放大倍数
+(setq org-latex-packages-alist '(("" "graphicx" t)))
+
 
 (provide 'init-org)

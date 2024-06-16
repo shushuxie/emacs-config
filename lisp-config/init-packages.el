@@ -27,17 +27,10 @@
   ("<f2> f" . 'counsel-describe-function)
   ("<f2> v" . 'counsel-describe-variable)
   ("<f2> i" . 'counsel-info-lookup-symbol))
-(global-set-key (kbd "C-c g") 'counsel-git)
-(global-set-key (kbd "C-c j") 'counsel-git-grep)
-(global-set-key (kbd "C-c k") 'counsel-ag)
-(global-set-key (kbd "C-x l") 'counsel-locate)
-(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
 (use-package hydra
   :ensure t)
-
-
 
 (use-package use-package-hydra
   :ensure t
@@ -73,14 +66,11 @@
   :init (good-scroll-mode))
 
 
-;(use-package which-key
-  ;:ensure t
-  ;:init (which-key-mode))
-(require 'which-key)
-(which-key-mode)
+(use-package which-key
+  :ensure t
+  :init (which-key-mode))
 
 
-(global-set-key (kbd "C-j") nil)
 
 (use-package avy
   :ensure t
@@ -93,9 +83,6 @@
   :init (marginalia-mode)
   :bind (:map minibuffer-local-map
 			  ("M-A" . marginalia-cycle)))
-
-
-
 
 (use-package undo-tree
   :ensure t
@@ -112,40 +99,6 @@
   ("u"   undo-tree-visualize "visualize" :color blue)
   ("q"   nil "quit" :color blue)))
 
-
-
-(use-package multiple-cursors
-  :ensure t
-  :after hydra
-  :bind
-  (("C-x C-h m" . hydra-multiple-cursors/body)
-   ("C-S-<mouse-1>" . mc/toggle-cursor-on-click))
-  :hydra (hydra-multiple-cursors
-		  (:hint nil)
-		  "
-Up^^             Down^^           Miscellaneous           % 2(mc/num-cursors) cursor%s(if (> (mc/num-cursors) 1) \"s\" \"\")
-------------------------------------------------------------------
- [_p_]   Prev     [_n_]   Next     [_l_] Edit lines  [_0_] Insert numbers
- [_P_]   Skip     [_N_]   Skip     [_a_] Mark all    [_A_] Insert letters
- [_M-p_] Unmark   [_M-n_] Unmark   [_s_] Search      [_q_] Quit
- [_|_] Align with input CHAR       [Click] Cursor at point"
-		  ("l" mc/edit-lines :exit t)
-		  ("a" mc/mark-all-like-this :exit t)
-		  ("n" mc/mark-next-like-this)
-		  ("N" mc/skip-to-next-like-this)
-		  ("M-n" mc/unmark-next-like-this)
-		  ("p" mc/mark-previous-like-this)
-		  ("P" mc/skip-to-previous-like-this)
-		  ("M-p" mc/unmark-previous-like-this)
-		  ("|" mc/vertical-align)
-		  ("s" mc/mark-all-in-region-regexp :exit t)
-		  ("0" mc/insert-numbers :exit t)
-		  ("A" mc/insert-letters :exit t)
-		  ("<mouse-1>" mc/add-cursor-on-click)
-		  ;; Help with click recognition in this hydra
-		  ("<down-mouse-1>" ignore)
-		  ("<drag-mouse-1>" ignore)
-		  ("q" nil)))
 
 
  (use-package dashboard
@@ -170,69 +123,6 @@ Up^^             Down^^           Miscellaneous           % 2(mc/num-cursors) cu
   :ensure t
     :hook (prog-mode . rainbow-delimiters-mode))
 
-
-
-
-;(use-package company
-;  :ensure t
-;  :init (global-company-mode)
-;  :config
-;  (setq company-minimum-prefix-length 1) ; 只需敲 1 个字母就开始进行自动补全
-;  (setq company-tooltip-align-annotations t)
-;  (setq company-idle-delay 0.0)
-;  (setq company-show-numbers t) ;; 给选项编号 (按快捷键 M-1、M-2 等等来进行选择).
-;  (setq company-selection-wrap-around t)
-;  (setq company-transformers '(company-sort-by-occurrence))) ; 根据选择的频率进行排序，读者如果不喜欢可以去掉
-
-;(use-package company-box
-;  :ensure t
-;  :if window-system
-;    :hook (company-mode . company-box-mode))
-
-
-;; 智能补全
-;(use-package company-tabnine
-;  :ensure t
-;  :init (add-to-list 'company-backends #'company-tabnine))
-
-
-;; 存储代码片段???
-;(use-package yasnippet
-  ;:ensure t
-  ;:hook
-  ;(prog-mode . yas-minor-mode)
-  ;:config
-  ;(yas-reload-all)
-  ;;; add company-yasnippet to company-backends
-  ;(defun company-mode/backend-with-yas (backend)
-    ;(if (and (listp backend) (member 'company-yasnippet backend))
-	;backend
-      ;(append (if (consp backend) backend (list backend))
-	      ;'(:with company-yasnippet))))
-  ;(setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-  ;;; unbind <TAB> completion
-  ;(define-key yas-minor-mode-map [(tab)]        nil)
-  ;(define-key yas-minor-mode-map (kbd "TAB")    nil)
-  ;(define-key yas-minor-mode-map (kbd "<tab>")  nil)
-  ;:bind
-  ;(:map yas-minor-mode-map ("S-<tab>" . yas-expand)))
-;
-;(use-package yasnippet-snippets
-  ;:ensure t
-    ;:after yasnippet)
-
-
-; 文本补全，输入前几个字符补全文档中相似的字符
-(global-set-key (kbd "M-/") 'hippie-expand)
-
-(use-package flycheck
-  :ensure t
-  :config
-  (setq truncate-lines nil) ; 如果单行信息很长会自动换行
-  :hook
-    (prog-mode . flycheck-mode))
-
-
 (use-package projectile
   :ensure t
   :bind (("C-c p" . projectile-command-map))
@@ -244,8 +134,6 @@ Up^^             Down^^           Miscellaneous           % 2(mc/num-cursors) cu
   :ensure t
   :after (projectile)
     :init (counsel-projectile-mode))
-
-
 
 (use-package treemacs
   :ensure t
@@ -295,5 +183,6 @@ Up^^             Down^^           Miscellaneous           % 2(mc/num-cursors) cu
   ;; Load the doom-one theme
   (load-theme 'leuven t))
 
+(version)
 ;; 
 (provide 'init-packages)

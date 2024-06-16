@@ -3,3 +3,5 @@
  - path :: ~/.emacs.d
 ** typora
  - path :: ~/Documents/typora
+** lldbtest
+ - path :: ~/Documents/lldbtest
