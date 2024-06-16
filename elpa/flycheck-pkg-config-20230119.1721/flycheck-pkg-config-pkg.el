@@ -1,2 +1,0 @@
-;;; Generated package description from flycheck-pkg-config.el  -*- no-byte-compile: t -*-
-(define-package "flycheck-pkg-config" "20230119.1721" "configure flycheck using pkg-config" '((dash "2.8.0") (s "1.9.0") (flycheck "29")) :commit "c4e4028f6621187365b7362566ac2786206765a1" :authors '(("Wilfred Hughes" . "me@wilfred.me.uk")) :maintainers '(("Wilfred Hughes" . "me@wilfred.me.uk")) :maintainer '("Wilfred Hughes" . "me@wilfred.me.uk") :keywords '("flycheck"))
