@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: caption-example
+# key: ,ce
+# --
+#+caption: ${1}
+#+begin_example
+${0}
+#+end_example

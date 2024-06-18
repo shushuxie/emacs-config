@@ -13,6 +13,8 @@
   "Face for org-mode bold."
   :group 'org-faces )
 
+;; 添加新模板到现有的 org-structure-template-alist 中
+(add-to-list 'org-structure-template-alist '("x" . "latex"))
 
 ;; 隐藏强调标记
 (setq org-hide-emphasis-markers t)

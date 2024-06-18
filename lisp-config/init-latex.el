@@ -24,7 +24,7 @@
 ;; latex编辑
 (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
-
+(setq org-startup-with-latex-preview nil) ;打开文件不渲染预览
 ;; prettify mode
 (setq my/prettify-symbols-alist
       '(("lambda" . ?λ)
@@ -136,6 +136,14 @@
 (add-hook 'prog-mode-hook 'my/setup-prettify-symbols)
 (add-hook 'org-mode-hook 'my/setup-prettify-symbols)
 (setq prettify-symbols-unprettify-at-point t) ;自动展开光标处的替换
+
+;; 公式渲染显示中文
+;(setq org-format-latex-header "\\documentclass{article}
+;\\usepackage[UTF8]{ctex}
+;\\usepackage{amsmath}
+;\\usepackage{bm}
+;\\setCJKmainfont{SimSun}")
+
 ;;; ============latex-end =================================
 
 (provide 'init-latex)

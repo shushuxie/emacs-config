@@ -131,6 +131,8 @@
     "am" 'eshell                         ;; 打开 Eshell
     "ag" 'magit-status                   ;; 打开 Magit
     "ar" 'ranger                         ;; 打开 Ranger 文件管理器
+    ;; latex
+    "lt" 'org-cdlatex-environment-indent ;; 插入latex环境
 
     ;; 书签
     "bm" 'bookmark-set                   ;; 设置书签

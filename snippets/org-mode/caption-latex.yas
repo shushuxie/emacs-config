@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: caption-latex
+# key: ,cl
+# --
+#+caption: ${1}
+#+begin_latex
+${0}
+#+end_latex

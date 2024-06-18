@@ -162,6 +162,20 @@
 (use-package magit
     :bind (("C-x g" . magit)))
 
+(use-package git-gutter
+  :hook (prog-mode . git-gutter-mode)
+  :config
+  (setq git-gutter:update-interval 0.02))
+
+(use-package git-gutter-fringe
+  :config
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom));; 定制符号
+;; 定制颜色
+(set-face-foreground 'git-gutter:modified "blue")
+(set-face-foreground 'git-gutter:added "#00FF00")
+(set-face-foreground 'git-gutter:deleted "red")
 (use-package treemacs-magit
   :after (treemacs magit)
     :ensure t)
@@ -172,7 +186,6 @@
   :config
   (require 'treemacs-projectile))
 
-
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
@@ -180,9 +193,9 @@
 (use-package doom-themes
   :ensure t
   :config
-  ;; Load the doom-one theme
-  (load-theme 'leuven t))
+  ;; Load the doom-one,dracula theme
+  (load-theme 'doom-one-light t))
 
-(version)
+
 ;; 
 (provide 'init-packages)
