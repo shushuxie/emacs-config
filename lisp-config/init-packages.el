@@ -176,6 +176,8 @@
 (set-face-foreground 'git-gutter:modified "blue")
 (set-face-foreground 'git-gutter:added "#00FF00")
 (set-face-foreground 'git-gutter:deleted "red")
+(global-git-gutter-mode 1) ; 这一行开启了全局模式
+
 (use-package treemacs-magit
   :after (treemacs magit)
     :ensure t)
