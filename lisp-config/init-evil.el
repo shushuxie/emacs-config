@@ -133,6 +133,9 @@
     "ar" 'ranger                         ;; 打开 Ranger 文件管理器
     ;; latex
     "lt" 'org-cdlatex-environment-indent ;; 插入latex环境
+    "pd" 'org-download-clipboard         ;; 插入剪贴板文件
+    "vv" 'org-toggle-inline-images       ;; 链接和图片切换
+    "ee" 'eval-last-sexp                 ;; 执行elisp
 
     ;; 书签
     "bm" 'bookmark-set                   ;; 设置书签

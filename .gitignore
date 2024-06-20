@@ -4,15 +4,13 @@
 eshell/lastdir
 history
 recentf
-
 /auto-save-list/.saves-38919-xsq.local~
 elpa/
 transient/
-amx-items
+*amx-items*
 eshell/
 .cache/
 .bookmarks
 /auto-save-list/*.local
 projectile.cache
 /auto-save-list/.saves-41679-xsq.local~
-.cache/

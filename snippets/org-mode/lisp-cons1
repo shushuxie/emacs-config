@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: lisp-cons1
+# key: c
+# --
+(cons ${1} ${2}) 

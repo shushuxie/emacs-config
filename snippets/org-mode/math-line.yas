@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: caption-example
+# key: $
+# --
+$${1}$ ${0}

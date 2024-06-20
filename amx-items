@@ -1,13 +1,13 @@
 
 ;; ----- amx-history -----
 (
- pretty-mode
- list-packages
- prettify-symbols-mode
- org-latex-preview
- org-preview-latex-fragment
+ eval-buffer
+ yas-new-snippet
  package-list-packages
- package-autoremove
+ org-download-clipboard-resize
+ org-download-delete
+ org-download-edit
+ org-download-image
 )
 
 ;; ----- amx-data -----
@@ -17,20 +17,20 @@
  (ace-window-display-mode . 1)
  (ace-swap-window . 3)
  (ace-delete-window . 2)
- (package-list-packages . 26)
+ (package-list-packages . 28)
  (ace-jump-mode . 1)
  (ace-jump-word-mode . 1)
  (company-tabnine-install-binary . 1)
  (company-tabnine . 1)
- (company-mode . 1)
+ (company-mode . 2)
  (lsp-install-server . 2)
  (dap-hydra . 2)
  (dap-debug-edit-template . 1)
  (lsp-mode . 9)
- (package-autoremove . 13)
+ (package-autoremove . 16)
  (all-the-icons-install-fonts . 2)
  (lsp . 4)
- (load-theme . 221)
+ (load-theme . 253)
  (customize . 2)
  (theme-choose-variant . 1)
  (list-faces-display . 2)
@@ -64,8 +64,8 @@
  (revert-buffer . 2)
  (describe-variable . 5)
  (line-number-mode . 2)
- (list-packages . 31)
- (eval-buffer . 191)
+ (list-packages . 37)
+ (eval-buffer . 192)
  (flycheck-mode . 1)
  (my-evil-delete-inner-word . 6)
  (org-agenda-switch-to . 2)
@@ -73,7 +73,7 @@
  (org-agenda-file-to-front . 1)
  (org-attach-open . 1)
  (org-open-at-point . 1)
- (dired . 2)
+ (dired . 3)
  (calendar . 5)
  (package-upgrade . 2)
  (evil-mode . 2)
@@ -139,4 +139,19 @@
  (org-preview-latex-fragment . 21)
  (org-latex-preview . 1)
  (pretty-mode . 4)
+ (org-latex-export-to-pdf . 1)
+ (org-export-dispatch . 5)
+ (git-gutter-mode . 6)
+ (git-gutter . 2)
+ (yas-insert-snippet . 1)
+ (yas-new-snippet . 7)
+ (yas-describe-tables . 1)
+ (yas-reload-all . 2)
+ (vc-diff . 1)
+ (org-download-clipboard . 4)
+ (org-download-yank . 1)
+ (org-download-image . 3)
+ (org-download-edit . 1)
+ (org-download-delete . 2)
+ (org-download-clipboard-resize . 5)
 )

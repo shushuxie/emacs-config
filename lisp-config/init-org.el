@@ -209,6 +209,69 @@
         "pdflatex -interaction nonstopmode -output-directory %o %f"))
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0)) ; 调整公式的放大倍数
 (setq org-latex-packages-alist '(("" "graphicx" t)))
+;;; org-download
+(use-package org-download
+  :config
+  (setq-default org-download-heading-lvl nil)
+  (setq-default org-download-image-dir "./images")
+  (setq org-download-backend "wget")
+  (setq org-download-abbreviate-filename-function (lambda (fn) fn)) ; use original filename
+  (defun dummy-org-download-annotate-function (link)
+    "")
+  (setq org-download-annotate-function
+      #'dummy-org-download-annotate-function)
+  )
+ ;; 自定义粘贴函数，调整图片大小
+  ;(defun org-download-clipboard-resize (width)
+    ;"Download the image from clipboard and resize to WIDTH."
+    ;(interactive "nWidth: ")
+    ;(let* ((filename (concat org-download-image-dir "/" (format-time-string "%Y%m%d_%H%M%S") ".png"))
+           ;(resize-command (format "convert clipboard: -resize %dx %s" width filename)))
+      ;(unless (file-directory-p org-download-image-dir)
+        ;(make-directory org-download-image-dir t))
+      ;(shell-command resize-command)
+      ;(insert (format "[[file:%s]]" filename))
+      ;(org-redisplay-inline-images)))
+
+;(defun org-download-clipboard-resize (width)
+  ;"Download the image from clipboard and resize to WIDTH."
+  ;(interactive "nWidth: ")
+  ;(let* ((filename (concat org-download-image-dir "/" (format-time-string "%Y%m%d_%H%M%S") ".png"))
+         ;(resize-command (format "pngpaste %s && sips --resampleWidth %d %s" filename width filename)))
+    ;(unless (file-directory-p org-download-image-dir)
+      ;(make-directory org-download-image-dir t))
+    ;(shell-command resize-command)
+    ;(insert (format "[[file:%s]]" filename))
+    ;(org-redisplay-inline-images)))
+
+(defun org-download-clipboard-resize (width height)
+  "Download the image from clipboard and resize to WIDTH and HEIGHT while maintaining high quality."
+  (interactive "nWidth: \nnHeight: ")
+  (let* ((filename (concat org-download-image-dir "/" (format-time-string "%Y%m%d_%H%M%S") ".png"))
+         (resize-command (format "pngpaste %s && sips --resampleWidth %d --resampleHeight %d %s" filename width height filename)))
+    (unless (file-directory-p org-download-image-dir)
+      (make-directory org-download-image-dir t))
+    (shell-command resize-command)
+    (insert (format "[[file:%s]]" filename))
+    (org-redisplay-inline-images)))
 
 
+  ;; 绑定自定义粘贴函数到快捷键
+  (global-set-key (kbd "C-S-y") 'org-download-clipboard-resize)
+;;;org-capture==============
+;; 加载org-protocol
+;(require 'org-protocol)
+;
+;;; 设置org-capture-templates
+;(setq org-capture-templates `(
+	;("p" "Protocol" entry (file+headline ,(concat org-directory "~/org/notes.org") "Inbox")
+        ;"* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+	;("L" "Protocol Link" entry (file+headline ,(concat org-directory "~/org/notes.org") "Inbox")
+        ;"* %? [[%:link][%:description]] \nCaptured On: %U")
+;))
+;;; 启动Emacs服务器
+;(require 'server)
+;(unless (server-running-p)
+  ;(server-start))
+;;;org-capture==============
 (provide 'init-org)

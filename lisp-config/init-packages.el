@@ -195,8 +195,12 @@
 (use-package doom-themes
   :ensure t
   :config
-  ;; Load the doom-one,dracula theme
-  (load-theme 'doom-one-light t))
+  ;(load-theme 'doom-one-light t))
+  ;(load-theme 'dracula t))
+  (load-theme 'leuven t))
+  ;(load-theme 'tango t))
+  ;(load-theme 'tsdh-light t))
+  ;(load-theme 'tsdh-dark t))
 
 
 ;; 

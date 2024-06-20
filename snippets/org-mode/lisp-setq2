@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: lisp-setq2
+# key: se
+# --
+setq
