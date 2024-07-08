@@ -46,3 +46,6 @@
 (setq save-place-file (concat user-emacs-directory "places"))
 ;; 确保每个 buffer 都记录位置
 (setq-default save-place t)
+(global-hl-line-mode t)
+
+(provide 'init)

@@ -202,6 +202,25 @@
   ;(load-theme 'tsdh-light t))
   ;(load-theme 'tsdh-dark t))
 
+;; 保存桌面start
+(use-package desktop
+  :ensure t
+  :init
+  (desktop-save-mode 1)
+  :config
+  (setq desktop-path '("~/.emacs.d/desktop/")
+        desktop-dirname "~/.emacs.d/desktop/"
+        desktop-base-file-name "emacs-desktop"
+        desktop-base-lock-name "emacs-desktop.lock"
+        desktop-save 'if-exists
+        desktop-load-locked-desktop t
+        desktop-auto-save-timeout 30))
+
+(use-package winner
+  :ensure t
+  :config
+  (winner-mode 1))
+;; 保存桌面end
 
 ;; 
 (provide 'init-packages)

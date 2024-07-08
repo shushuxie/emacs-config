@@ -36,7 +36,7 @@
   (evil-leader/set-leader ",")
   (evil-leader/set-key
     ;; 文件操作
-    "ff" 'find-file                      ;; 打开文件
+    "ff" 'counsel-find-file              ;; 打开文件
     "fs" 'save-buffer                    ;; 保存当前缓冲区
     "fr" 'recentf-open-files             ;; 最近打开的文件
 
@@ -60,9 +60,12 @@
     "wm" 'maximize-window                ;; 最大化窗口
     "aw" 'ace-swap-window
     "af" 'ace-maximize-window
-    ;;"ac" 'aya-create  ;; 代码片段
     "wu" 'winner-undo                    ;; 撤销窗口布局变化
     "wr" 'winner-redo                    ;; 重做窗口布局变化
+    "wh" 'evil-window-decrease-width     ;; 宽度变窄
+    "wk" 'evil-window-decrease-height
+    "wl" 'evil-window-increase-width
+    "wj" 'evil-window-increase-height
 
     ;; 窗口选择
     "0" 'winum-select-window-0-or-10
@@ -91,7 +94,7 @@
 
     ;; 项目管理
     "pf" 'projectile-find-file           ;; 在项目中查找文件
-    "pd" 'projectile-find-dir            ;; 在项目中查找目录
+    "pd" 'projectile-dired            ;; 在项目中查找目录
     "pr" 'projectile-recentf             ;; 最近项目文件
     "pg" 'projectile-grep                ;; grep搜索项目文件
 
@@ -104,7 +107,7 @@
 
     ;; 搜索
     "ss" 'swiper                         ;; Swiper 搜索
-    "sg" 'rgrep                          ;; 在项目中进行正则搜索
+    "sg" 'projectile-grep                ;; 在项目中进行正则搜索
 
     ;; Org mode
     "nw" 'widen                          ;;展开折叠
@@ -133,9 +136,10 @@
     "ar" 'ranger                         ;; 打开 Ranger 文件管理器
     ;; latex
     "lt" 'org-cdlatex-environment-indent ;; 插入latex环境
-    "pd" 'org-download-clipboard         ;; 插入剪贴板文件
+    "dd" 'org-download-clipboard         ;; 插入剪贴板文件
     "vv" 'org-toggle-inline-images       ;; 链接和图片切换
     "ee" 'eval-last-sexp                 ;; 执行elisp
+    "zz" 'repeat                         ;; 重复操作,按z可以一直重复
 
     ;; 书签
     "bm" 'bookmark-set                   ;; 设置书签
@@ -147,6 +151,8 @@
     "hv" 'describe-variable              ;; 显示变量的描述
     "hm" 'describe-mode                  ;; 显示当前模式的描述
     ))
+
+
 
 ;; Bind in normal mode
 (define-key evil-normal-state-map (kbd "M-<tab>") 'my-search-and-tab)

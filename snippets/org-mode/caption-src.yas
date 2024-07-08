@@ -2,7 +2,7 @@
 # name: caption-src
 # key: ,cs
 # --
-#+caption: ${1}
-#+begin_src 
+${1:#+${2:caption: } ${3:Description}}
+#+begin_src ${4:emacs-lisp}
 ${0}
 #+end_src
