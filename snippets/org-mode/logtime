@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: logtime
+# key: log
+# --
+
+:LOGTIME:
+${1:插入时间}
+:END:
+${0}

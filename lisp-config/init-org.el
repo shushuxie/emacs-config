@@ -13,6 +13,7 @@
   "Face for org-mode bold."
   :group 'org-faces )
 
+
 ;; 添加新模板到现有的 org-structure-template-alist 中
 (add-to-list 'org-structure-template-alist '("x" . "latex"))
 
@@ -67,21 +68,6 @@
         (0.5 . org-upcoming-deadline)
         (0.0 . org-upcoming-distant-deadline)));紧迫感线条
 
-;;; code block
-   ;(defun my/org-mode-setup ()
-  ;"Custom setup for `org-mode`."
-  ;(outline-minor-mode 1)
-  ;(hs-minor-mode 1)
-;
-  ;;; Define key bindings for folding and unfolding
-  ;(define-key org-mode-map (kbd "C-c TAB") 'hs-toggle-hiding)
-  ;(define-key org-mode-map (kbd "C-c C-S-TAB") 'hs-show-all)
-  ;(define-key org-mode-map (kbd "C-c C-S-<tab>") 'hs-show-all)
-  ;(define-key org-mode-map (kbd "C-c C-M-TAB") 'hs-hide-all)
-  ;(define-key org-mode-map (kbd "C-c C-M-<tab>") 'hs-hide-all))
-;
-;(add-hook 'org-mode-hook 'my/org-mode-setup)
- 
 ;;; list 样式
 (font-lock-add-keywords
  'org-mode
@@ -106,7 +92,6 @@
    '(org-document-title ((t (:height 1.2))))))
 
     
-
 (use-package pangu-spacing
   :ensure t
   :config
@@ -123,7 +108,6 @@
         org-appear-autosubmarkers t
         org-appear-autolinks nil))
 
-
      
   ;; 中英文混排table显示 
 (use-package valign
@@ -131,29 +115,13 @@
   (setq valign-fancy-bar t)
   (add-hook 'org-mode-hook #'valign-mode))
      
+(setq valign-fancy-bar t) ;表格支持像素级对齐
+
 ;; 替换折叠状态符号
 (with-eval-after-load 'org
   (setq org-ellipsis " ▾ "))
-;; 个人键盘不匹配
-;(defun my-input-method ()
-  ;"Custom input method for automatic character replacement."
-  ;(setq-local default-input-method "latin-1-prefix")
-  ;(activate-input-method default-input-method)
-  ;(quail-defrule "±" ["`"])
-  ;(quail-defrule "§" ["~"]))
-;
-;(add-hook 'evil-insert-state-entry-hook 'my-input-method)
 
-;; 定义键盘符号替换函数
-(defun my-keyboard-translate ()
-  (keyboard-translate ?± ?`)
-  (keyboard-translate ?§ ?~))
-
-;; 在 Emacs 启动时调用键盘符号替换函数
-(add-hook 'after-init-hook 'my-keyboard-translate)
-
-
-;; 行内折叠代码块
+;; 行内折叠代码块,alt+tab迅速折叠
 (defun my-search-and-tab ()
   "Search for '#+' and trigger TAB key."
   (interactive)
@@ -164,20 +132,6 @@
           (call-interactively 'org-cycle))
       (message "No '#+end' found in the buffer"))))
 
-;; 忽略 org-element-cache 警告
-(require 'warnings)
-
-;; 忽略 org-element-cache 警告
-(add-hook 'after-init-hook
-          (lambda ()
-            (with-eval-after-load 'org
-              (add-to-list 'warning-suppress-types '(org-element-cache)))))
-;; 禁用提示音
-(defun my-disable-bell-in-org-mode ()
-  "Disable bell in Org mode."
-  (setq-local ring-bell-function 'ignore))
-
-(add-hook 'org-mode-hook #'my-disable-bell-in-org-mode)
 
 ;;; 代码块默认折叠
 ;; 确保所有代码块默认折叠
@@ -195,83 +149,20 @@
 (add-hook 'org-mode-hook 'my-org-mode-setup)
 ;;;===============================
 
-;; 绑定 Ctrl-c Ctrl-, 到 org-insert-structure-template
-;(global-set-key (kbd "C-c C-,") 'org-insert-structure-template)
 
-;; 绑定 Ctrl-c Ctrl-， 到 org-insert-structure-template
-(global-set-key (kbd "C-c C-，") 'org-insert-structure-template)
-
-
-(setq org-latex-create-formula-image-program 'dvisvgm)
-(setq org-latex-pdf-process
-      '("pdflatex -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -interaction nonstopmode -output-directory %o %f"))
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0)) ; 调整公式的放大倍数
-(setq org-latex-packages-alist '(("" "graphicx" t)))
 ;;; org-download
 (use-package org-download
+  :ensure t
   :config
-  (setq-default org-download-heading-lvl nil)
-  (setq-default org-download-image-dir "./images")
-  (setq org-download-backend "wget")
-  (setq org-download-abbreviate-filename-function (lambda (fn) fn)) ; use original filename
-  (defun dummy-org-download-annotate-function (link)
-    "")
-  (setq org-download-annotate-function
-      #'dummy-org-download-annotate-function)
-  )
- ;; 自定义粘贴函数，调整图片大小
-  ;(defun org-download-clipboard-resize (width)
-    ;"Download the image from clipboard and resize to WIDTH."
-    ;(interactive "nWidth: ")
-    ;(let* ((filename (concat org-download-image-dir "/" (format-time-string "%Y%m%d_%H%M%S") ".png"))
-           ;(resize-command (format "convert clipboard: -resize %dx %s" width filename)))
-      ;(unless (file-directory-p org-download-image-dir)
-        ;(make-directory org-download-image-dir t))
-      ;(shell-command resize-command)
-      ;(insert (format "[[file:%s]]" filename))
-      ;(org-redisplay-inline-images)))
+  ;; 自动插入相对路径
+  (setq org-download-link-format "[[file:%s]]")
+  ;; 绑定快捷键
+  (define-key org-mode-map (kbd "C-S-y") 'org-download-screenshot)
+  (define-key org-mode-map (kbd "C-S-p") 'org-download-clipboard))
 
-;(defun org-download-clipboard-resize (width)
-  ;"Download the image from clipboard and resize to WIDTH."
-  ;(interactive "nWidth: ")
-  ;(let* ((filename (concat org-download-image-dir "/" (format-time-string "%Y%m%d_%H%M%S") ".png"))
-         ;(resize-command (format "pngpaste %s && sips --resampleWidth %d %s" filename width filename)))
-    ;(unless (file-directory-p org-download-image-dir)
-      ;(make-directory org-download-image-dir t))
-    ;(shell-command resize-command)
-    ;(insert (format "[[file:%s]]" filename))
-    ;(org-redisplay-inline-images)))
+(add-hook 'org-mode-hook
+          (lambda ()
+            (setq org-download-image-dir "./images")
+            (message "org-download-image-dir: %s" org-download-image-dir)))
 
-(defun org-download-clipboard-resize (width height)
-  "Download the image from clipboard and resize to WIDTH and HEIGHT while maintaining high quality."
-  (interactive "nWidth: \nnHeight: ")
-  (let* ((filename (concat org-download-image-dir "/" (format-time-string "%Y%m%d_%H%M%S") ".png"))
-         (resize-command (format "pngpaste %s && sips --resampleWidth %d --resampleHeight %d %s" filename width height filename)))
-    (unless (file-directory-p org-download-image-dir)
-      (make-directory org-download-image-dir t))
-    (shell-command resize-command)
-    (insert (format "[[file:%s]]" filename))
-    (org-redisplay-inline-images)))
-
-
-  ;; 绑定自定义粘贴函数到快捷键
-  (global-set-key (kbd "C-S-y") 'org-download-clipboard-resize)
-;;;org-capture==============
-;; 加载org-protocol
-;(require 'org-protocol)
-;
-;;; 设置org-capture-templates
-;(setq org-capture-templates `(
-	;("p" "Protocol" entry (file+headline ,(concat org-directory "~/org/notes.org") "Inbox")
-        ;"* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
-	;("L" "Protocol Link" entry (file+headline ,(concat org-directory "~/org/notes.org") "Inbox")
-        ;"* %? [[%:link][%:description]] \nCaptured On: %U")
-;))
-;;; 启动Emacs服务器
-;(require 'server)
-;(unless (server-running-p)
-  ;(server-start))
-;;;org-capture==============
 (provide 'init-org)

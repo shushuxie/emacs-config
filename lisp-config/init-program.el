@@ -69,15 +69,6 @@
 (setq c-default-style "linux" 
       c-basic-offset 4)
 
-;;; 调试功能
-;;; 绑定 dap-mode 的常用快捷键
-;(define-key dap-mode-map (kbd "<f6>") 'dap-debug)
-;(define-key dap-mode-map (kbd "<f10>") 'dap-breakpoint-toggle)
-;(define-key dap-mode-map (kbd "<f8>") 'dap-next)
-;(define-key dap-mode-map (kbd "<f7>") 'dap-step-in)
-;(define-key dap-mode-map (kbd "<f9>") 'dap-continue)
-
-
 ;; 安装 quickrun
 (unless (package-installed-p 'quickrun)
   (package-refresh-contents)
@@ -97,72 +88,14 @@
 ;; 设置快捷键 F5 以运行 quickrun
 (global-set-key (kbd "<f5>") 'quickrun)
 
+;; org-bable start多语言编程
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (shell . t)
+   (C .t)))
 
-;(use-package dap-mode
-  ;:ensure t
-  ;:config
-  ;;; Enable DAP features
-  ;(dap-auto-configure-mode)
-  ;(dap-tooltip-mode 1)
-  ;(tooltip-mode 1)
-  ;(dap-ui-controls-mode 1))
-;
-;(use-package dap-lldb
-  ;:after dap-mode
-  ;:config
-  ;(setq dap-lldb-debug-program '("/Users/xieshuqiang/.vscode/extensions/vadimcn.vscode-lldb-1.10.0/adapter/codelldb"))
-  ;(setq dap-lldb-debugged-program-function (lambda () (read-file-name "Select xsq file to debug.")))
-  ;(require 'dap-lldb))
-;
-;;; 判断某个包是否被加载
-;(if (featurep 'dap-lldb)
-    ;(message "dap-lldb 已加载")
-  ;(message "dap-lldb 未加载"))
-;
-;(setq dap-print-io t)
-;;; 设置 LLDB 调试器监听端口号
-;(setq dap-lldb-debug-server-port 4711)
-;
-;;; 注册调试模板
-;(dap-register-debug-template
- ;"LLDB Debug"
- ;(list :type "lldb"
-       ;:request "launch"
-       ;:name "LLDB::Run"
-       ;:program "/Users/xieshuqiang/Documents/lldbtest/test"
-       ;:cwd "/Users/xieshuqiang/Documents/lldbtest"
-       ;:args '()
-       ;:stopOnEntry t))
-;
-;(dap-mode 1)
-;(dap-ui-mode 1)
-;;;;;;;;;;;new test
-(require 'dap-mode)
-(require 'dap-lldb)
-(dap-mode 1)
-(dap-ui-mode 1)
-
-(setq dap-lldb-debug-program '("/Users/xieshuqiang/.vscode/extensions/vadimcn.vscode-lldb-1.10.0/adapter/codelldb"))
-(setq dap-lldb-debugged-program "/Users/xieshuqiang/Documents/lldbtest/test")
-(setq dap-lldb-debug-args '("--port" "4711"))
-
-(dap-register-debug-template "LLDB::Run"
-                             (list :type "lldb"
-                                   :request "launch"
-                                   :name "LLDB::Run"
-                                   :program "/Users/xieshuqiang/Documents/lldbtest/test"
-                                   :args '()
-                                   :cwd nil
-                                   :environment-variables '()
-                                   :stopOnEntry t
-                                   :externalConsole nil
-                                   :debugServerArgs "--port 4711"
-                                   :targetCreateCommands '()
-                                   :sourceMap (make-hash-table :test 'equal)
-                                   :setupCommands '()))
-
-(provide 'init-dap-mode)
-
+(setq org-babel-python-command "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3")
+;;; org-bable end
 
 (provide 'init-program)
-;;; init-program end

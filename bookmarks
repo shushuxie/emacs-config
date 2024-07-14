@@ -16,8 +16,8 @@
  (last-modified 25922 23390 734570 0))
 ("org-capture-last-stored"
  (filename . "~/Documents/capture/gtd.org")
- (front-context-string . "** TODO setq,con")
- (rear-context-string . "程][规则表示为相应的过程]]\n")
- (position . 4730)
- (last-modified 26228 14312 344277 0))
+ (front-context-string . "** TODO pdf-tool")
+ (rear-context-string . ".org::*序对][序对]]\n")
+ (position . 4816)
+ (last-modified 26255 62655 45437 0))
 )

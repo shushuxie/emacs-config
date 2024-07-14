@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: lisp-defun
+# key: de
+# --
+(defun ${1:function-name} (${2:arguments})
+  (${3:body}))
+${0}

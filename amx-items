@@ -1,13 +1,13 @@
 
 ;; ----- amx-history -----
 (
+ yas-reload-all
+ load-theme
  eval-buffer
- yas-new-snippet
- package-list-packages
- org-download-clipboard-resize
- org-download-delete
- org-download-edit
- org-download-image
+ treemacs-load-theme
+ list-packages
+ dap-debug
+ treemacs-resize-icons
 )
 
 ;; ----- amx-data -----
@@ -27,10 +27,10 @@
  (dap-hydra . 2)
  (dap-debug-edit-template . 1)
  (lsp-mode . 9)
- (package-autoremove . 16)
+ (package-autoremove . 17)
  (all-the-icons-install-fonts . 2)
  (lsp . 4)
- (load-theme . 253)
+ (load-theme . 259)
  (customize . 2)
  (theme-choose-variant . 1)
  (list-faces-display . 2)
@@ -38,7 +38,7 @@
  (describe-key . 1)
  (org-agenda . 4)
  (org-agenda-fontify-priorities . 2)
- (project-find-file . 1)
+ (project-find-file . 2)
  (pwd . 1)
  (treemacs-icons-dired-mode . 3)
  (treemacs-load-theme . 49)
@@ -64,9 +64,9 @@
  (revert-buffer . 2)
  (describe-variable . 5)
  (line-number-mode . 2)
- (list-packages . 37)
- (eval-buffer . 192)
- (flycheck-mode . 1)
+ (list-packages . 41)
+ (eval-buffer . 221)
+ (flycheck-mode . 3)
  (my-evil-delete-inner-word . 6)
  (org-agenda-switch-to . 2)
  (org-agenda-filter . 1)
@@ -143,10 +143,10 @@
  (org-export-dispatch . 5)
  (git-gutter-mode . 6)
  (git-gutter . 2)
- (yas-insert-snippet . 1)
- (yas-new-snippet . 7)
+ (yas-insert-snippet . 2)
+ (yas-new-snippet . 9)
  (yas-describe-tables . 1)
- (yas-reload-all . 2)
+ (yas-reload-all . 3)
  (vc-diff . 1)
  (org-download-clipboard . 4)
  (org-download-yank . 1)
@@ -154,4 +154,16 @@
  (org-download-edit . 1)
  (org-download-delete . 2)
  (org-download-clipboard-resize . 5)
+ (global-highlight-changes-mode . 2)
+ (multi-occur . 1)
+ (swiper-all . 1)
+ (counsel-find-file . 2)
+ (key-chord-mode . 2)
+ (projectile-find-file . 1)
+ (desktop-read . 2)
+ (desktop-save . 5)
+ (projectile-find-dir . 1)
+ (counsel-projectile-find-file . 1)
+ (pdf-tools-install . 1)
+ (pdf-tools-toggle-debug . 1)
 )

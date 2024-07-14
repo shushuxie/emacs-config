@@ -19,12 +19,20 @@
 ;
 ;(setq org-preview-latex-image-directory "/tmp/ltximg/") ; 设置缓存目录
 
-
+;;; latex预览
+(setq org-latex-create-formula-image-program 'dvisvgm)
+(setq org-latex-pdf-process
+      '("pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"))
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0)) ; 调整公式的放大倍数
+(setq org-latex-packages-alist '(("" "graphicx" t)))
 
 ;; latex编辑
 (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
 (setq org-startup-with-latex-preview nil) ;打开文件不渲染预览
+
 ;; prettify mode
 (setq my/prettify-symbols-alist
       '(("lambda" . ?λ)
@@ -137,14 +145,5 @@
 (add-hook 'org-mode-hook 'my/setup-prettify-symbols)
 (setq prettify-symbols-unprettify-at-point t) ;自动展开光标处的替换
 
-;; 公式渲染显示中文
-;(setq org-format-latex-header "\\documentclass{article}
-;\\usepackage[UTF8]{ctex}
-;\\usepackage{amsmath}
-;\\usepackage{bm}
-;\\setCJKmainfont{SimSun}")
-
-;;; ============latex-end =================================
 
 (provide 'init-latex)
-;;; latex config end

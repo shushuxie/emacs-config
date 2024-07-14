@@ -28,14 +28,56 @@
 (require 'org-tempo) ;解决<c无法创建代码块问题
 (fset 'yes-or-no-p 'y-or-n-p)
 
+(setq org-confirm-babel-evaluate nil);风险提示关闭
+;(set-frame-font "SF Mono 16")
+(setq default-frame-alist
+      '((font . "SF Mono 16"))) ; 设置整个frame的默认字体为SF Mono Bold，大小为12pt
+(setq default-text-scale-factor 1.0) ; 如果需要，可以调整文本缩放比例
+(setq dap-lldb-debug-program '("/usr/local/bin/lldb-mi"))
+
+;; 启用保存位置模式
+(save-place-mode 1)
+;; 配置保存位置的文件路径
+(setq save-place-file (concat user-emacs-directory "places"))
+;; 确保每个 buffer 都记录位置
+(setq-default save-place t)
+(global-hl-line-mode t) ;光标所在行高亮
+
+;; 键盘符号替换 start
+(defun my-keyboard-translate ()
+  (keyboard-translate ?± ?`)
+  (keyboard-translate ?§ ?~))
+(add-hook 'after-init-hook 'my-keyboard-translate)
+;; 键盘符号替换 end
+
+
+;; 忽略 org-element-cache 警告
+(require 'warnings)
+
+;; 忽略 org-element-cache 警告
+(add-hook 'after-init-hook
+          (lambda ()
+            (with-eval-after-load 'org
+              (add-to-list 'warning-suppress-types '(org-element-cache)))))
+;; 禁用提示音
+(defun my-disable-bell-in-org-mode ()
+  "Disable bell in Org mode."
+  (setq-local ring-bell-function 'ignore))
+
+(add-hook 'org-mode-hook #'my-disable-bell-in-org-mode)
+
 ;; globe kbd
 (global-set-key (kbd "C-c g") 'counsel-git)
 (global-set-key (kbd "C-c j") 'counsel-git-grep)
 (global-set-key (kbd "C-c k") 'counsel-ag)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+
 (global-set-key (kbd "C-j") nil)
 (global-set-key (kbd "M-/") 'hippie-expand)
+(global-set-key (kbd "C-c C-，") 'org-insert-structure-template)
+(global-set-key (kbd "C-S-y") 'org-download-clipboard-resize)
+
 
 ;; 配置 Emacs 启动时全屏
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
