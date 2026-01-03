@@ -153,7 +153,6 @@
 		 ("/" . treemacs-advanced-helpful-hydra))
         ("C-x t M-t" . treemacs-find-tag)))
 
-
 ;(require 'treemacs)
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once)

@@ -1,33 +1,4 @@
 ls
-./a
-eixt
-quit
-ls
-ll
-ls -l
-rename-file emacs学习.md  ./emacs资料/emacs学习.md
-mkdir eamcs资料
-ls
-mv emacs学习.md  eamcs资料/
-ls
-mv eamcs资料/ emacs资料/
-mv eamcs资料/ emacs资料
-ls
-cd emacs资料/
-ls
-ls -la
-cd ..
-ls -l
-cd emacs资料/
-ls
-ls
-emacs -nw 插件的基本使用.md 
-ls
-003isNumber
-ls
-./003isNumber 
-ll
-ls
 mkdir emacs
 ll
 ls
@@ -114,3 +85,44 @@ lldb testProgram
 ls 
 lldb tes2 
 lldb tes2 
+pwd
+cd
+cp -r ~/Library/Rime ~/Library/Rime.bak
+cd config/
+git clone cp -r ~/Library/Rime ~/Library/Rime.bak
+git clone https://github.com/shushuxie/rime.git
+cd
+cd Library/Rime
+ls
+rm -rf ./*
+ll
+ls
+ls
+vim default.custom.yaml
+cd
+cd .emacs.d/
+ll
+ls
+cd lisp-config/
+ls
+yazi
+ls
+ll
+cd ..
+cd 日志
+ls
+ls -a
+rm -rf
+ls
+ls -a
+cd ..
+rm -rf* 日志
+ls
+ll
+ls
+cd 日志/
+ls
+clear
+ls -a 
+rm .2026.~undo-tree~
+ls -a 

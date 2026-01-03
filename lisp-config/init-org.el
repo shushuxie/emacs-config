@@ -33,6 +33,8 @@
 (set-face-background 'org-bold "#fefefe")
 (set-face-background 'org-verbatim "#fefefe")
 
+;; 添加tag标签
+(setq org-use-fast-tag-selection 'expert)
 
 ;;; todo技巧
 (global-set-key (kbd "C-c l") #'org-store-link)
@@ -42,6 +44,13 @@
 (setq org-todo-keywords
       '((sequence "TODO(t)" "DOING(i!)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELLED(c@)")
 	))
+
+
+;;org agenda收录文件确定
+(setq org-agenda-files
+      (append
+       (directory-files-recursively "~/Documents/typora" "\\.org$")
+       (directory-files-recursively "~/Documents/capture" "\\.org$")))
 
 ;;capture
 (setq org-default-notes-file  "~/Documents/capture/gtd.org")
