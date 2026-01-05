@@ -1,28 +1,35 @@
-# --- 1. 临时文件与备份 (彻底覆盖那些 .saves-xxx 和 .lan~ 等) ---
+# 1. 忽略所有编译文件和备份
+*.elc
 *~
 \#*\#
 .\#*
-*.lan~
-*.~undo-tree~
 
-# --- 2. Emacs 自动生成的运行数据目录 ---
-auto-save-list/
-#elpa/
-eshell/
-transient/
-.cache/
-.session/
+# 2. 忽略插件及其安装包（这是占空间大头）
+#/elpa/
+/*.tar
+/treemacs-*/
 
-# --- 3. 特定的持久化状态文件 ---
-history
-recentf
-projectile.cache
-places
-emacs-desktop
-desktop.lock
-desktop
-.bookmarks
-*amx-items*
+# 3. 忽略 Emacs 及其插件产生的运行记录文件
+/amx-items
+/history
+/recentf
+/places
+/bookmarks
+/tramp
+/projectile-bookmarks.eld
+/projectile.cache
+/projects
+/diary
 
-# --- 4. 编译后的字节码 (可选，建议忽略) ---
-*.elc
+# 4. 忽略运行产生的目录
+/auto-save-list/
+/eshell/
+/transient/
+/url/
+/games/
+/.cache/
+
+# 5. 忽略桌面会话
+/desktop
+/desktop.lock
+/emacs-desktop
