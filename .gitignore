@@ -1,25 +1,28 @@
+# --- 1. 临时文件与备份 (彻底覆盖那些 .saves-xxx 和 .lan~ 等) ---
+*~
+\#*\#
+.\#*
 *.lan~
 *.~undo-tree~
-/elpa/
-eshell/lastdir
+
+# --- 2. Emacs 自动生成的运行数据目录 ---
+auto-save-list/
+#elpa/
+eshell/
+transient/
+.cache/
+.session/
+
+# --- 3. 特定的持久化状态文件 ---
 history
 recentf
-/auto-save-list/.saves-38919-xsq.local~
-elpa/
-transient/
-*amx-items*
-eshell/
-.cache/
-.bookmarks
-/auto-save-list/*.local
 projectile.cache
-/auto-save-list/.saves-41679-xsq.local~
-/auto-save-list/.saves-58401-xsq.local~
-/auto-save-list/.saves-59518-xsq.local~
-/auto-save-list/.saves-60019-xsq.local~
-/auto-save-list/.saves-76992-xsq.local~
-/auto-save-list/.saves-82170-xsq.local~
-/places
-/emacs-desktop
-/desktop.lock
-/desktop
+places
+emacs-desktop
+desktop.lock
+desktop
+.bookmarks
+*amx-items*
+
+# --- 4. 编译后的字节码 (可选，建议忽略) ---
+*.elc
