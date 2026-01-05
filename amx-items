@@ -1,13 +1,13 @@
 
 ;; ----- amx-history -----
 (
- yas-describe-tables
- yas-insert-snippet
- display-time-world
- display-time
- org-md-export-to-markdown
- treemacs-switch-workspace
- treemacs-TAB-action
+ package-list-packages
+ describe-variable
+ my/force-buffer-utf8
+ revert-buffer-with-coding-system
+ revert-buffer
+ set-buffer-file-coding-system
+ org-mode
 )
 
 ;; ----- amx-data -----
@@ -17,7 +17,7 @@
  (ace-window-display-mode . 1)
  (ace-swap-window . 3)
  (ace-delete-window . 2)
- (package-list-packages . 29)
+ (package-list-packages . 31)
  (ace-jump-mode . 1)
  (ace-jump-word-mode . 1)
  (company-tabnine-install-binary . 1)
@@ -61,8 +61,8 @@
  (image-mode-menu . 1)
  (rgrep . 3)
  (grep . 1)
- (revert-buffer . 2)
- (describe-variable . 5)
+ (revert-buffer . 4)
+ (describe-variable . 8)
  (line-number-mode . 2)
  (list-packages . 42)
  (eval-buffer . 221)
@@ -143,7 +143,7 @@
  (org-export-dispatch . 5)
  (git-gutter-mode . 6)
  (git-gutter . 2)
- (yas-insert-snippet . 3)
+ (yas-insert-snippet . 4)
  (yas-new-snippet . 12)
  (yas-describe-tables . 2)
  (yas-reload-all . 3)
@@ -178,4 +178,9 @@
  (org-md-export-to-markdown . 1)
  (display-time . 1)
  (display-time-world . 1)
+ (tags-table-mode . 2)
+ (set-buffer-file-coding-system . 5)
+ (org-mode . 1)
+ (revert-buffer-with-coding-system . 2)
+ (my/force-buffer-utf8 . 3)
 )

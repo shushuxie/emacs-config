@@ -1,3 +1,4 @@
+;; -*- coding: utf-8 -*-
 ;;; basic config include bootstra
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -98,7 +99,7 @@
 ;; ===============================
 
 ;; ---        ---
-;;      UTF-8
+;;      UTF-8 
 (prefer-coding-system 'utf-8)
 (setq locale-coding-system 'utf-8)
 (set-language-environment "UTF-8")
@@ -108,32 +109,84 @@
 (setq coding-system-for-read 'utf-8)
 (setq coding-system-for-write 'utf-8)
 
-;; --- GUI       (Mac   ) ---
-(when (display-graphic-p)
-  (setq ns-selection-coding-system 'utf-8))
+(setq org-tag-alist
+      '(
+	(:startgroup)
+	;; 内容性质
+	("记录" . ?j)
+	("思考" . ?t)
+	("总结" . ?z)
+	(:endgroup)
 
-;; ---           �~    ---
-(defun my/clean-pasted-text ()
-  "            �~��~    "
-  (let ((inhibit-read-only t))
-    (when (use-region-p)
-      (save-excursion
-        (goto-char (region-beginning))
-        (while (re-search-forward "[\x00-\x08\x0B\x0C\x0E-\x1F]" (region-end) t)
-          (replace-match ""))))))
+	(:startgroup)
+	;; 领域
+	("编程" . ?c)
+	("emacs" . ?e)
+	("算法" . ?a)
+	("工具" . ?g)
+	("阅读" . ?r)
+	(:endgroup)
 
-;;   yank      
-(advice-add 'yank :after #'my/clean-pasted-text)
+	(:startgroup)
+	;; 状态/价值
+	("待整理" . ?d)
+	("重要" . ?i)
+	("长期" . ?l)
+	("个人" . ?p)
+	("情绪" . ?q)
+	(:endgroup)
+	))
+
+;; 强制转码utf-8
+(defun my/force-buffer-utf8 ()
+  "Force the current buffer to UTF-8 encoding, replacing invalid characters.
+Handles old files with non-UTF8 or hidden chars.
+Disables org-appear temporarily to avoid hook errors."
+  (interactive)
+  (let ((orig-point (point))
+        (org-appear-was-enabled (and (boundp 'org-appear-mode) org-appear-mode)))
+    (when org-appear-was-enabled
+      (org-appear-mode -1)) ;; 临时关闭
+    (condition-case err
+        (progn
+          ;; 重新以 utf-8-unix 读取 buffer 内容
+          (revert-buffer-with-coding-system 'utf-8-unix)
+          ;; 设置 buffer 默认编码为 utf-8
+          (set-buffer-file-coding-system 'utf-8-unix)
+          (setq buffer-file-coding-system 'utf-8-unix)
+          (goto-char orig-point)
+          (message "Buffer successfully converted to UTF-8."))
+      (error
+       (message "Failed to convert buffer to UTF-8: %s" (error-message-string err))))
+    ;; 恢复 org-appear
+    (when org-appear-was-enabled
+      (org-appear-mode 1))))
+(defun my/force-buffer-utf8 ()
+  "Force the current buffer to UTF-8 encoding, replacing invalid characters.
+This works for old files with non-UTF8 or hidden characters.
+After running, buffer-file-coding-system will be set to 'utf-8-unix'."
+  (interactive)
+  (let ((orig-point (point)))  ;; 保存光标位置
+    (condition-case err
+        (progn
+          ;; 重新以 utf-8-unix 读取 buffer 内容
+          (revert-buffer-with-coding-system 'utf-8-unix)
+          ;; 设置 buffer 默认编码为 utf-8
+          (set-buffer-file-coding-system 'utf-8-unix)
+          ;; 修正 mode line
+          (setq buffer-file-coding-system 'utf-8-unix)
+          ;; 恢复光标
+          (goto-char orig-point)
+          (message "Buffer successfully converted to UTF-8."))
+      (error
+       ;; 如果出现错误，提示用户
+       (message "Failed to convert buffer to UTF-8: %s" (error-message-string err))))))
 
 
-;; ---        ---
-;; $LANG   $LC_CTYPE   UTF-8
-;;  shell       
-;; export LANG=zh_CN.UTF-8
-;; export LC_CTYPE=zh_CN.UTF-8
-
-(provide 'my-web-text-utf8)
-
+;; 终端剪贴板可以使用y,p复制粘贴
+(unless (display-graphic-p)      ; 如果不是图形界面（即在终端里）
+  (when (fboundp 'osx-clipboard-mode)
+    (osx-clipboard-mode 1)))     ; 开启 macOS 剪切板同步
 
 
 ;;    Emacs      

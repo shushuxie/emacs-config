@@ -122,18 +122,19 @@
      "/Users/xieshuqiang/Documents/capture/note.org"
      "/Users/xieshuqiang/Documents/capture/smallThings.org"))
  '(package-selected-packages
-   '(rime pdf-tools general key-chord git-gutter-fringe org-download
-	  git-gutter pretty-mode cdlatex auctex realgud-lldb realgud
-	  quickrun ccls company-box evil-escape dap-mode evil-mc
-	  evil-leader doom-themes treemacs-magit treemacs-icons-dired
-	  treemacs-evil treemacs-projectile which-key pyim org-appear
-	  pangu-spacing cal-china-x dracula-theme org-bullets
-	  modus-themes valign yasnippet-snippets yasnippet
-	  rainbow-delimiters highlight-symbol dashboard
-	  multiple-cursors undo-tree marginalia good-scroll mwim
-	  ace-jump-mode ace-window amx ztree use-package magit lsp-ui
-	  lsp-ivy flycheck-pkg-config evil counsel-projectile
-	  company-tabnine))
+   '(ace-jump-mode ace-window amx auctex cal-china-x ccls cdlatex
+                   company-box company-tabnine counsel-projectile
+                   dap-mode dashboard doom-themes dracula-theme evil
+                   evil-escape evil-leader evil-mc flycheck-pkg-config
+                   general git-gutter git-gutter-fringe good-scroll
+                   highlight-symbol key-chord lsp-ivy lsp-ui magit
+                   marginalia modus-themes multiple-cursors mwim
+                   org-appear org-bullets org-download osx-clipboard
+                   pangu-spacing pdf-tools pretty-mode pyim quickrun
+                   rainbow-delimiters realgud realgud-lldb rime
+                   treemacs-evil treemacs-icons-dired treemacs-magit
+                   treemacs-projectile undo-tree use-package valign
+                   which-key yasnippet yasnippet-snippets ztree))
  '(setq org-default-notes-file t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
