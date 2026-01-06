@@ -1,13 +1,14 @@
 # 1. 忽略所有编译文件和备份
 *.elc
 *~
+*.swp
 \#*\#
 .\#*
 
 # 2. 忽略插件及其安装包（这是占空间大头）
-#/elpa/
+elpa/
 /*.tar
-/treemacs-*/
+treemacs-*/
 
 # 3. 忽略 Emacs 及其插件产生的运行记录文件
 /amx-items
