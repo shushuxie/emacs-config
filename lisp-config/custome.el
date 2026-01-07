@@ -66,6 +66,7 @@
      "/Users/xieshuqiang/Documents/typora/emacs/package安装.org"
      "/Users/xieshuqiang/Documents/typora/emacs/program环境配置.org"
      "/Users/xieshuqiang/Documents/typora/emacs/中文输入.org"
+     "/Users/xieshuqiang/Documents/typora/emacs/编码问题.org"
      "/Users/xieshuqiang/Documents/typora/java/1设计模式/1设计模式入门.org"
      "/Users/xieshuqiang/Documents/typora/java/JVM/0 工具.org"
      "/Users/xieshuqiang/Documents/typora/java/JVM/1 jvm入门.org"
@@ -102,7 +103,13 @@
      "/Users/xieshuqiang/Documents/typora/unix(apue)/1.整体概览.org"
      "/Users/xieshuqiang/Documents/typora/unix(apue)/README.org"
      "/Users/xieshuqiang/Documents/typora/zhihu/收藏处理.org"
+     "/Users/xieshuqiang/Documents/typora/日志/2026/01/08.org"
      "/Users/xieshuqiang/Documents/typora/日志/2026/01/2026-01-03.org"
+     "/Users/xieshuqiang/Documents/typora/日志/2026/01/2026-01-04.org"
+     "/Users/xieshuqiang/Documents/typora/日志/2026/01/2026-01-05.org"
+     "/Users/xieshuqiang/Documents/typora/日志/2026/01/2026-01-06.org"
+     "/Users/xieshuqiang/Documents/typora/日志/2026/01/2026-01-07.org"
+     "/Users/xieshuqiang/Documents/typora/日志/2026/01/test.org"
      "/Users/xieshuqiang/Documents/typora/算法：C语言实现/字符串.org"
      "/Users/xieshuqiang/Documents/typora/算法：C语言实现/广义队列(栈,队列).org"
      "/Users/xieshuqiang/Documents/typora/算法：C语言实现/数据结构.org"
@@ -134,13 +141,19 @@
                    rainbow-delimiters realgud realgud-lldb rime
                    treemacs-evil treemacs-icons-dired treemacs-magit
                    treemacs-projectile undo-tree use-package valign
-                   which-key yasnippet yasnippet-snippets ztree))
- '(setq org-default-notes-file t))
+                   which-key yasnippet yasnippet-snippets ztree)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(diff-hl-change ((t (:foreground "blue" :background nil))))
+ '(diff-hl-delete ((t (:foreground "#F40009" :background nil))))
+ '(diff-hl-insert ((t (:foreground "#2ea44f" :background nil))))
+ '(magit-diff-added ((t (:background "#e6ffed" :foreground "#2ea44f"))))
+ '(magit-diff-added-highlight ((t (:background "#acf2bd" :foreground "#1a7f37" :weight bold))))
+ '(magit-diff-removed ((t (:background "#ffeef0" :foreground "#F40009"))))
+ '(magit-diff-removed-highlight ((t (:background "#ffd3d9" :foreground "#d73a49" :weight bold))))
  '(org-document-title ((t (:height 1.2))))
  '(outline-1 ((t (:weight extra-bold :height 1.25))))
  '(outline-2 ((t (:weight bold :height 1.15))))

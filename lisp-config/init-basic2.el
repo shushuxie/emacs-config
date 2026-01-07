@@ -21,9 +21,7 @@
 (global-hl-line-mode -1)              ; 禁用当前行高亮 (需要时设为 1)
 
 ;; 字体设置
-(set-face-attribute 'default nil :font "SF Mono 16" :height 160)
 (set-face-attribute 'minibuffer-prompt nil :height 180) ; 提示符稍微大一点即可
-
 ;; ==========================================
 ;; 2. 操作习惯设置 (Editing Behavior)
 ;; ==========================================
@@ -42,6 +40,7 @@
 (save-place-mode 1)                   ; 记住上次打开文件时光标的位置
 (setq save-place-file (concat user-emacs-directory "places"))
 (setq-default save-place t)
+(setq create-lockfiles nil) ; 不再产生 .# 开头的临时锁定文件
 
 ;; ==========================================
 ;; 4. Org-mode 与 插件基础配置
@@ -216,8 +215,8 @@
         ;; 5. Git 信息 (VC Mode) - 动态颜色显示
         (:eval (when vc-mode
                  (let ((state-color (if (buffer-modified-p) 
-                                        "#ff6c6b"   ; 已修改显示为暖红色
-                                      "#98be65")))  ; 干净状态显示为草绿色
+                                        "#F40009"   ; 已修改显示为暖红色
+                                      "#2ea44f")))  ; 干净状态显示为草绿色
                    (propertize (format-mode-line vc-mode) 
                                'face `(:foreground ,state-color :weight bold)))))
         ;; 6. 日期时间 (年份放最后)
@@ -227,6 +226,27 @@
 
 ;;    Emacs      
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+
+
+;; 保存桌面start
+(use-package desktop
+  :init
+  (desktop-save-mode 1)
+  :config
+  (setq desktop-path '("~/.emacs.d/desktop/")
+        desktop-dirname "~/.emacs.d/desktop/"
+        desktop-base-file-name "emacs-desktop"
+        desktop-base-lock-name "emacs-desktop.lock"
+        desktop-save 'if-exists
+        desktop-load-locked-desktop t
+        desktop-auto-save-timeout 30))
+
+(use-package winner
+  :ensure t
+  :config
+  (winner-mode 1))
+;; 保存桌面end
 
 ;; explore file
 (provide 'init-basic2)
