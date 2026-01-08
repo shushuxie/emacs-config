@@ -21,7 +21,13 @@
 (global-hl-line-mode -1)              ; 禁用当前行高亮 (需要时设为 1)
 
 ;; 字体设置
-(set-face-attribute 'minibuffer-prompt nil :height 180) ; 提示符稍微大一点即可
+;;(set-face-attribute 'minibuffer-prompt nil :height 180) ; 提示符稍微大一点即可
+(when (display-graphic-p)
+  (defun my/minibuffer-font ()
+    (set-face-attribute 'default nil :height 150)
+    (set-face-attribute 'minibuffer-prompt nil :height 150))
+  (add-hook 'minibuffer-setup-hook #'my/minibuffer-font))
+
 ;; ==========================================
 ;; 2. 操作习惯设置 (Editing Behavior)
 ;; ==========================================
@@ -250,7 +256,6 @@
 
 ;; explore file
 (provide 'init-basic2)
-
 
 
 

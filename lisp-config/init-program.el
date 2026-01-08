@@ -128,5 +128,10 @@
 		 ("/" . treemacs-advanced-helpful-hydra))
         ("C-x t M-t" . treemacs-find-tag)))
 
+;; treemacs可以使用tab
+(add-hook 'treemacs-mode-hook
+          (lambda ()
+            (setq-local tab-width 8)))
+
 
 (provide 'init-program)

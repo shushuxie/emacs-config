@@ -1,7 +1,8 @@
 ;;; lisp-config/init-ui.el
 ;; 放在 init-ui.el 的最前面
 (condition-case err
-    (set-face-attribute 'default nil :font "SF Mono-16")
+    (set-face-attribute 'default nil :font "Hack Nerd Font Mono"
+                        :height 160)
   (error
    (message "字体设置失败: %s" (error-message-string err))))
 
@@ -87,5 +88,10 @@
 (use-package which-key :init (which-key-mode 1))
 ;; 嵌套括号显示不同的颜色
 (use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode))
+;; GUI mode-line 更高 + 更舒服
+(with-eval-after-load 'doom-themes
+  (set-face-attribute 'mode-line nil :height 1.2)
+  (set-face-attribute 'mode-line-inactive nil :height 1.2))
+
 
 (provide 'init-ui)
