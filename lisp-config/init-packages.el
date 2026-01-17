@@ -3,9 +3,14 @@
 ;; 1. 关键：关闭签名验证，解决 [已过期] 报错
 (setq package-check-signature nil)
 
-(setq package-archives '(("gnu"    . "https://mirrors.sjtug.sjtu.edu.cn/elpa/gnu/")
-                         ("nongnu" . "https://mirrors.sjtug.sjtu.edu.cn/elpa/nongnu/")
-                         ("melpa"  . "https://mirrors.sjtug.sjtu.edu.cn/elpa/melpa/")))
+;;(setq package-archives '(("gnu"    . "https://mirrors.sjtug.sjtu.edu.cn/elpa/gnu/")
+                         ;;("nongnu" . "https://mirrors.sjtug.sjtu.edu.cn/elpa/nongnu/")
+                         ;;("melpa"  . "https://mirrors.sjtug.sjtu.edu.cn/elpa/melpa/")))
+(setq package-archives '(("gnu"    . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("nongnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
+                         ("melpa"  . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+;; 运行完上面这段后，务必再次执行：
+;; M-x package-refresh-contents
 
 ;; 忽略本地过时的缓存，强制从服务器获取最新列表
 (setq package-check-signature nil) ; 如果遇到签名错误可以暂时关闭

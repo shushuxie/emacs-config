@@ -9,7 +9,7 @@
 ;; 基础 UI 优化，增加容错
 (setq inhibit-startup-message t) ; 关闭启动画面
 
-;; 安全地关闭图形组件
+;; 安全地关闭图形组ht件
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -30,7 +30,7 @@
   :custom
   (ivy-use-virtual-buffers t)
   (ivy-count-format "(%d/%d) ")
-  (setq ivy-height 20)
+  (setq ivy-heig 20)
   :bind
   ("C-s" . swiper-isearch)
   ("C-x b" . ivy-switch-buffer))
@@ -42,16 +42,59 @@
   ("C-x C-f" . counsel-find-file)
   ("M-y" . counsel-yank-pop))
 
-;; 基础交互工具
-(use-package avy
+;;=========================== 基础交互工具
+(use-package ace-pinyin
   :ensure t
-  :bind (("M-g s" . avy-goto-char-timer)  ; 推荐用这个键，避免 C-j 冲突
-         ("C-c j" . avy-goto-char-timer))
   :config
-  ;; 设置输入中断后的等待时间（秒）
-  (setq avy-timeout-seconds 0.5)
-  ;; 如果你想让跳转标签显示在行首或其他自定义设置，可以加在这里
-  )
+  (setq ace-pinyin-use-avy t)
+  (ace-pinyin-global-mode t))
+
+(use-package pinyinlib :ensure t :demand t)
+(use-package avy :ensure t)
+
+(defun my-avy-pinyin-timer-perfect ()
+  "完美的拼音跳转：输入时自动匹配，停顿 0.5 秒自动触发。"
+  (interactive)
+  (require 'pinyinlib)
+  (let ((input "")
+        (char nil)
+        (timeout 0.5)) ;; 按照你的要求设置 0.5 秒延迟
+    ;; 循环读取字符，直到超时或按下回车/空格
+    (while (setq char (read-event (format "Pinyin Search: %s" input) nil timeout))
+      (cond
+       ;; 如果按下退格键 (Backspace / DEL)
+       ((member char '(?\177 ?\b))
+        (when (> (length input) 0)
+          (setq input (substring input 0 -1))))
+       ;; 如果按下回车或空格，立即结束输入并跳转
+       ((member char '(?\s ?\r ?\n))
+        (setq char nil))
+       ;; 如果输入的是普通字符，累加到 input
+       ((numberp char)
+        (setq input (concat input (char-to-string char))))
+       ;; 其它情况跳出
+       (t (setq char nil))))
+    
+    (if (string-empty-p input)
+        (message "Cancelled")
+      (avy-with my-avy-pinyin-timer-perfect
+        ;; 核心：使用 avy-process 避开所有新版 Avy 的参数报错坑
+        (avy-process (avy--regex-candidates (pinyinlib-build-regexp-string input)))))))
+
+;; --- 快捷键绑定 ---
+(with-eval-after-load 'evil
+  ;; 绑定 Normal 和 Operator 模式
+  (evil-define-key 'normal 'global (kbd "s") #'my-avy-pinyin-timer-perfect)
+  (evil-define-key 'operator 'global (kbd "s") #'my-avy-pinyin-timer-perfect)
+  
+  ;; f 键保持原生的单字符跳转（跳英文/标点极快）
+  (evil-define-key 'normal 'global (kbd "f") 'avy-goto-char))
+
+;; --- Avy 基础视觉设置 ---
+(setq avy-background t)
+(setq avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)) ;; 左手主行编码
+
+
 
 (use-package ivy-posframe
   :init
@@ -92,6 +135,5 @@
 (with-eval-after-load 'doom-themes
   (set-face-attribute 'mode-line nil :height 1.2)
   (set-face-attribute 'mode-line-inactive nil :height 1.2))
-
 
 (provide 'init-ui)
