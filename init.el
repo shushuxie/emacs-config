@@ -13,5 +13,4 @@
 (require 'init-org)
 (require 'init-function) ;自己编写的函数
 
-
 (provide 'init)

@@ -1,12 +1,5 @@
 ;; -*- coding: utf-8 -*-
 ;;; basic config include bootstra
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(setq package-archives '(("gnu"   . "http://mirrors.cloud.tencent.com/elpa/gnu/")
-                         ("melpa" . "http://mirrors.cloud.tencent.com/elpa/melpa/")
-			 ("popkit" . "http://elpa.popkit.org/packages/")))
-
-(package-initialize)
 
 ;; ==========================================
 ;; 1. 界面与外观设置 (UI)
@@ -253,6 +246,16 @@
   :config
   (winner-mode 1))
 ;; 保存桌面end
+(with-eval-after-load 'evil
+  ;; 强制 Treemacs 始终以 Emacs 状态打开，不使用 Evil 键位
+  (evil-set-initial-state 'treemacs-mode 'emacs))
+;; treemacs tab键位
+(with-eval-after-load 'treemacs
+  ;; 针对终端环境的特殊绑定
+  ;; 在终端里 TAB 往往被识别为 [tab] 或 (kbd "TAB") 或 "TAB"
+  (define-key treemacs-mode-map (kbd "<tab>") #'treemacs-TAB-action)
+  (define-key treemacs-mode-map (kbd "TAB") #'treemacs-TAB-action)
+  (define-key treemacs-mode-map (kbd "C-i") #'treemacs-TAB-action))
 
 ;; explore file
 (provide 'init-basic2)

@@ -31,114 +31,12 @@
      "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
      default))
  '(org-agenda-files
-   '("/Users/xieshuqiang/Documents/typora/C-language/c++_primer/1.org"
-     "/Users/xieshuqiang/Documents/typora/C-language/pointer-on-c/1.org"
-     "/Users/xieshuqiang/Documents/typora/article/1. first week.org"
-     "/Users/xieshuqiang/Documents/typora/article/成长感.org"
-     "/Users/xieshuqiang/Documents/typora/blogs/arths监控程序.org"
-     "/Users/xieshuqiang/Documents/typora/blogs/git技巧.org"
-     "/Users/xieshuqiang/Documents/typora/blogs/java算法.org"
-     "/Users/xieshuqiang/Documents/typora/blogs/linux日志查看.org"
-     "/Users/xieshuqiang/Documents/typora/blogs/parallels desktop linux 配置.org"
-     "/Users/xieshuqiang/Documents/typora/blogs/vimiun-c键盘操作.org"
-     "/Users/xieshuqiang/Documents/typora/blogs/vim操作技巧.org"
-     "/Users/xieshuqiang/Documents/typora/blogs/workBalance.org"
-     "/Users/xieshuqiang/Documents/typora/blogs/回家的几天.org"
-     "/Users/xieshuqiang/Documents/typora/blogs/找工作记录.org"
-     "/Users/xieshuqiang/Documents/typora/blogs/终端.org"
-     "/Users/xieshuqiang/Documents/typora/books/1.为什么没人早点告诉我/README.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/README.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/blog-github.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/dired使用.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/emacs使用技巧.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/emacs工作流程.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/emacs搜索.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/export导出.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/gtd管理日程.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/ideBuild.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/magit的使用.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/org-babel编程.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/org-latex语法.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/orgMode语法.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/package安装.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/program环境配置.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/中文输入.org"
-     "/Users/xieshuqiang/Documents/typora/emacs/编码问题.org"
-     "/Users/xieshuqiang/Documents/typora/java/1设计模式/1设计模式入门.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/0 工具.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/1 jvm入门.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/10_直接内存.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/11 执行引擎.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/12 String Table.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/13 垃圾回收概述.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/14 垃圾回收相关算法.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/15 垃圾回收相关概念.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/16 垃圾回收器.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/2. 类加载子系统.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/3 运行时数据区概述及线程.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/4 程序计数器.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/5 虚拟机栈.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/6 本地方法接口.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/7 本地方法栈.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/8 堆.org"
-     "/Users/xieshuqiang/Documents/typora/java/JVM/9 方法区.org"
-     "/Users/xieshuqiang/Documents/typora/java/RocketMq/1 简介.org"
-     "/Users/xieshuqiang/Documents/typora/java/RocketMq/2 安装与启动.org"
-     "/Users/xieshuqiang/Documents/typora/java/并发/并发常用方法.org"
-     "/Users/xieshuqiang/Documents/typora/java/并发/并发锁.org"
-     "/Users/xieshuqiang/Documents/typora/java/2注解.org"
-     "/Users/xieshuqiang/Documents/typora/java/3范型.org"
-     "/Users/xieshuqiang/Documents/typora/java/4反射.org"
-     "/Users/xieshuqiang/Documents/typora/java/5 常用技巧.org"
-     "/Users/xieshuqiang/Documents/typora/java/6 RPC.org"
-     "/Users/xieshuqiang/Documents/typora/java/7 消息队列.org"
-     "/Users/xieshuqiang/Documents/typora/java/8 Spring Ioc的使用.org"
-     "/Users/xieshuqiang/Documents/typora/lisp/0.基础语法.org"
-     "/Users/xieshuqiang/Documents/typora/lisp/1.程序设计的基本元素.org"
-     "/Users/xieshuqiang/Documents/typora/lisp/2.构造数据抽象.org"
-     "/Users/xieshuqiang/Documents/typora/lisp/README.org"
-     "/Users/xieshuqiang/Documents/typora/unix(apue)/1.整体概览.org"
-     "/Users/xieshuqiang/Documents/typora/unix(apue)/README.org"
-     "/Users/xieshuqiang/Documents/typora/zhihu/收藏处理.org"
-     "/Users/xieshuqiang/Documents/typora/日志/2026/01/08.org"
-     "/Users/xieshuqiang/Documents/typora/日志/2026/01/2026-01-03.org"
-     "/Users/xieshuqiang/Documents/typora/日志/2026/01/2026-01-04.org"
-     "/Users/xieshuqiang/Documents/typora/日志/2026/01/2026-01-05.org"
-     "/Users/xieshuqiang/Documents/typora/日志/2026/01/2026-01-06.org"
-     "/Users/xieshuqiang/Documents/typora/日志/2026/01/2026-01-07.org"
-     "/Users/xieshuqiang/Documents/typora/日志/2026/01/test.org"
-     "/Users/xieshuqiang/Documents/typora/算法：C语言实现/字符串.org"
-     "/Users/xieshuqiang/Documents/typora/算法：C语言实现/广义队列(栈,队列).org"
-     "/Users/xieshuqiang/Documents/typora/算法：C语言实现/数据结构.org"
-     "/Users/xieshuqiang/Documents/typora/算法：C语言实现/栈.org"
-     "/Users/xieshuqiang/Documents/typora/算法：C语言实现/递归和树.org"
-     "/Users/xieshuqiang/Documents/typora/算法：C语言实现/链表.org"
-     "/Users/xieshuqiang/Documents/typora/网络是怎么连接的/test.org"
-     "/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/1第一章：计算机网络和因特网.org"
-     "/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/2第二章：应用层.org"
-     "/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/3第三章：运输层.org"
-     "/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/4第四章：网络层-数据平面.org"
-     "/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/linux操作.org"
-     "/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/常用小工具命令.org"
-     "/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/网络概览.org"
-     "/Users/xieshuqiang/Documents/capture/gtd.org"
-     "/Users/xieshuqiang/Documents/capture/journal.org"
-     "/Users/xieshuqiang/Documents/capture/note.org"
-     "/Users/xieshuqiang/Documents/capture/smallThings.org"))
- '(package-selected-packages
-   '(ace-jump-mode ace-window amx auctex cal-china-x ccls cdlatex
-                   company-box company-tabnine counsel-projectile
-                   dap-mode dashboard doom-themes dracula-theme evil
-                   evil-escape evil-leader evil-mc flycheck-pkg-config
-                   general git-gutter git-gutter-fringe good-scroll
-                   highlight-symbol key-chord lsp-ivy lsp-ui magit
-                   marginalia modus-themes multiple-cursors mwim
-                   org-appear org-bullets org-download osx-clipboard
-                   pangu-spacing pdf-tools pretty-mode pyim quickrun
-                   rainbow-delimiters realgud realgud-lldb rime
-                   treemacs-evil treemacs-icons-dired treemacs-magit
-                   treemacs-projectile undo-tree use-package valign
-                   which-key yasnippet yasnippet-snippets ztree)))
+   '("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org"
+     "/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/note.org"
+     "/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/journal.org"))
+ '(package-selected-packages nil)
+ '(safe-local-variable-values '((org-archive-location . "archives/journal-%Y.org::")))
+ '(warning-suppress-log-types '((use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

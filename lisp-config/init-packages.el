@@ -1,8 +1,18 @@
 ;;; package management
-;; 清华镜像地址
-(setq package-archives '(("gnu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
-                         ("melpa"  . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+(require 'package)
+;; 1. 关键：关闭签名验证，解决 [已过期] 报错
+(setq package-check-signature nil)
+
+(setq package-archives '(("gnu"    . "https://mirrors.sjtug.sjtu.edu.cn/elpa/gnu/")
+                         ("nongnu" . "https://mirrors.sjtug.sjtu.edu.cn/elpa/nongnu/")
+                         ("melpa"  . "https://mirrors.sjtug.sjtu.edu.cn/elpa/melpa/")))
+
+;; 忽略本地过时的缓存，强制从服务器获取最新列表
+(setq package-check-signature nil) ; 如果遇到签名错误可以暂时关闭
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
 
 (require 'use-package)
 (setq use-package-always-ensure t) ; 以后所有的 use-package 默认都会自动下载
@@ -140,6 +150,17 @@
 
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+(use-package org-download
+  :after org
+  :config
+  (setq org-download-method 'directory)
+  (setq org-download-image-dir "images")
+  (setq org-download-heading-lvl nil))
+
+(setq org-startup-with-inline-images t)  ; 启动时自动显示图片
+(setq org-image-actual-width nil)       ; 允许图片根据窗口大小缩放，不会大得离谱
+(setq org-display-remote-inline-images 'cache) ; 如果有远程图片则缓存
 
 ;; 
 (provide 'init-packages)
