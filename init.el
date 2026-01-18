@@ -4,6 +4,7 @@
 (add-to-list 'load-path "~/.emacs.d/lisp-config")
 (setq custom-file "~/.emacs.d/lisp-config/custome.el")
 (load custom-file)
+
 (require 'init-packages)
 (require 'init-basic2)
 (require 'init-ui)       ; 加载 UI 配置

@@ -119,12 +119,51 @@
   (setq ivy-posframe-border-width 2))
 
 
-;; 启动页
+;;===============================================
+;;---------------dashbord 启动页-----------------
+;;===============================================
 (use-package dashboard
+  :ensure t
   :config
-  (setq dashboard-banner-logo-title "努力进步")
-  (setq dashboard-items '((recents . 8) (projects . 3)))
+  ;; --- 1. 基础设置 ---
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-center-content t)
+  (setq dashboard-items '((recents  . 10)
+                          (agenda   . 5)))
+
+  ;; --- 2. 核心：只截取文件名（不改任何间距） ---
+  (advice-add 'dashboard-insert-recents :around
+              (lambda (orig-fun list-size)
+                (cl-letf (((symbol-function 'dashboard-extract-key-path-alist)
+                           (lambda (el alist)
+                             (file-name-nondirectory (dashboard-expand-path-alist el alist)))))
+                  (funcall orig-fun list-size))))
+
+;; ------------------------------------------优化显示文字效果
+  ;; --- 3. 视觉强化：针对白色背景调色 ---
+  (custom-set-faces
+   ;; 文件名：纯黑、加粗、字号放大
+   '(dashboard-items-face ((t (:inherit widget-button 
+                               :weight bold 
+                               :height 1.3 
+                               :foreground "#228B22"))))
+   ;; 标题：深蓝色、加粗
+   '(dashboard-heading ((t (:inherit font-lock-keyword-face 
+                                     :weight extra-bold 
+                                     :height 1.5 
+                                     :foreground "#0052cc")))))
+
   (dashboard-setup-startup-hook))
+
+;; 彻底移除 note: 等前缀，让 Agenda 变干净
+(setq dashboard-org-agenda-categories nil)
+
+;;===============================================
+;;---------------dashbord 启动页-----------------
+;;===============================================
+
+
 
 ;; 其他 UI 增强
 (use-package winum :config (winum-mode 1))

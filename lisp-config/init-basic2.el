@@ -113,10 +113,20 @@
 (with-eval-after-load 'undo-tree
   (setq undo-tree-auto-save-history nil))
 
-;; 终端剪贴板可以使用y,p复制粘贴
-(unless (display-graphic-p)      ; 如果不是图形界面（即在终端里）
-  (when (fboundp 'osx-clipboard-mode)
-    (osx-clipboard-mode 1)))     ; 开启 macOS 剪切板同步
+
+;; 1. 强制 Emacs 与系统剪贴板交互
+(setq select-enable-clipboard t)
+(setq select-enable-primary t)
+
+;; 2. 让 Evil 模式的 y/p 直接使用系统剪贴板
+;; 这样你按 'y' 网页就能直接 'cmd+v'，网页 'cmd+c' 后 Emacs 就能直接 'p'
+(with-eval-after-load 'evil
+  (setq evil-send-yank-to-clipboard t))
+
+;; 3. 增强：解决在终端 (Terminal) 下的同步问题
+;; 即使不判断 (display-graphic-p)，加上这个也无妨
+(when (fboundp 'osx-clipboard-mode)
+  (osx-clipboard-mode 1))
 
 ;; ==========================================
 ;; 7. 全局快捷
@@ -256,6 +266,47 @@
   (define-key treemacs-mode-map (kbd "<tab>") #'treemacs-TAB-action)
   (define-key treemacs-mode-map (kbd "TAB") #'treemacs-TAB-action)
   (define-key treemacs-mode-map (kbd "C-i") #'treemacs-TAB-action))
+
+
+
+;; 1. 确保 history 文件夹存在
+(let ((history-dir (expand-file-name "emacs-cache/" user-emacs-directory)))
+  (unless (file-directory-p history-dir)
+    (make-directory history-dir t))
+
+  ;; 2. 这里的变量必须指向【具体的文件】，不能只写到文件夹
+  (setq recentf-save-file (expand-file-name "recentf" history-dir))
+  (setq savehist-file (expand-file-name "savehist" history-dir))
+  (setq custom-file (expand-file-name "custom.el" history-dir))
+  
+  ;; 3. 这里的变量指向的是【文件夹】（它们本来就支持目录映射）
+  (setq undo-tree-history-directory-alist `(("." . ,history-dir)))
+  (setq backup-directory-alist `(("." . ,history-dir)))
+  (setq auto-save-file-name-transforms `((".*" ,history-dir t))))
+
+;; 4. 立即加载刚才定义的 custom-file 防止报错（如果文件不存在就创建一个空的）
+(unless (file-exists-p custom-file)
+  (with-temp-buffer (write-file custom-file)))
+(load custom-file)
+
+;; 5. 启动模式
+(savehist-mode 1)
+(recentf-mode 1)
+
+
+(let ((history-dir (expand-file-name "history/" user-emacs-directory)))
+  (unless (file-directory-p history-dir)
+    (make-directory history-dir t))
+  
+  ;; 1. 修复 savehist 报错：指定具体文件而不是文件夹
+  (setq savehist-file (expand-file-name "savehist" history-dir))
+  
+  ;; 2. 其他路径保持不变
+  (setq undo-tree-history-directory-alist `(("." . ,history-dir)))
+  (setq backup-directory-alist `(("." . ,history-dir)))
+  (setq auto-save-file-name-transforms `((".*" ,history-dir t))))
+
+(savehist-mode 1)
 
 ;; explore file
 (provide 'init-basic2)

@@ -103,7 +103,7 @@
     "pf" 'projectile-find-file           ;; 在项目中查找文件
     "pd" 'projectile-dired            ;; 在项目中查找目录
     "pr" 'projectile-recentf             ;; 最近项目文件
-    "pg" 'projectile-grep                ;; grep搜索项目文件
+    "pg" 'projectile-ripgrep                ;; grep搜索项目文件
 
     ;; 代码导航
     "gd" 'xref-find-definitions          ;; 跳转到定义
@@ -114,7 +114,8 @@
 
     ;; 搜索
     "ss" 'swiper                         ;; Swiper 搜索
-    "sg" 'projectile-grep                ;; 在项目中进行正则搜索
+    "sa" 'swiper-all                    ;;所有打开的buffer进行搜索
+    "sg" 'projectile-ripgrep                ;; 在项目中进行正则搜索
     "si" 'yas-insert-snippet             ;; 插入对应的模板
 
 

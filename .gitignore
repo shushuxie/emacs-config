@@ -1,36 +1,28 @@
-# 1. 忽略所有编译文件和备份
-*.elc
+### --- Emacs 临时与备份文件 --- ###
 *~
-*.swp
 \#*\#
-.\#*
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list/
+tramp
+.#*
 
-# 2. 忽略插件及其安装包（这是占空间大头）
+### --- 插件生成的缓存与历史 (重点) --- ###
+history/
+.cache/
 elpa/
-/*.tar
-treemacs-*/
+recentf
+projectile.cache
+projectile-bookmarks.eld
+knowledge/
+.lsp-session-v1
+.org-id-locations
 
-# 3. 忽略 Emacs 及其插件产生的运行记录文件
-/amx-items
-/history
-/recentf
-/places
-/bookmarks
-/tramp
-/projectile-bookmarks.eld
-/projectile.cache
-/projects
-/diary
+### --- Undo-tree 专属干扰 --- ###
+*.~undo-tree~
 
-# 4. 忽略运行产生的目录
-/auto-save-list/
-/eshell/
-/transient/
-/url/
-/games/
-/.cache/
-
-# 5. 忽略桌面会话
-/desktop
-/desktop.lock
-/emacs-desktop
+### --- 系统与 IDE 垃圾 --- ###
+.DS_Store
+.idea/
+.vscode/

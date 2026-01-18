@@ -5,7 +5,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("603a831e0f2e466480cdc633ba37a0b1ae3c3e9a4e90183833bc4def3421a961"
+   '("45631691477ddee3df12013e718689dafa607771e7fd37ebc6c6eb9529a8ede5"
+     "603a831e0f2e466480cdc633ba37a0b1ae3c3e9a4e90183833bc4def3421a961"
      "8c7e832be864674c220f9a9361c851917a93f921fedb7717b1b5ece47690c098"
      "4ade6b630ba8cbab10703b27fd05bb43aaf8a3e5ba8c2dc1ea4a2de5f8d45882"
      "3d54650e34fa27561eb81fc3ceed504970cc553cfd37f46e8a80ec32254a3ec3"
@@ -42,6 +43,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(dashboard-heading ((t (:inherit font-lock-keyword-face :weight extra-bold :height 1.5 :foreground "#0052cc"))))
+ '(dashboard-items-face ((t (:inherit widget-button :weight bold :height 1.3 :foreground "#228B22"))))
  '(diff-hl-change ((t (:foreground "blue" :background nil))))
  '(diff-hl-delete ((t (:foreground "#F40009" :background nil))))
  '(diff-hl-insert ((t (:foreground "#2ea44f" :background nil))))

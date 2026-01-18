@@ -124,12 +124,28 @@
   :init (highlight-symbol-mode)
     :bind ("<f5>" . highlight-symbol)) ;; 按下 F3 键就可高亮当前符号
 
+
+;; 1. 创建专门的缓存目录（名字改掉，避免和旧的冲突）
+(let ((my-cache-dir (expand-file-name "emacs-cache/" user-emacs-directory)))
+  (unless (file-directory-p my-cache-dir)
+    (make-directory my-cache-dir t))
+
+  ;; 2. 关键：确保这些变量指向【具体文件】，而不是【目录】
+  (setq savehist-file (expand-file-name "savehist" my-cache-dir))
+  (setq recentf-save-file (expand-file-name "recentf" my-cache-dir))
+  (setq undo-tree-history-directory-alist `(("." . ,my-cache-dir))))
+
+;; 3. 启用模式
+(savehist-mode 1)
+(recentf-mode 1)
+
+;; 4. 既然你有 rg，确保 Projectile 这样配置来过滤 elpa
 (use-package projectile
   :ensure t
-  :bind (("C-c p" . projectile-command-map))
   :config
-  (setq projectile-mode-line "Projectile")
-  (setq projectile-track-known-projects-automatically nil))
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-globally-ignored-directories '("elpa" "emacs-cache" ".git"))
+  (projectile-mode +1))
 
 (use-package counsel-projectile
   :ensure t
