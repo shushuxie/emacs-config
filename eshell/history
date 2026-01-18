@@ -1,0 +1,128 @@
+ll
+ls
+./hello 
+ll
+ls 
+gcc hello.c -o hello
+./hello 
+gcc 1-romaParseIntegra.c -o romaParse
+ls 
+./romaParse LVIII
+ls 
+cat 1-romaParseIntegra.c 
+ls 
+gcc 1-romaParseIntegra.c -o romaParse
+ls -la
+data-debug-new-buffer 
+date
+./romaParse III
+./romaParse IV
+gcc 1-romaParseIntegra.c -o romaParse
+./romaParse IV
+gcc 1-romaParseIntegra.c -o romaParse
+./romaParse IV
+./romaParse MCMXCIV
+ls 
+gcc 4-reverNums.c -o reverNums
+ls -la
+clear 
+ls 
+./ reverNums 
+./reverNums 
+eixt
+git status
+git rm --cached
+git rm --cached *.undo-tree*
+git rm --cached lisp-config/*.undo-tree*
+git rm --cached lisp-config/*.~undo-tree~
+git status 
+git rm --cached recentf 
+git rm --cached history 
+git rm --cached eshell/lastdir
+git status
+git rm --cached elpa/archives/nongnu/archive-contents
+git status
+git status 
+git rm --cached bookmarks.~undo-tree~
+git rm --cached 'bookmarks.~undo-tree~'
+git push 
+cd .emacs.d/
+git push -v origin refs/heads/master:refs/heads/master
+git pull
+git push -v origin refs/heads/master:refs/heads/master
+ls 
+ll
+ls -l
+./testProgram 
+lldb testProgram 
+ls 
+lldb tes2 
+lldb tes2 
+pwd
+cd
+cp -r ~/Library/Rime ~/Library/Rime.bak
+cd config/
+git clone cp -r ~/Library/Rime ~/Library/Rime.bak
+git clone https://github.com/shushuxie/rime.git
+cd
+cd Library/Rime
+ls
+rm -rf ./*
+ll
+ls
+ls
+vim default.custom.yaml
+cd
+cd .emacs.d/
+ll
+ls
+cd lisp-config/
+ls
+yazi
+ls
+ll
+cd ..
+cd 日志
+ls
+ls -a
+rm -rf
+ls
+ls -a
+cd ..
+rm -rf* 日志
+ls
+ll
+ls
+cd 日志/
+ls
+clear
+ls -a 
+rm .2026.~undo-tree~
+ls -a 
+git rm -r --cached .
+cd ..
+git rm -r --cached
+pwd
+ls
+ls
+ll
+ls
+vim inbox.org
+ls
+ls -a
+rm .*.~undo-tree~
+rm .[^.]*.~undo-tree~
+rm -f *~rm -f .#*
+find . -maxdepth 1 -name ".*~undo-tree~" -o -name "*~" -o -name ".#*" | xargs rm -f
+rm -rf .idea/          # 移除 IDE 留下的垃圾rm projectile.cache    # 移除旧的搜索索引
+ls -a
+ls -a
+ls -la
+cd ~/.emacs.d# 1. 删除根目录下的 evil 安装包（它已经在 elpa 目录里了）rm evil-20240521.954.tar# 2. 删除根目录下带版本号的 treemacs（elpa 里面会有最新的）rm -rf treemacs-20240518.932# 3. 删除已经没用的桌面锁文件rm desktop.lock desktop# 4. 删除临时缓存类rm .DS_Storerm -rf auto-save-list/
+rm ~/.emacs.d/projectile.cacherm ~/.emacs.d/projectile-bookmarks.eld
+cd ~/.emacs.dgit ls-files --others --ignored --exclude-standard
+V
+ls -la
+rg --version
+rg --verison
+rg --version
