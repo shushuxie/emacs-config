@@ -37,11 +37,12 @@
      "/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/journal.org"))
  '(package-selected-packages
    '(ace-pinyin amx auctex ccls cdlatex company-box counsel-projectile
-                dashboard diff-hl doom-themes evil-escape evil-leader
-                flycheck git-gutter-fringe good-scroll
-                highlight-symbol ivy-posframe lsp-ui marginalia mwim
-                org-appear org-bullets org-download org-super-agenda
-                quickrun rainbow-delimiters rg smart-mode-line
+                dashboard diff-hl dired-subtree dirvish doom-themes
+                evil-escape evil-leader flycheck git-gutter-fringe
+                good-scroll highlight-symbol ivy-posframe lsp-ui
+                marginalia mwim org-appear org-bullets org-download
+                org-super-agenda osx-clipboard quickrun
+                rainbow-delimiters rg smart-mode-line
                 treemacs-icons-dired treemacs-magit
                 treemacs-projectile undo-tree use-package-hydra valign
                 winum yasnippet))

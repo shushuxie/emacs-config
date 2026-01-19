@@ -113,20 +113,19 @@
 (with-eval-after-load 'undo-tree
   (setq undo-tree-auto-save-history nil))
 
+;;-----------------剪贴板，复制----------------
+(use-package osx-clipboard
+  :ensure t
+  :config
+  (osx-clipboard-mode 1))
 
-;; 1. 强制 Emacs 与系统剪贴板交互
-(setq select-enable-clipboard t)
-(setq select-enable-primary t)
-
-;; 2. 让 Evil 模式的 y/p 直接使用系统剪贴板
-;; 这样你按 'y' 网页就能直接 'cmd+v'，网页 'cmd+c' 后 Emacs 就能直接 'p'
+;; 确保 Evil 知道要把东西发给剪贴板
 (with-eval-after-load 'evil
   (setq evil-send-yank-to-clipboard t))
 
-;; 3. 增强：解决在终端 (Terminal) 下的同步问题
-;; 即使不判断 (display-graphic-p)，加上这个也无妨
-(when (fboundp 'osx-clipboard-mode)
-  (osx-clipboard-mode 1))
+;; 基础剪贴板设置
+(setq select-enable-clipboard t)
+(setq select-enable-primary t)
 
 ;; ==========================================
 ;; 7. 全局快捷
@@ -307,6 +306,110 @@
   (setq auto-save-file-name-transforms `((".*" ,history-dir t))))
 
 (savehist-mode 1)
+
+;;===========================================================
+;;---------* DIRD 配置 文件bgein *---------------------------
+;;===========================================================
+(use-package dirvish
+  :ensure t
+  :config
+  (dirvish-override-dired-mode)
+  ;; 不要直接 require subtree，改用全局初始化
+  (dirvish-peek-mode) ; 开启预览
+  ;; 尝试使用这个属性开启 subtree 支持
+  (setq dirvish-attributes '(git-msg file-size icons subtree-state))
+  
+  :bind
+  (:map dirvish-mode-map
+        ;; 如果那个命令找不到，我们用 Dired 原生的展开替代
+        ("TAB" . dired-subtree-toggle) 
+        ("h"   . dired-up-directory)
+        ("l"   . dired-find-file)))
+(with-eval-after-load 'dired
+  (require 'dired-x) ; 必须加载这个扩展才能用 omit 功能
+  (setq dired-omit-files 
+        (concat dired-omit-files "\\|^\\..*$\\|\\.~undo-tree~$")))
+
+(add-hook 'dired-mode-hook #'dired-omit-mode)
+
+;; 3. 强力过滤垃圾文件（undo-tree 等）
+(with-eval-after-load 'dired
+  (setq dired-omit-files (concat dired-omit-files "\\|^\\..*$\\|\\.~undo-tree~$"))
+  (add-hook 'dired-mode-hook #'dired-omit-mode))
+
+(with-eval-after-load 'dired
+  (require 'dired-x) ; 必须加载 dired-x 才能使用 omit 功能
+  ;; 设置要隐藏的文件正则表达式：包括 . 开头的文件、# 开头的临时文件、以及 undo-tree 文件
+  (setq dired-omit-files 
+        (concat dired-omit-files "\\|^\\..*$\\|^#.*#$\\|\\.~undo-tree~$")))
+
+;; 自动在所有 Dired 缓冲区开启隐藏模式
+(add-hook 'dired-mode-hook 'dired-omit-mode)
+
+(with-eval-after-load 'dirvish
+  ;; 无论在什么状态下，回车键必须是打开文件
+  (define-key dirvish-mode-map (kbd "RET") 'dired-find-file)
+  ;; 针对 Evil 模式用户的特殊加固
+  (evil-make-overriding-map dirvish-mode-map 'normal)
+  (evil-define-key 'normal dirvish-mode-map (kbd "RET") 'dired-find-file))
+
+;; 确保在 evil 加载后再进行按键绑定
+(with-eval-after-load 'evil
+  (with-eval-after-load 'dirvish
+    ;; 修复 Enter 键不能打开文件的问题
+    (evil-define-key 'normal dirvish-mode-map (kbd "RET") 'dired-find-file)
+    (evil-define-key 'normal dirvish-mode-map (kbd "l") 'dired-find-file)
+    (evil-define-key 'normal dirvish-mode-map (kbd "h") 'dired-up-directory)))
+
+(with-eval-after-load 'dired
+  (require 'dired-x)
+  ;; 增加过滤规则：隐藏所有以 . 开头的文件和以 ~ 结尾的文件
+  (setq dired-omit-files 
+        (concat dired-omit-files "\\|^\\..*$\\|\\.~undo-tree~$")))
+
+;; dird 行号关闭
+(add-hook 'dirvish-mode-hook (lambda () (display-line-numbers-mode -1)))
+
+;; ---------------subtree 修饰---------------
+
+(with-eval-after-load 'dired-subtree
+  ;; 1. 增加物理缩进：让子目录内容明显右移
+  (setq dired-subtree-line-prefix "    ┃ ") 
+  
+  ;; 2. 这里的重点：强制子目录在插入时也运行过滤钩子
+  (setq dired-subtree-use-filter t)
+  
+  ;; 3. 视觉补救：让子目录的文件名颜色变浅一点，和外层区分开
+  (custom-set-faces
+   '(dired-subtree-depth-1-face ((t (:foreground "#999999" :background nil))))))
+
+(defun my/clean-subtree-garbage ()
+  "强制清理 Subtree 展开后的隐藏文件"
+  (dired-omit-mode 1)           ; 确保 Omit 模式是开启的
+  (dired-omit-expunge))         ; 立即执行物理隐藏
+
+(add-hook 'dired-subtree-after-insert-hook #'my/clean-subtree-garbage)
+
+;; 增大行间距，这在终端里能显著提升辨认度
+(setq-default line-spacing 0.2)
+
+(with-eval-after-load 'dired-subtree
+  (custom-set-faces
+   ;; 1. 将 Subtree 展开部分的引导线和文件名设为绿色
+   ;; :foreground "ForestGreen" 适合白色背景，既清晰又不刺眼
+   '(dired-subtree-depth-1-face ((t (:foreground "ForestGreen" :background nil :bold t))))
+   '(dired-subtree-depth-2-face ((t (:foreground "DarkGreen" :background nil :bold t))))
+   '(dired-subtree-depth-3-face ((t (:foreground "LimeGreen" :background nil :bold t))))
+   
+   ;; 2. 顺便把引导线颜色也强化一下
+   '(dired-subtree-line-prefix-face ((t (:foreground "ForestGreen")))))
+  
+  ;; 增加一点缩进宽度，让绿色引导线更明显
+  (setq dired-subtree-line-prefix "    ┃ "))
+
+;;===========================================================
+;;---------* DIRD 配置 文件end*---------------------------
+;;===========================================================
 
 ;; explore file
 (provide 'init-basic2)

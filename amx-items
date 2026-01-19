@@ -1,13 +1,13 @@
 
 ;; ----- amx-history -----
 (
+ dirvish
+ package-install
+ dired
+ dirvish-find-file-horizontal
+ counsel-find-file
  swiper-all
  treemacs-find-file
- package-install
- package-refresh-contents
- projectile-ripgrep
- projectile-invalidate-cache
- projectile-find-file
 )
 
 ;; ----- amx-data -----
@@ -73,7 +73,7 @@
  (org-agenda-file-to-front . 1)
  (org-attach-open . 1)
  (org-open-at-point . 1)
- (dired . 3)
+ (dired . 4)
  (calendar . 5)
  (package-upgrade . 2)
  (evil-mode . 2)
@@ -118,7 +118,7 @@
  (dap-mode . 3)
  (compile . 3)
  (gdb . 2)
- (package-install . 9)
+ (package-install . 10)
  (dap-gdb-lldb-setup . 3)
  (dap-debug-restart . 1)
  (toggle-debug-on-error . 1)
@@ -157,7 +157,7 @@
  (global-highlight-changes-mode . 2)
  (multi-occur . 1)
  (swiper-all . 2)
- (counsel-find-file . 2)
+ (counsel-find-file . 3)
  (key-chord-mode . 2)
  (projectile-find-file . 3)
  (desktop-read . 2)
@@ -196,4 +196,6 @@
  (treemacs-find-file . 8)
  (projectile-invalidate-cache . 5)
  (projectile-ripgrep . 7)
+ (dirvish-find-file-horizontal . 1)
+ (dirvish . 6)
 )

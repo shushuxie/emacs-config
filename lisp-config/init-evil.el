@@ -99,11 +99,15 @@
     "aa" 'clipboard-kill-ring-save ; used frequently
     "pp" 'clipboard-yank ; used frequently
 
+
     ;; 项目管理
     "pf" 'projectile-find-file           ;; 在项目中查找文件
     "pd" 'projectile-dired            ;; 在项目中查找目录
     "pr" 'projectile-recentf             ;; 最近项目文件
     "pg" 'projectile-ripgrep                ;; grep搜索项目文件
+    ;;文件夹存
+    "di"  'dired                ;;打开目录管理
+    "dv"  'dirvish              ;; 打开dirvish目录
 
     ;; 代码导航
     "gd" 'xref-find-definitions          ;; 跳转到定义

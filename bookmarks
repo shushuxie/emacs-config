@@ -1,0 +1,11 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("org-capture-last-stored"
+ (filename . "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org")
+ (front-context-string . "** TODO 修复y,p粘贴\n")
+ (rear-context-string)
+ (position . 9)
+ (last-modified 26989 4299 166488 0))
+)

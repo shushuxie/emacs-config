@@ -1,4 +1,5 @@
-((magit-branch nil)
+((dirvish-file-info-menu nil)
+ (magit-branch nil)
  (magit-commit nil)
  (magit-diff
   ("--no-ext-diff" "--stat"))
@@ -9,7 +10,7 @@
   ("-n256" "--graph" "--decorate"))
  (magit-merge nil)
  (magit-pull nil
-             ("--rebase"))
+	     ("--rebase"))
  (magit-push nil)
  (magit-reset nil)
  (magit-revert
