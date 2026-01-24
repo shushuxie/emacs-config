@@ -19,8 +19,11 @@
   (package-refresh-contents))
 
 
-(require 'use-package)
-(setq use-package-always-ensure t) ; 以后所有的 use-package 默认都会自动下载
+;(require 'use-package)
+;(setq use-package-always-ensure t) ; 以后所有的 use-package 默认都会自动下载
+(eval-when-compile
+  (require 'use-package))
+(setq use-package-always-ensure t)  ;; 自动安装缺失包
 
 ;; 列表开始...
 ;; 基础工具
@@ -71,7 +74,7 @@
 (use-package lsp-ui)
 (use-package ccls)
 (use-package quickrun)
-
+(use-package cdlatex)
 
 
 ; 记录输入命令的频率，优先显示

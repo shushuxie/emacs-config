@@ -1,13 +1,13 @@
 
 ;; ----- amx-history -----
 (
- dirvish
+ set-input-method
+ rime-select-schema
+ rime-deploy
+ rime-open-schema
+ rime-compile-module
  package-install
- dired
- dirvish-find-file-horizontal
- counsel-find-file
- swiper-all
- treemacs-find-file
+ emacs-version
 )
 
 ;; ----- amx-data -----
@@ -51,7 +51,7 @@
  (treemacs--common-helpful-hydra/treemacs-indent-guide-mode . 1)
  (treemacs-git-commit-diff-mode . 1)
  (treemacs-peek-mode . 1)
- (time-stamp . 3)
+ (time-stamp . 4)
  (org-agenda-add-note . 1)
  (hs-toggle-hiding . 4)
  (eww . 3)
@@ -83,7 +83,7 @@
  (package-refresh-contents . 10)
  (org-table-toggle-column-width . 1)
  (redraw-display . 1)
- (toggle-input-method . 1)
+ (toggle-input-method . 3)
  (list-input-methods . 1)
  (org-agenda-holidays . 1)
  (dired-display-file . 1)
@@ -118,7 +118,7 @@
  (dap-mode . 3)
  (compile . 3)
  (gdb . 2)
- (package-install . 10)
+ (package-install . 12)
  (dap-gdb-lldb-setup . 3)
  (dap-debug-restart . 1)
  (toggle-debug-on-error . 1)
@@ -198,4 +198,12 @@
  (projectile-ripgrep . 7)
  (dirvish-find-file-horizontal . 1)
  (dirvish . 6)
+ (rime-compile-module . 7)
+ (rime-select-schema . 22)
+ (rime-deploy . 22)
+ (rime-mode . 5)
+ (set-input-method . 32)
+ (rime-open-schema . 3)
+ (evil-ex . 1)
+ (emacs-version . 2)
 )

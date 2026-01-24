@@ -37,7 +37,7 @@
   (evil-leader/set-leader ",")
   (evil-leader/set-key
     ;; 文件操作
-    "ff" 'counsel-find-file              ;; 打开文件
+    "ff"  'fanyi-dwim             ;; 翻译插件
     "fs" 'save-buffer                    ;; 保存当前缓冲区
     "fr" 'recentf-open-files             ;; 最近打开的文件
 

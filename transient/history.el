@@ -10,7 +10,7 @@
   ("-n256" "--graph" "--decorate"))
  (magit-merge nil)
  (magit-pull nil
-	     ("--rebase"))
+             ("--rebase"))
  (magit-push nil)
  (magit-reset nil)
  (magit-revert

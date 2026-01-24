@@ -4,8 +4,8 @@
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored"
  (filename . "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org")
- (front-context-string . "** TODO 修复y,p粘贴\n")
+ (front-context-string . "** TODO ESC多重出发操")
  (rear-context-string)
  (position . 9)
- (last-modified 26989 4299 166488 0))
+ (last-modified 26996 44493 631216 0))
 )

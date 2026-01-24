@@ -1,20 +1,23 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/journal.org"
-  . 78)
- ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/smallthings.org"
-  . 542)
- ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/inbox.org"
-  . 49)
- ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/note.org"
-  . 161)
- ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org"
-  . 771)
- ("/Users/xieshuqiang/.emacs.d/lisp-config/init-basic2.el" . 10214)
+(("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/smallthings.org" . 542)
+ ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/inbox.org" . 49)
+ ("/Users/xieshuqiang/.emacs.d/lisp-config/init-basic2.el" . 13532)
  ("/Users/xieshuqiang/.emacs.d/lisp-config/"
-  (dired-filename
-   . "/Users/xieshuqiang/.emacs.d/lisp-config/init-basic2.el"))
+  (dired-filename . "/Users/xieshuqiang/.emacs.d/lisp-config/init-evil.el"))
+ ("/Users/xieshuqiang/.emacs.d/lisp-config/init-evil.el" . 1176)
+ ("/Users/xieshuqiang/Documents/typora/emacs/中文输入.org" . 630)
+ ("/Users/xieshuqiang/.emacs.d/init.el" . 1877)
+ ("/Users/xieshuqiang/.emacs.d/lisp-config/init-packages.el" . 2090)
+ ("/Users/xieshuqiang/Documents/typora/article/身体健康.org" . 1036)
+ ("/Users/xieshuqiang/Library/Rime/default.custom.yaml" . 368)
  ("/Users/xieshuqiang/.emacs.d/"
   (dired-filename . "/Users/xieshuqiang/.emacs.d/lisp-config"))
+ ("/Users/xieshuqiang/Library/Rime/build/default.yaml" . 3295)
+ ("/Users/xieshuqiang/Library/Rime/build/squirrel.yaml" . 11557)
+ ("/Users/xieshuqiang/Library/Rime/squirrel.custom.yaml" . 909)
+ ("/Users/xieshuqiang/Library/Rime/"
+  (dired-filename . "/Users/xieshuqiang/Library/Rime/default.custom.yaml"))
+ ("/Users/xieshuqiang/Documents/typora/emacs/dired使用.org" . 3165)
  ("/Users/xieshuqiang/"
   (dired-filename . "/Users/xieshuqiang/Documents"))
  ("/Users/xieshuqiang/Documents/"
@@ -26,157 +29,107 @@
   (dired-filename . "/Users/xieshuqiang/Documents/typora/java"))
  ("/Users/xieshuqiang/Documents/typora/java/"
   (dired-filename . "/Users/xieshuqiang/Documents/typora/java/JVM"))
- ("/Users/" (dired-filename . "/Users/xieshuqiang"))
+ ("/Users/"
+  (dired-filename . "/Users/xieshuqiang"))
  ("/Users/xieshuqiang/Documents/JVM.emmx" . 157)
- ("/Users/xieshuqiang/.emacs.d/lisp-config/init-evil.el" . 3356)
  ("/Users/xieshuqiang/.emacs.d/emacs-cache/"
-  (dired-filename
-   . "/Users/xieshuqiang/.emacs.d/emacs-cache/custom.el"))
+  (dired-filename . "/Users/xieshuqiang/.emacs.d/emacs-cache/custom.el"))
  ("/Users/xieshuqiang/.emacs.d/games/"
   (dired-filename . "/Users/xieshuqiang/.emacs.d/games/snake-scores"))
- ("/Users/xieshuqiang/Documents/typora/emacs/dired使用.org" . 3008)
  ("/Users/xieshuqiang/Documents/typora/emacs/"
-  (dired-filename
-   . "/Users/xieshuqiang/Documents/typora/emacs/dired使用.org"))
+  (dired-filename . "/Users/xieshuqiang/Documents/typora/emacs/dired使用.org"))
  ("/Users/xieshuqiang/Documents/多线程.xmind" . 160)
  ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/"
-  (dired-filename
-   . "/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org"))
+  (dired-filename . "/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org"))
  ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/"
-  (dired-filename
-   . "/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org"))
+  (dired-filename . "/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org"))
  ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/"
-  (dired-filename
-   . "/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents"))
+  (dired-filename . "/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents"))
  ("/Users/xieshuqiang/Documents/typora/操作系统导论/OS-homework/"
-  (dired-filename
-   . "/Users/xieshuqiang/Documents/typora/操作系统导论/OS-homework/chapter28.md"))
- ("/Users/xieshuqiang/Documents/typora/操作系统导论/OS-homework/chapter28.md"
-  . 222)
+  (dired-filename . "/Users/xieshuqiang/Documents/typora/操作系统导论/OS-homework/chapter28.md"))
+ ("/Users/xieshuqiang/Documents/typora/操作系统导论/OS-homework/chapter28.md" . 222)
  ("/Users/xieshuqiang/Documents/typora/操作系统导论/"
-  (dired-filename
-   . "/Users/xieshuqiang/Documents/typora/操作系统导论/OS-homework"))
+  (dired-filename . "/Users/xieshuqiang/Documents/typora/操作系统导论/OS-homework"))
  ("/Users/xieshuqiang/Documents/typora/zhihu/"
-  (dired-filename
-   . "/Users/xieshuqiang/Documents/typora/zhihu/收藏处理.org"))
+  (dired-filename . "/Users/xieshuqiang/Documents/typora/zhihu/收藏处理.org"))
  ("/Users/xieshuqiang/Documents/typora/Users/"
-  (dired-filename
-   . "/Users/xieshuqiang/Documents/typora/Users/xieshuqiang"))
- ("/Users/xieshuqiang/Documents/typora/操作系统导论/OS-homework/ostep-homework/threads-cv/README.md"
-  . 1193)
+  (dired-filename . "/Users/xieshuqiang/Documents/typora/Users/xieshuqiang"))
+ ("/Users/xieshuqiang/Documents/typora/操作系统导论/OS-homework/ostep-homework/threads-cv/README.md" . 1193)
  ("/Users/xieshuqiang/Documents/typora/article/"
-  (dired-filename
-   . "/Users/xieshuqiang/Documents/typora/article/成长感.org"))
+  (dired-filename . "/Users/xieshuqiang/Documents/typora/article/成长感.org"))
  ("/Users/xieshuqiang/Documents/typora/article/成长感.org" . 650)
  ("/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/"
-  (dired-filename
-   . "/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/网络概览.org"))
+  (dired-filename . "/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/网络概览.org"))
  ("/Users/xieshuqiang/Documents/typora/zhihu/收藏处理.org" . 291)
- ("/Users/xieshuqiang/Documents/typora/article/1. first week.org"
-  . 275)
+ ("/Users/xieshuqiang/Documents/typora/article/1. first week.org" . 275)
  ("/Users/xieshuqiang/.emacs.d/.projectile" . 69)
  ("/Users/xieshuqiang/.emacs.d/.gitignore" . 242)
  ("/Users/xieshuqiang/.emacs.d/amx-items" . 185)
  ("/Users/xieshuqiang/Documents/typora/blogs/git技巧.org" . 368)
- ("/Users/xieshuqiang/Documents/typora/emacs/.emacs使用技巧.org.~undo-tree~"
-  . 22383)
+ ("/Users/xieshuqiang/Documents/typora/emacs/.emacs使用技巧.org.~undo-tree~" . 22383)
  ("/Users/xieshuqiang/.emacs.d/.cache/treemacs-persist" . 85)
- ("/Users/xieshuqiang/Documents/typora/article/如何破除完美主义.org"
-  . 2058)
+ ("/Users/xieshuqiang/Documents/typora/article/如何破除完美主义.org" . 2058)
  ("/Users/xieshuqiang/Documents/capture/note.org" . 313)
- ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/2026_note.org_archive"
-  . 153)
- ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/2026_gtd.org_archive"
-  . 6646)
- ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/2026_smallthings.org_archive"
-  . 2278)
+ ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/2026_note.org_archive" . 153)
+ ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/2026_gtd.org_archive" . 6646)
+ ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/2026_smallthings.org_archive" . 2278)
  ("/Users/xieshuqiang/Documents/capture/smallThings.org" . 2210)
- ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/journal-2023.org"
-  . 221)
- ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/journal-2024.org"
-  . 652)
- ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/journal.org_archive"
-  . 737)
+ ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/journal-2023.org" . 221)
+ ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/journal-2024.org" . 652)
+ ("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/archives/journal.org_archive" . 737)
  ("/Users/xieshuqiang/Documents/capture/journal.org" . 2316)
- ("/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/网络概览.org"
-  . 1036)
+ ("/Users/xieshuqiang/Documents/typora/计算机网络自顶向下/网络概览.org" . 1036)
  ("/Users/xieshuqiang/Documents/typora/算法：C语言实现/栈.org" . 3862)
- ("/Users/xieshuqiang/Documents/typora/算法：C语言实现/广义队列(栈,队列).org"
-  . 2633)
+ ("/Users/xieshuqiang/Documents/typora/算法：C语言实现/广义队列(栈,队列).org" . 2633)
  ("/Users/xieshuqiang/Documents/typora/unix(apue)/README.org" . 101)
- ("/Users/xieshuqiang/Documents/typora/unix(apue)/1.整体概览.org"
-  . 7914)
+ ("/Users/xieshuqiang/Documents/typora/unix(apue)/1.整体概览.org" . 7914)
  ("/Users/xieshuqiang/Documents/typora/lisp/README.org" . 2948)
- ("/Users/xieshuqiang/Documents/typora/lisp/2.构造数据抽象.org"
-  . 33753)
- ("/Users/xieshuqiang/Documents/typora/lisp/1.程序设计的基本元素.org"
-  . 26237)
+ ("/Users/xieshuqiang/Documents/typora/lisp/2.构造数据抽象.org" . 33753)
+ ("/Users/xieshuqiang/Documents/typora/lisp/1.程序设计的基本元素.org" . 26237)
  ("/Users/xieshuqiang/Documents/typora/lisp/0.基础语法.org" . 4775)
- ("/Users/xieshuqiang/Documents/typora/java/RocketMq/2 安装与启动.org"
-  . 369)
+ ("/Users/xieshuqiang/Documents/typora/java/RocketMq/2 安装与启动.org" . 369)
  ("/Users/xieshuqiang/Documents/typora/java/RocketMq/1 简介.org" . 551)
  ("/Users/xieshuqiang/Documents/typora/java/JVM/9 方法区.org" . 2668)
- ("/Users/xieshuqiang/Documents/typora/java/JVM/7 本地方法栈.org"
-  . 314)
- ("/Users/xieshuqiang/Documents/typora/java/JVM/6 本地方法接口.org"
-  . 314)
+ ("/Users/xieshuqiang/Documents/typora/java/JVM/7 本地方法栈.org" . 314)
+ ("/Users/xieshuqiang/Documents/typora/java/JVM/6 本地方法接口.org" . 314)
  ("/Users/xieshuqiang/Documents/typora/java/JVM/5 虚拟机栈.org" . 5139)
- ("/Users/xieshuqiang/Documents/typora/java/JVM/4 程序计数器.org"
-  . 334)
- ("/Users/xieshuqiang/Documents/typora/java/JVM/3 运行时数据区概述及线程.org"
-  . 829)
- ("/Users/xieshuqiang/Documents/typora/java/JVM/2. 类加载子系统.org"
-  . 5704)
+ ("/Users/xieshuqiang/Documents/typora/java/JVM/4 程序计数器.org" . 334)
+ ("/Users/xieshuqiang/Documents/typora/java/JVM/3 运行时数据区概述及线程.org" . 829)
+ ("/Users/xieshuqiang/Documents/typora/java/JVM/2. 类加载子系统.org" . 5704)
  ("/Users/xieshuqiang/Documents/typora/java/JVM/1 jvm入门.org" . 8144)
  ("/Users/xieshuqiang/Documents/typora/java/JVM/0 工具.org" . 2241)
- ("/Users/xieshuqiang/Documents/typora/emacs/中文输入.org" . 306)
  ("/Users/xieshuqiang/Documents/typora/blogs/终端.org" . 6405)
  ("/Users/xieshuqiang/Documents/typora/blogs/找工作记录.org" . 690)
  ("/Users/xieshuqiang/Documents/typora/blogs/workBalance.org" . 682)
- ("/Users/xieshuqiang/Documents/typora/blogs/parallels desktop linux 配置.org"
-  . 281)
+ ("/Users/xieshuqiang/Documents/typora/blogs/parallels desktop linux 配置.org" . 281)
  ("/Users/xieshuqiang/Documents/typora/blogs/java算法.org" . 206)
  ("/Users/xieshuqiang/Documents/typora/算法：C语言实现/链表.org" . 398)
- ("/Users/xieshuqiang/Documents/typora/blogs/linux日志查看.org"
-  . 17479)
+ ("/Users/xieshuqiang/Documents/typora/blogs/linux日志查看.org" . 17479)
  ("/Users/xieshuqiang/.emacs.d/mylisp/utf8.el" . 556)
- ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/latex-table33.yas"
-  . 89)
+ ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/latex-table33.yas" . 89)
  ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/boldword" . 49)
- ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/org-tag-template.yas"
-  . 54)
+ ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/org-tag-template.yas" . 54)
  ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/dengkuan" . 65)
- ("/Users/xieshuqiang/Documents/typora/books/1.为什么没人早点告诉我/"
-  . 162)
+ ("/Users/xieshuqiang/Documents/typora/books/1.为什么没人早点告诉我/" . 162)
  ("/Users/xieshuqiang/Documents/typora/books/" . 151)
  ("/Users/xieshuqiang/Documents/typora/java/RocketMq/" . 159)
  ("/Users/xieshuqiang/Documents/typora/java/JVM/"
-  (dired-filename
-   . "/Users/xieshuqiang/Documents/typora/java/JVM/8 堆.org"))
- ("/Users/xieshuqiang/Documents/typora/网络是怎么连接的/1 第一章，浏览器发送请求.md"
-  . 1014)
- ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/caption-example.yas"
-  . 97)
- ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/latex-table43.yas"
-  . 160)
- ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/latex-table53.yas"
-  . 57)
+  (dired-filename . "/Users/xieshuqiang/Documents/typora/java/JVM/8 堆.org"))
+ ("/Users/xieshuqiang/Documents/typora/网络是怎么连接的/1 第一章，浏览器发送请求.md" . 1014)
+ ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/caption-example.yas" . 97)
+ ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/latex-table43.yas" . 160)
+ ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/latex-table53.yas" . 57)
  ("/Users/xieshuqiang/Desktop/电子书/"
   (dired-filename . "/Users/xieshuqiang/Desktop/电子书/book"))
  ("/Users/xieshuqiang/Desktop/电子书/book/"
-  (dired-filename
-   . "/Users/xieshuqiang/Desktop/电子书/book/【4】UNIX环境高级编程（第三版）.pdf"))
- ("/Users/xieshuqiang/Desktop/电子书/book/【4】UNIX环境高级编程（第三版）.pdf"
-  . 5521990)
+  (dired-filename . "/Users/xieshuqiang/Desktop/电子书/book/【4】UNIX环境高级编程（第三版）.pdf"))
+ ("/Users/xieshuqiang/Desktop/电子书/book/【4】UNIX环境高级编程（第三版）.pdf" . 5521990)
  ("/Users/xieshuqiang/Documents/typora/unix(apue)/" . 168)
  ("/Users/xieshuqiang/Documents/typora/算法：C语言实现/leetcode/"
-  (dired-filename
-   . "/Users/xieshuqiang/Documents/typora/算法：C语言实现/leetcode/1-romaParseIntegra.c"))
+  (dired-filename . "/Users/xieshuqiang/Documents/typora/算法：C语言实现/leetcode/1-romaParseIntegra.c"))
  ("/Users/xieshuqiang/Documents/typora/算法：C语言实现/"
-  (dired-filename
-   . "/Users/xieshuqiang/Documents/typora/算法：C语言实现/.hello.c.swp"))
- ("/Users/xieshuqiang/Documents/typora/lisp/.0.基础语法.org.~undo-tree~"
-  . 8475632)
+  (dired-filename . "/Users/xieshuqiang/Documents/typora/算法：C语言实现/.hello.c.swp"))
+ ("/Users/xieshuqiang/Documents/typora/lisp/.0.基础语法.org.~undo-tree~" . 8475632)
  ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/caption-src.yas" . 61)
  ("/Users/xieshuqiang/Documents/typora/lisp/2-1有理数表示.el" . 346)
  ("/Users/xieshuqiang/.emacs.d/snippets/org-mode/lisp-defun" . 86)
