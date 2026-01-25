@@ -143,17 +143,23 @@
 (recentf-mode 1)
 
 ;; 4. 既然你有 rg，确保 Projectile 这样配置来过滤 elpa
-(use-package projectile
-  :ensure t
-  :config
-  (setq projectile-indexing-method 'alien)
-  (setq projectile-globally-ignored-directories '("elpa" "emacs-cache" ".git"))
-  (projectile-mode +1))
+;; (use-package projectile
+;;   :ensure t
+;;   :config
+;;   (setq projectile-indexing-method 'alien)
+;;   (setq projectile-globally-ignored-directories '("elpa" "emacs-cache" ".git"))
+;;   (projectile-mode +1))
 
-(use-package counsel-projectile
-  :ensure t
-  :after (projectile)
-    :init (counsel-projectile-mode))
+;; (use-package counsel-projectile
+;;   :ensure t
+;;   :after (projectile ivy) ; 确保在 projectile 和 ivy 加载后再激活
+;;   :config
+;;   (counsel-projectile-mode 1)
+  
+  ;; 核心：让 counsel-projectile 明确使用我们的拼音匹配器
+  ;; (add-to-list 'ivy-re-builders-alist '(counsel-projectile-find-file . my-ivy-re-builder-pinyin))
+  ;; (add-to-list 'ivy-re-builders-alist '(counsel-projectile-find-dir . my-ivy-re-builder-pinyin))
+  ;; (add-to-list 'ivy-re-builders-alist '(counsel-projectile-switch-project . my-ivy-re-builder-pinyin)))
 
 
 ;(require 'treemacs)

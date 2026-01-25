@@ -3,9 +3,9 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored"
- (filename . "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org")
- (front-context-string . "** TODO ESC多重出发操")
- (rear-context-string)
- (position . 9)
- (last-modified 26996 44493 631216 0))
+ (filename . "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/note.org")
+ (front-context-string . "**** 好用的快捷键 M-h ")
+ (rear-context-string . " 2026-01-25 星期日\n")
+ (position . 597)
+ (last-modified 26998 14894 184160 0))
 )

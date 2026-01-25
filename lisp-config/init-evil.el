@@ -101,7 +101,9 @@
 
 
     ;; 项目管理
-    "pf" 'projectile-find-file           ;; 在项目中查找文件
+    "pf" 'counsel-projectile-find-file           ;; 在项目中查找文件
+    ;; 绑定到一个新的快捷键，比如 "ps" (Project Super)
+    "pa" 'my-project-search-all-files
     "pd" 'projectile-dired            ;; 在项目中查找目录
     "pr" 'projectile-recentf             ;; 最近项目文件
     "pg" 'projectile-ripgrep                ;; grep搜索项目文件
@@ -171,25 +173,17 @@
 (define-key evil-normal-state-map (kbd "M-<tab>") 'my-search-and-tab)
 (define-key evil-insert-state-map (kbd "M-<tab>") 'my-search-and-tab)
 
-(with-eval-after-load 'org
-  ;; 1. 确保在 Org 模式的正文中，Tab 不会强制按缩进
-  (setq org-adapt-indentation nil)
 
-  ;; 2. 定义 Evil 插入模式下的 TAB 行为
-  ;; 在 Insert 模式下，强制行插入空格（或缩进）的操作，而不是折叠
-  (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
-  
-  ;; 3. 设定缩进的宽度为 4 个空格
-  (setq-default tab-width 4)
-  (setq-default indent-tabs-mode nil) ; 使用空格代替 Tab 字符
-  
-  ;; 4. (可选) 如果你希望在 Insert 模式下遇到纲标题依然能折叠，可以用这个：
-  ;; (define-key evil-insert-state-map (kbd "TAB") 
-  ;;             (lambda () (interactive)
-  ;;               (if (org-at-heading-p) 
-  ;;                   (org-cycle) 
-  ;;                 (tab-to-tab-stop))))
+;; ======================================================
+;; -----------evil 深度定制 映射-------------------------
+;; ======================================================
+(with-eval-after-load 'evil
+  ;; --- 1. Normal 模式定制 ---
+  ;; H 跳到行首第一个非空字符，L 跳到行尾
+  (define-key evil-normal-state-map (kbd "H") 'evil-first-non-blank)
+  (define-key evil-normal-state-map (kbd "L") 'evil-last-non-blank)
 )
+
 
 
 (provide 'init-evil)

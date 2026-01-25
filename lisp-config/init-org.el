@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;;; lisp-config/init-org.el
 (defvar org-default-notes-file nil)
 ;; 禁用 org-element 在非 Org 缓冲区运行时的警告弹出
@@ -315,5 +316,99 @@
   :config
   (setq org-download-link-format "[[file:%s]]")
   (add-hook 'org-mode-hook (lambda () (setq org-download-image-dir "./images"))))
+
+
+;; ===================tab 相关配置===============================   
+ ;; 1. 设置全局默认缩进宽度为 4
+(setq-default tab-width 4)
+
+;; 2. 强制使用空格代替 Tab 字符 (推荐，避免在不同编辑器下乱码)
+(setq-default indent-tabs-mode nil)
+
+;; 3. 针对特定的编程模式或 Org-mode 进一步微调
+(setq-default standard-indent 4)
+
+;; 4. 如果你希望 Org-mode 的代码块也遵循 4 空格
+(with-eval-after-load 'org
+  (setq org-edit-src-content-indentation 4) ; 代码块内容缩进
+  (setq org-src-tab-acts-natively t))        ; TAB 在代码块内表现得像原生语言
+
+(with-eval-after-load 'org
+  (defun my-org-smart-tab ()
+    (interactive)
+    (cond
+     ;; 1. 优先尝试 Yasnippet 展开模板
+     ((and (bound-and-true-p yas-minor-mode)
+           (yas-expand))
+      t)
+     ;; 2. 如果在表格里，执行表格内跳转（自动对齐并跳到下个单元格）
+     ((org-at-table-p)
+      (org-table-next-field))
+     ;; 3. 如果在标题行，执行折叠/展开循环
+     ((org-at-heading-p)
+      (org-cycle))
+     ;; 4. 以上皆非时，执行普通的缩进（插入 4 个空格）
+     (t
+      (tab-to-tab-stop))))
+
+  ;; 绑定到 Evil 插入模式
+  (define-key evil-insert-state-map (kbd "TAB") #'my-org-smart-tab)
+  ;; 绑定到 Org 模式本身的 TAB（有些场景下 Evil 会 fallback 回去）
+  (define-key org-mode-map (kbd "TAB") #'my-org-smart-tab))
+;;=================================================================
+;; ---------------evil- surround---------------------------------
+;;=================================================================
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode 1)
+  
+  ;; 为 Org-mode 自定义快捷符号
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (push '(?b . ("*" . "*")) evil-surround-pairs-alist) ; b 代表 bold
+              (push '(?k . ("~" . "~")) evil-surround-pairs-alist) ; k 代表 code
+              (push '(?v . ("=" . "=")) evil-surround-pairs-alist) ; v 代表 verbatim
+              (push '(?s . ("+" . "+")) evil-surround-pairs-alist) ; s 代表 strike
+              (push '(?i . ("/" . "/")) evil-surround-pairs-alist) ; i 代表 italic
+              (push '(?u . ("_" . "_")) evil-surround-pairs-alist))))
+
+(with-eval-after-load 'org
+  ;; 核心函数：带空格检查的包裹
+  (defun my-org-smart-wrap (char)
+    "在包裹 CHAR 的同时，智能处理中文字符间的空格。"
+    (let* ((beg (region-beginning))
+           (end (region-end))
+           (char-before (char-before beg))
+           (char-after (char-after end)))
+      ;; 1. 处理结束位置：如果后面紧跟中文或非空白字符，插入空格
+      (save-excursion
+        (goto-char end)
+        (insert char)
+        (unless (or (eobp) ;; 文件末尾
+                    (memq (char-after) '(?\s ?\t ?\n ?\r)) ;; 已经是空格
+                    (memq (char-after) '(?点 ?, ?. ?? ?! ?: ?; ?\) ?\] ?\}))) ;; 标点
+          (insert " ")))
+      ;; 2. 处理起始位置：如果前面是中文或非空白字符，插入空格
+      (save-excursion
+        (goto-char beg)
+        (unless (or (bobp) ;; 文件开头
+                    (memq (char-before) '(?\s ?\t ?\n ?\r)) ;; 已经是空格
+                    (memq (char-before) '(?\( ?\[ ?\{))) ;; 标点
+          (insert " "))
+        (insert char))
+      (deactivate-mark)))
+
+  ;; 绑定快捷键 (使用宏确保字符正确传入)
+  (let ((bindings '(("M-b" . "*") ("M-i" . "/") ("M-u" . "_")
+                    ("M-s" . "+") ("M-k" . "~") ("M-v" . "="))))
+    (dolist (binding bindings)
+      (let ((key (car binding))
+            (c (cdr binding)))
+        (define-key evil-visual-state-map (kbd key)
+          `(lambda () (interactive) (my-org-smart-wrap ,c)))
+        ;; 插入模式下如果没选区，还是用简单的双写逻辑
+        (define-key evil-insert-state-map (kbd key)
+          `(lambda () (interactive) (insert ,c ,c) (backward-char 1)))))))
 
 (provide 'init-org)

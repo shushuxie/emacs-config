@@ -25,15 +25,47 @@
   ;(load-theme 'tsdh-dark t))
 
 ;; Ivy / Counsel 交互配置
+;; 2. 增强后的 Ivy 配置
 (use-package ivy
+  :ensure t
   :init (ivy-mode 1)
   :custom
   (ivy-use-virtual-buffers t)
   (ivy-count-format "(%d/%d) ")
-  (setq ivy-heig 20)
+  (ivy-height 20)
+  :config
+  ;; --- 1. 定义拼音逻辑 (保持不变) ---
+  (defun my-ivy-cregexp-helper (str)
+    (if (string-match-p "^[[:ascii:]]+$" str)
+        (let ((regexp (pinyinlib-build-regexp-string str)))
+          (if (stringp regexp) regexp (ivy--regex-plus str)))
+      (ivy--regex-plus str)))
+
+  (defun my-ivy-re-builder-pinyin (str)
+    (or (my-ivy-cregexp-helper str) (ivy--regex-plus str)))
+
+  ;; --- 2. 核心：大一统匹配规则 ---
+  ;; 把所有相关的函数名全部塞进去
+  (setq ivy-re-builders-alist
+        '((counsel-projectile-find-file . my-ivy-re-builder-pinyin)
+          (counsel-projectile-find-dir . my-ivy-re-builder-pinyin)
+          (counsel-projectile-switch-project . my-ivy-re-builder-pinyin)
+          (projectile-find-file . my-ivy-re-builder-pinyin)
+          (read-file-name-internal . my-ivy-re-builder-pinyin)
+          (ivy-switch-buffer . my-ivy-re-builder-pinyin)
+          (swiper . my-ivy-re-builder-pinyin)
+          (counsel-find-file . my-ivy-re-builder-pinyin) ;; 顺便把普通的 find-file 也加了
+          (t . ivy--regex-plus))) ; 默认
+
   :bind
   ("C-s" . swiper-isearch)
   ("C-x b" . ivy-switch-buffer))
+
+(use-package counsel-projectile
+  :ensure t
+  :after (projectile ivy)
+  :config
+  (counsel-projectile-mode 1))
 
 (use-package counsel
   :config (counsel-mode 1)
@@ -94,8 +126,22 @@
 (setq avy-background t)
 (setq avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)) ;; 左手主行编码
 
+;; =============================switch buffer 支持拼音===============
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+(defun completion--regex-pinyin (str)
+  "把输入的 STR 转换为拼音正则表达式。"
+  (orderless-regexp (pinyinlib-build-regexp-string str)))
+
+(add-to-list 'orderless-matching-styles 'completion--regex-pinyin)
 
 
+;; ========================================================
+;; -----------代码补全-------------------------
+;; ========================================================
 (use-package ivy-posframe
   :init
   (ivy-posframe-mode 1)
@@ -129,9 +175,13 @@
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-center-content t)
-  (setq dashboard-items '((recents  . 10)
+  (setq dashboard-items '((recents  . 12)
                           (agenda   . 5)))
-
+    ;; --- 3. 排除 bookmarks ---
+  ;; 注意：一定要在 recentf 层面排除，dashboard 才会消失
+  (with-eval-after-load 'recentf
+    (add-to-list 'recentf-exclude (expand-file-name "bookmarks" user-emacs-directory)))
+  
   ;; --- 2. 核心：只截取文件名（不改任何间距） ---
   (advice-add 'dashboard-insert-recents :around
               (lambda (orig-fun list-size)

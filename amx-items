@@ -1,13 +1,13 @@
 
 ;; ----- amx-history -----
 (
- set-input-method
+ load-theme
  rime-select-schema
- rime-deploy
- rime-open-schema
- rime-compile-module
- package-install
- emacs-version
+ set-input-method
+ projectile-invalidate-cache
+ projectile-discover-projects-in-search-path
+ counsel-projectile-find-file
+ projectile-add-known-project
 )
 
 ;; ----- amx-data -----
@@ -30,7 +30,7 @@
  (package-autoremove . 18)
  (all-the-icons-install-fonts . 2)
  (lsp . 4)
- (load-theme . 295)
+ (load-theme . 303)
  (customize . 2)
  (theme-choose-variant . 1)
  (list-faces-display . 2)
@@ -159,19 +159,19 @@
  (swiper-all . 2)
  (counsel-find-file . 3)
  (key-chord-mode . 2)
- (projectile-find-file . 3)
+ (projectile-find-file . 4)
  (desktop-read . 2)
  (desktop-save . 5)
  (projectile-find-dir . 1)
- (counsel-projectile-find-file . 1)
+ (counsel-projectile-find-file . 4)
  (pdf-tools-install . 1)
  (pdf-tools-toggle-debug . 1)
  (dired-number-of-marked-files . 1)
  (treemacs-resort . 9)
- (projectile-switch-project . 3)
+ (projectile-switch-project . 8)
  (projectile-find-file-dwim . 1)
  (projectile-vc . 1)
- (projectile-add-known-project . 2)
+ (projectile-add-known-project . 7)
  (org-edit-agenda-file-list . 1)
  (treemacs-TAB-action . 2)
  (treemacs-switch-workspace . 1)
@@ -194,16 +194,18 @@
  (find-function . 3)
  (dashboard-refresh-buffer . 1)
  (treemacs-find-file . 8)
- (projectile-invalidate-cache . 5)
+ (projectile-invalidate-cache . 8)
  (projectile-ripgrep . 7)
  (dirvish-find-file-horizontal . 1)
  (dirvish . 6)
  (rime-compile-module . 7)
- (rime-select-schema . 22)
+ (rime-select-schema . 25)
  (rime-deploy . 22)
  (rime-mode . 5)
- (set-input-method . 32)
+ (set-input-method . 33)
  (rime-open-schema . 3)
  (evil-ex . 1)
  (emacs-version . 2)
+ (projectile-clear-known-projects . 1)
+ (projectile-discover-projects-in-search-path . 1)
 )

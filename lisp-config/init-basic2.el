@@ -143,12 +143,12 @@
 	("记录" . ?j)
 	("思考" . ?t)
 	("总结" . ?z)
+	("社会" . ?s)
 	(:endgroup)
 
 	(:startgroup)
 	;; 领域
 	("编程" . ?c)
-	("emacs" . ?e)
 	("算法" . ?a)
 	("工具" . ?g)
 	("阅读" . ?r)
@@ -235,7 +235,6 @@
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 
-
 ;; 保存桌面start
 (use-package desktop
   :init
@@ -264,8 +263,6 @@
   (define-key treemacs-mode-map (kbd "<tab>") #'treemacs-TAB-action)
   (define-key treemacs-mode-map (kbd "TAB") #'treemacs-TAB-action)
   (define-key treemacs-mode-map (kbd "C-i") #'treemacs-TAB-action))
-
-
 
 ;; 1. 确保 history 文件夹存在
 (let ((history-dir (expand-file-name "emacs-cache/" user-emacs-directory)))
@@ -406,10 +403,6 @@
   ;; 增加一点缩进宽度，让绿色引导线更明显
   (setq dired-subtree-line-prefix "    ┃ "))
 
-;;===========================================================
-;;---------* emacs-rime 配置------------------------------
-;;===========================================================
-
 
 ;;;====================================================
 ;;---------------翻译插件--------------------------
@@ -417,14 +410,89 @@
 
 (use-package fanyi
   :ensure t
-  :bind (;; 绑定常用快捷键
-         ("C-c t" . fanyi-dwim)      ; 自动识别：有选区翻选区，没选区翻单词
-         ("C-c f" . fanyi-dwim))
-  :custom
-  ;; 配置查词源：有道词典、海词、金山词霸
-  (fanyi-providers '(fanyi-youdao-thesaurus-provider 
-                     fanyi-haici-provider 
-                     fanyi-longman-provider)))
+  :bind ("C-c t" . fanyi-dwim)
+  :config
+  ;; 1. 强制在 Evil 的 normal 和 motion 状态下都把 q 给 fanyi 用
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal fanyi-mode-map (kbd "q") 'quit-window)
+    (evil-define-key 'motion fanyi-mode-map (kbd "q") 'quit-window)
+    ;; 强制 fanyi-mode 启动时使用 motion 状态（更适合只读页面）
+    (evil-set-initial-state 'fanyi-mode 'motion))
+
+  ;; 2. 普通绑定作为兜底
+  (define-key fanyi-mode-map (kbd "q") 'quit-window)
+
+  ;; 3. 自动跳转：翻译完后光标自动跳到翻译窗口
+  (defun my-fanyi-jump-to-window ()
+    (let ((win (get-buffer-window "*fanyi*")))
+      (when win 
+        (select-window win)
+        ;; 确保跳转过去后真的是 motion 状态，双重保险
+        (when (fboundp 'evil-motion-state)
+          (evil-motion-state)))))
+  
+  (add-hook 'fanyi-show-fontification-hook #'my-fanyi-jump-to-window))
+
+
+(use-package shackle
+  :ensure t
+  :init (shackle-mode 1)
+  :config
+  ;; 规定 *fanyi* 窗口出现在底部，占用 0.4 的比例，按 ESC 就能关
+  (setq shackle-rules '(("*fanyi*" :select t :align t :size 0.4 :autoclose t))))
+
+;;============================================================
+;; --------------------rime 配置 输入法-----------------------
+;;============================================================
+(use-package posframe :ensure t)
+
+(setq rime-librime-root "/opt/homebrew")
+  ;; 1. 这一行必须放在 :init 块，确保 Emacs 启动时就知道默认输入法
+ (setq default-input-method "rime")
+ (use-package rime
+  :ensure t
+  :init
+  :config
+  ;; 2. 暴力解决：只要进入插入模式，就强行激活 Rime
+  (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "rime"))) 
+  (setq rime-user-data-dir "/Users/xieshuqiang/Library/Rime")
+   ;;【关键配置】开启 posframe 效果
+  (setq rime-show-candidate 'posframe)  
+  ;; 自动处理模式切换：从 Normal 进入 Insert 时尝试恢复输入法状态
+  (add-hook 'evil-insert-state-entry-hook #'rime-force-enable)
+  ;; 3. 强制指定默认方案为自然码
+  (setq rime-default-scheme "double_pinyin")) 
+
+(with-eval-after-load 'rime
+  (setq rime-disable-predicates
+        '(
+          ;; 代码里不用中文
+          rime-predicate-prog-in-code-p
+          ;; 英文单词中不用中文中文
+          rime-predicate-after-alphabet-char-p
+          )))
+
+
+;; =========================================================
+;; --------------hydra 看板配置，快捷键 菜单---------------
+;; =========================================================
+(defhydra hydra-surround (:color blue :hint nil)
+  "
+  Surround 助手:
+  _d_ 删除包裹    _c_ 修改包裹   
+  _p_ 加括号 ()   _s_ 加中括号 []  _q_ 加引号 \"\"
+  "
+  ("d" (call-interactively 'evil-surround-delete))
+  ("c" (call-interactively 'evil-surround-change))
+  ;; 常用成对符号
+  ("p" (my-org-smart-wrap "("))
+  ("s" (my-org-smart-wrap "["))
+  ("a" (my-org-smart-wrap "{"))
+  ("q" nil "退出" :exit t))
+
+;; 绑定一个启动键，比如 M-o
+(global-set-key (kbd "M-o") 'hydra-surround/body)
+
 
 ;; explore file
 (provide 'init-basic2)
