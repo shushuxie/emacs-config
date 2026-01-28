@@ -310,17 +310,13 @@
   :ensure t
   :config
   (dirvish-override-dired-mode)
-  ;; 不要直接 require subtree，改用全局初始化
-  (dirvish-peek-mode) ; 开启预览
-  ;; 尝试使用这个属性开启 subtree 支持
-  (setq dirvish-attributes '(git-msg file-size icons subtree-state))
-  
   :bind
-  (:map dirvish-mode-map
-        ;; 如果那个命令找不到，我们用 Dired 原生的展开替代
+   (:map dirvish-mode-map
+         ;; 如果那个命令找不到，我们用 Dired 原生的展开替代
         ("TAB" . dired-subtree-toggle) 
-        ("h"   . dired-up-directory)
-        ("l"   . dired-find-file)))
+       ("h"   . dired-up-directory)
+      ("l"   . dired-find-file))
+)
 (with-eval-after-load 'dired
   (require 'dired-x) ; 必须加载这个扩展才能用 omit 功能
   (setq dired-omit-files 
@@ -328,10 +324,7 @@
 
 (add-hook 'dired-mode-hook #'dired-omit-mode)
 
-;; 3. 强力过滤垃圾文件（undo-tree 等）
-(with-eval-after-load 'dired
-  (setq dired-omit-files (concat dired-omit-files "\\|^\\..*$\\|\\.~undo-tree~$"))
-  (add-hook 'dired-mode-hook #'dired-omit-mode))
+(add-hook 'dirvish-mode-hook (lambda () (display-line-numbers-mode -1)))
 
 (with-eval-after-load 'dired
   (require 'dired-x) ; 必须加载 dired-x 才能使用 omit 功能
@@ -350,12 +343,25 @@
   (evil-define-key 'normal dirvish-mode-map (kbd "RET") 'dired-find-file))
 
 ;; 确保在 evil 加载后再进行按键绑定
+;; 确保在 evil 加载后再进行按键绑定
 (with-eval-after-load 'evil
   (with-eval-after-load 'dirvish
     ;; 修复 Enter 键不能打开文件的问题
     (evil-define-key 'normal dirvish-mode-map (kbd "RET") 'dired-find-file)
     (evil-define-key 'normal dirvish-mode-map (kbd "l") 'dired-find-file)
-    (evil-define-key 'normal dirvish-mode-map (kbd "h") 'dired-up-directory)))
+    (evil-define-key 'normal dirvish-mode-map (kbd "h") 'dired-up-directory)
+    ;; 添加 jk 映射为上下
+    (evil-define-key 'normal dirvish-mode-map (kbd "j") 'dired-next-line)
+    (evil-define-key 'normal dirvish-mode-map (kbd "k") 'dired-previous-line)))
+
+(setq dirvish-reuse-session t) ; 尽量重用 session
+(setq dirvish-use-dedicated-window nil) ; 禁用专用窗口（如果版本支持此变量）
+
+(with-eval-after-load 'dirvish
+  (define-key dirvish-mode-map (kbd "RET") 'dired-find-file)
+  ;; 如果是在 Evil 模式下，强制使用这个：
+  (evil-define-key 'normal dirvish-mode-map (kbd "RET") 
+    (lambda () (interactive) (set-window-dedicated-p (selected-window) nil) (dired-find-file))))
 
 (with-eval-after-load 'dired
   (require 'dired-x)
@@ -366,42 +372,45 @@
 ;; dird 行号关闭
 (add-hook 'dirvish-mode-hook (lambda () (display-line-numbers-mode -1)))
 
+
+
+
 ;; ---------------subtree 修饰---------------
 
-(with-eval-after-load 'dired-subtree
-  ;; 1. 增加物理缩进：让子目录内容明显右移
-  (setq dired-subtree-line-prefix "    ┃ ") 
+;; (with-eval-after-load 'dired-subtree
+;;   ;; 1. 增加物理缩进：让子目录内容明显右移
+;;   (setq dired-subtree-line-prefix "    ┃ ") 
   
-  ;; 2. 这里的重点：强制子目录在插入时也运行过滤钩子
-  (setq dired-subtree-use-filter t)
+;;   ;; 2. 这里的重点：强制子目录在插入时也运行过滤钩子
+;;   (setq dired-subtree-use-filter t)
   
-  ;; 3. 视觉补救：让子目录的文件名颜色变浅一点，和外层区分开
-  (custom-set-faces
-   '(dired-subtree-depth-1-face ((t (:foreground "#999999" :background nil))))))
+;;   ;; 3. 视觉补救：让子目录的文件名颜色变浅一点，和外层区分开
+;;   (custom-set-faces
+;;    '(dired-subtree-depth-1-face ((t (:foreground "#999999" :background nil))))))
 
-(defun my/clean-subtree-garbage ()
-  "强制清理 Subtree 展开后的隐藏文件"
-  (dired-omit-mode 1)           ; 确保 Omit 模式是开启的
-  (dired-omit-expunge))         ; 立即执行物理隐藏
+;; (defun my/clean-subtree-garbage ()
+;;   "强制清理 Subtree 展开后的隐藏文件"
+;;   (dired-omit-mode 1)           ; 确保 Omit 模式是开启的
+;;   (dired-omit-expunge))         ; 立即执行物理隐藏
 
-(add-hook 'dired-subtree-after-insert-hook #'my/clean-subtree-garbage)
+;; (add-hook 'dired-subtree-after-insert-hook #'my/clean-subtree-garbage)
 
-;; 增大行间距，这在终端里能显著提升辨认度
-(setq-default line-spacing 0.2)
+;; ;; 增大行间距，这在终端里能显著提升辨认度
+;; (setq-default line-spacing 0.2)
 
-(with-eval-after-load 'dired-subtree
-  (custom-set-faces
-   ;; 1. 将 Subtree 展开部分的引导线和文件名设为绿色
-   ;; :foreground "ForestGreen" 适合白色背景，既清晰又不刺眼
-   '(dired-subtree-depth-1-face ((t (:foreground "ForestGreen" :background nil :bold t))))
-   '(dired-subtree-depth-2-face ((t (:foreground "DarkGreen" :background nil :bold t))))
-   '(dired-subtree-depth-3-face ((t (:foreground "LimeGreen" :background nil :bold t))))
+;; (with-eval-after-load 'dired-subtree
+;;   (custom-set-faces
+;;    ;; 1. 将 Subtree 展开部分的引导线和文件名设为绿色
+;;    ;; :foreground "ForestGreen" 适合白色背景，既清晰又不刺眼
+;;    '(dired-subtree-depth-1-face ((t (:foreground "ForestGreen" :background nil :bold t))))
+;;    '(dired-subtree-depth-2-face ((t (:foreground "DarkGreen" :background nil :bold t))))
+;;    '(dired-subtree-depth-3-face ((t (:foreground "LimeGreen" :background nil :bold t))))
    
-   ;; 2. 顺便把引导线颜色也强化一下
-   '(dired-subtree-line-prefix-face ((t (:foreground "ForestGreen")))))
+;;    ;; 2. 顺便把引导线颜色也强化一下
+;;    '(dired-subtree-line-prefix-face ((t (:foreground "ForestGreen")))))
   
-  ;; 增加一点缩进宽度，让绿色引导线更明显
-  (setq dired-subtree-line-prefix "    ┃ "))
+;;   ;; 增加一点缩进宽度，让绿色引导线更明显
+;;   (setq dired-subtree-line-prefix "    ┃ "))
 
 
 ;;;====================================================
@@ -433,14 +442,36 @@
   
   (add-hook 'fanyi-show-fontification-hook #'my-fanyi-jump-to-window))
 
-
+;;==================buffer 管理============================== 
 (use-package shackle
   :ensure t
-  :init (shackle-mode 1)
+  :init
+  (setq shackle-rules
+        '(
+          ;; 使用 :regexp t 确保正则生效
+          ("\\*fanyi\\*" :regexp t :select t :align 'bottom :size 0.4 :autoclose t)
+          ("\\*Help\\*" :regexp t :select t :align 'right :size 0.4)
+          ("\\*Warnings\\*" :regexp t :select nil :align 'bottom :size 0.3)
+          ("*Messages*" :select nil :align 'bottom :size 0.25) ; 固定名字可不用正则
+          ("\\*Compile-Log\\*" :regexp t :align 'bottom :size 0.3)
+          ("\\*Async Shell Command\\*" :regexp t :align 'bottom :size 0.3)
+          ))
   :config
-  ;; 规定 *fanyi* 窗口出现在底部，占用 0.4 的比例，按 ESC 就能关
-  (setq shackle-rules '(("*fanyi*" :select t :align t :size 0.4 :autoclose t))))
+  (shackle-mode 1))
 
+;; 修复 Messages 窗口 q 退出
+(with-eval-after-load 'evil
+  ;; 1. 定义一个函数来强制覆盖绑定
+  (defun my-force-q-to-quit-messages ()
+    (evil-local-set-key 'normal (kbd "q") #'quit-window))
+
+  ;; 2. 将此函数挂载到 messages-buffer-mode
+  (add-hook 'messages-buffer-mode-hook #'my-force-q-to-quit-messages)
+
+  ;; 3. 特殊补丁：针对可能已经存在的 *Messages* 缓冲区立即生效
+  (when (get-buffer "*Messages*")
+    (with-current-buffer "*Messages*"
+      (my-force-q-to-quit-messages))))
 ;;============================================================
 ;; --------------------rime 配置 输入法-----------------------
 ;;============================================================

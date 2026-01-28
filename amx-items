@@ -1,13 +1,13 @@
 
 ;; ----- amx-history -----
 (
+ abbrev-mode
+ dirvish-peek-mode
+ my/unlock-window
+ org-element-cache-reset
  load-theme
  rime-select-schema
  set-input-method
- projectile-invalidate-cache
- projectile-discover-projects-in-search-path
- counsel-projectile-find-file
- projectile-add-known-project
 )
 
 ;; ----- amx-data -----
@@ -90,7 +90,7 @@
  (org-cycle . 1)
  (org-version . 2)
  (customize-variable . 1)
- (org-element-cache-reset . 1)
+ (org-element-cache-reset . 2)
  (treemacs-advanced-helpful-hydra . 2)
  (treemacs-version . 1)
  (counsel-minibuffer-history . 1)
@@ -208,4 +208,7 @@
  (emacs-version . 2)
  (projectile-clear-known-projects . 1)
  (projectile-discover-projects-in-search-path . 1)
+ (my/unlock-window . 1)
+ (dirvish-peek-mode . 1)
+ (abbrev-mode . 1)
 )

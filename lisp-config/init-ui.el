@@ -212,7 +212,14 @@
 ;;===============================================
 ;;---------------dashbord 启动页-----------------
 ;;===============================================
-
+(use-package evil-terminal-cursor-changer
+  :ensure t
+  :if (not (display-graphic-p)) ; 仅在终端模式下加载
+  :config
+  (evil-terminal-cursor-changer-activate))
+(unless (display-graphic-p)
+  (require 'evil-terminal-cursor-changer)
+  (evil-terminal-cursor-changer-activate))
 
 
 ;; 其他 UI 增强

@@ -9,7 +9,7 @@
  '(org-agenda-files
    '("/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org" "/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/note.org" "/Users/xieshuqiang/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/journal.org"))
  '(package-selected-packages
-   '(key-chord liberime valign org-appear org-super-agenda evil-leader evil-escape evil ace-pinyin dirvish osx-clipboard org-download smart-mode-line quickrun ccls lsp-ui flycheck yasnippet company-box org-bullets good-scroll treemacs-projectile treemacs-magit treemacs-icons-dired git-gutter-fringe counsel-projectile ivy-posframe diff-hl doom-themes highlight-symbol rainbow-delimiters dashboard marginalia use-package-hydra undo-tree which-key winum mwim amx))
+   '(evil-terminal-cursor-changer key-chord liberime valign org-appear org-super-agenda evil-leader evil-escape evil ace-pinyin dirvish osx-clipboard org-download smart-mode-line quickrun ccls lsp-ui flycheck yasnippet company-box org-bullets good-scroll treemacs-projectile treemacs-magit treemacs-icons-dired git-gutter-fringe counsel-projectile ivy-posframe diff-hl doom-themes highlight-symbol rainbow-delimiters dashboard marginalia use-package-hydra undo-tree which-key winum mwim amx))
  '(safe-local-variable-values '((org-archive-location . "archives/journal-%Y.org::")))
  '(warning-suppress-log-types '((use-package))))
 (custom-set-faces
