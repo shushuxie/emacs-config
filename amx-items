@@ -1,36 +1,36 @@
 
 ;; ----- amx-history -----
 (
- abbrev-mode
- dirvish-peek-mode
- my/unlock-window
- org-element-cache-reset
- load-theme
- rime-select-schema
- set-input-method
+ org-version
+ package-refresh-contents
+ eshell
+ package-install
+ package-list-packages
+ toggle-debug-on-error
+ scan-illegal-rx-in-dir
 )
 
 ;; ----- amx-data -----
 (
- (eshell . 12)
+ (eshell . 13)
  (ace-select-window . 1)
  (ace-window-display-mode . 1)
  (ace-swap-window . 3)
  (ace-delete-window . 2)
- (package-list-packages . 30)
+ (package-list-packages . 31)
  (ace-jump-mode . 1)
  (ace-jump-word-mode . 1)
  (company-tabnine-install-binary . 1)
  (company-tabnine . 1)
  (company-mode . 2)
- (lsp-install-server . 2)
+ (lsp-install-server . 6)
  (dap-hydra . 2)
  (dap-debug-edit-template . 1)
  (lsp-mode . 9)
  (package-autoremove . 18)
  (all-the-icons-install-fonts . 2)
  (lsp . 4)
- (load-theme . 303)
+ (load-theme . 401)
  (customize . 2)
  (theme-choose-variant . 1)
  (list-faces-display . 2)
@@ -79,8 +79,8 @@
  (evil-mode . 2)
  (describe-face . 1)
  (customize-face . 1)
- (shell . 5)
- (package-refresh-contents . 10)
+ (shell . 7)
+ (package-refresh-contents . 12)
  (org-table-toggle-column-width . 1)
  (redraw-display . 1)
  (toggle-input-method . 3)
@@ -88,7 +88,7 @@
  (org-agenda-holidays . 1)
  (dired-display-file . 1)
  (org-cycle . 1)
- (org-version . 2)
+ (org-version . 4)
  (customize-variable . 1)
  (org-element-cache-reset . 2)
  (treemacs-advanced-helpful-hydra . 2)
@@ -118,11 +118,11 @@
  (dap-mode . 3)
  (compile . 3)
  (gdb . 2)
- (package-install . 12)
+ (package-install . 13)
  (dap-gdb-lldb-setup . 3)
  (dap-debug-restart . 1)
- (toggle-debug-on-error . 1)
- (quickrun . 1)
+ (toggle-debug-on-error . 7)
+ (quickrun . 52)
  (next-error . 1)
  (dap-debug . 34)
  (byte-compile-file . 2)
@@ -146,7 +146,7 @@
  (yas-insert-snippet . 4)
  (yas-new-snippet . 12)
  (yas-describe-tables . 2)
- (yas-reload-all . 3)
+ (yas-reload-all . 4)
  (vc-diff . 1)
  (org-download-clipboard . 5)
  (org-download-yank . 1)
@@ -184,7 +184,7 @@
  (find-file . 1)
  (check-parens . 2)
  (git-gutter:toggle . 1)
- (display-line-numbers-mode . 2)
+ (display-line-numbers-mode . 7)
  (git-gutter:update-all-windows . 1)
  (diff-hl-show-hunk . 3)
  (counsel-org-agenda-headlines . 1)
@@ -199,10 +199,10 @@
  (dirvish-find-file-horizontal . 1)
  (dirvish . 6)
  (rime-compile-module . 7)
- (rime-select-schema . 25)
+ (rime-select-schema . 27)
  (rime-deploy . 22)
  (rime-mode . 5)
- (set-input-method . 33)
+ (set-input-method . 37)
  (rime-open-schema . 3)
  (evil-ex . 1)
  (emacs-version . 2)
@@ -211,4 +211,10 @@
  (my/unlock-window . 1)
  (dirvish-peek-mode . 1)
  (abbrev-mode . 1)
+ (global-display-line-numbers-mode . 1)
+ (leetcode . 3)
+ (lsp-workspace-show-log . 1)
+ (lsp-doctor . 2)
+ (pyim-default-scheme . 4)
+ (scan-illegal-rx-in-dir . 1)
 )

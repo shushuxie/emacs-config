@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: leetcode-java-auto-class
+# key: lc
+# --
+import java.util.*;
+
+/**
+ * 题目：${1:题目名称}
+ * 难度：${2:|Easy,Medium,Hard|}
+ * 类型：${3:算法类型（如：数组/双指针/DFS/动态规划/二叉树等）}
+ * 日期：`(format-time-string "%Y-%m-%d")`
+ */
+class `(file-name-sans-extension (file-name-nondirectory (or (buffer-file-name) "")))` {
+
+    public ${4:void} ${5:solution}(${6:args}) {
+        $0
+    }
+
+    public static void main(String[] args) {
+        `(file-name-sans-extension (file-name-nondirectory (or (buffer-file-name) "")))` sol = new `(file-name-sans-extension (file-name-nondirectory (or (buffer-file-name) "")))`();
+        // TODO: 添加测试用例
+        System.out.println();
+    }
+}

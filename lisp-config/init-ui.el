@@ -1,5 +1,5 @@
-;;; lisp-config/init-ui.el
-;; 放在 init-ui.el 的最前面
+;;; 一些关于ui的配置
+;;; -----------------字体设置--------------------------------
 (condition-case err
     (set-face-attribute 'default nil :font "Hack Nerd Font Mono"
                         :height 160)
@@ -13,16 +13,20 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-;; 主题配置
-(use-package doom-themes
-  :ensure t
-  :config
-  ;(load-theme 'doom-one-light t))
-  ;(load-theme 'dracula t))
-  (load-theme 'leuven t))
-  ;(load-theme 'tango t))
-  ;(load-theme 'tsdh-light t))
-  ;(load-theme 'tsdh-dark t))
+;;; ------------------------主题配置--------------------
+ (use-package doom-themes
+   :ensure t
+   :config
+   ;(load-theme 'doom-one-light t))
+   ;(load-theme 'dracula t))
+   ;(load-theme 'leuven t))
+   ;; (load-theme 'modus-vivendi t)) ; 深色
+    (load-theme 'modus-operandi t)) ; 浅色
+   ;(load-theme 'tsdh-light t))
+   ; (load-theme 'doom-tomorrow-day t))
+   ;(load-theme 'tsdh-dark t))
+
+
 
 ;; Ivy / Counsel 交互配置
 ;; 2. 增强后的 Ivy 配置
@@ -142,6 +146,17 @@
 ;; ========================================================
 ;; -----------代码补全-------------------------
 ;; ========================================================
+;; 1. 安装基础底层库
+(use-package posframe
+  :ensure t)
+
+(with-eval-after-load 'posframe
+  ;; 隐藏子帧的边缘线条，看起来更像原生浮窗
+  (setq posframe-arghandler
+        (lambda (buffer-or-name arg-name value)
+          (let ((info '(:internal-border-width 2 :left-fringe 0 :right-fringe 0)))
+            (or (plist-get info arg-name) value)))))
+
 (use-package ivy-posframe
   :init
   (ivy-posframe-mode 1)
@@ -212,15 +227,6 @@
 ;;===============================================
 ;;---------------dashbord 启动页-----------------
 ;;===============================================
-(use-package evil-terminal-cursor-changer
-  :ensure t
-  :if (not (display-graphic-p)) ; 仅在终端模式下加载
-  :config
-  (evil-terminal-cursor-changer-activate))
-(unless (display-graphic-p)
-  (require 'evil-terminal-cursor-changer)
-  (evil-terminal-cursor-changer-activate))
-
 
 ;; 其他 UI 增强
 (use-package winum :config (winum-mode 1))
@@ -231,5 +237,58 @@
 (with-eval-after-load 'doom-themes
   (set-face-attribute 'mode-line nil :height 1.2)
   (set-face-attribute 'mode-line-inactive nil :height 1.2))
+
+;;; ===== 安全折叠 + Org-element 稳定配置 =====
+
+(use-package outshine
+  :ensure t
+  :hook ((emacs-lisp-mode lisp-mode scheme-mode) . outshine-mode)
+  :bind (:map outshine-mode-map
+              ;; 直接在 outshine 自己的 map 里绑定，优先级最高
+              ("<tab>" . outshine-cycle)
+              ("TAB" . outshine-cycle))
+  :config
+  ;; 核心修复：强制设置简单的正则，防止旧版 Org 引擎在解析时崩溃
+  (setq outshine-regexp ";; [;]+ ")
+  
+  ;; 启用快捷命令
+  (setq outshine-use-speed-commands t)
+  
+  ;; 定义一个更安全的判断函数，不依赖 outshine-on-heading-p
+  (defun my-safe-outshine-check ()
+    (and (bound-and-true-p outshine-mode)
+         (looking-at-p (or outshine-regexp outline-regexp "^;;;+ "))))
+
+  ;; 修复 my-tab-handler (如果你还在用自定义的 TAB 处理函数)
+  (defun my-tab-handler ()
+    (interactive)
+    (cond
+     ((and (bound-and-true-p yas-minor-mode) (yas-expand)) t)
+     ;; 使用我们自己定义的 my-safe-outshine-check
+     ((my-safe-outshine-check) (outshine-cycle))
+     ((derived-mode-p 'org-mode) (org-cycle))
+     (t (indent-for-tab-command)))))
+
+(with-eval-after-load 'outshine
+  (defun my-force-outshine-tab ()
+    "在代码模式下强行执行折叠"
+    (interactive)
+    (if (outline-on-heading-p)
+        (outshine-cycle)
+      (indent-for-tab-command)))
+
+  ;; --- 针对 macOS GUI 的全键位覆盖 ---
+  (with-eval-after-load 'evil
+    ;; 覆盖 Normal 模式 (最关键)
+    (define-key evil-normal-state-map (kbd "TAB") #'my-force-outshine-tab)
+    (define-key evil-normal-state-map [tab] #'my-force-outshine-tab)
+    
+    ;; 覆盖 Insert 模式 (确保输入时也能折叠)
+    (define-key evil-insert-state-map (kbd "TAB") #'my-force-outshine-tab)
+    (define-key evil-insert-state-map [tab] #'my-force-outshine-tab)
+
+    ;; 覆盖 Motion 模式 (Evil 在某些特殊 Buffer 用的模式)
+    (define-key evil-motion-state-map (kbd "TAB") #'my-force-outshine-tab)
+    (define-key evil-motion-state-map [tab] #'my-force-outshine-tab)))
 
 (provide 'init-ui)

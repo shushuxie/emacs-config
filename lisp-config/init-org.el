@@ -68,6 +68,10 @@
         ("n" "Notes" entry (file+datetree "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/note.org")
          "* %?\n  记录于: %U\n  %i")
 
+      ("a" "Algorithm - 错题复盘" entry (file+headline "~/Documents/leetcode/Review.org" "错题集")
+                "* %^{题目名称} [%x]\n:PROPERTIES:\n:ID: %^{题目ID}\n:DIFFICULTY: %^{难度|简单|中等|困难}\n:TAGS: %^{标签}\n:END:\n\n** 错误原因\n- [ ] %?\n\n** 正确思路\n\n** 核心代码 (Java)\n#+BEGIN_SRC java\n\n#+END_SRC")
+
+
         ;; 【日志类】存入 iCloud/journal.org
         ("j" "Journal" entry 
          (file+datetree "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/journal.org")
@@ -318,43 +322,46 @@
   (add-hook 'org-mode-hook (lambda () (setq org-download-image-dir "./images"))))
 
 
-;; ===================tab 相关配置===============================   
- ;; 1. 设置全局默认缩进宽度为 4
+;;; ===================tab 相关配置===============================   
+;; 1. 基础缩进设置
 (setq-default tab-width 4)
-
-;; 2. 强制使用空格代替 Tab 字符 (推荐，避免在不同编辑器下乱码)
 (setq-default indent-tabs-mode nil)
 
-;; 3. 针对特定的编程模式或 Org-mode 进一步微调
-(setq-default standard-indent 4)
+;; 2. 编写防御性极强的智能 TAB
+(defun my-ultimate-tab ()
+  "完全防御版 TAB：Yasnippet -> Outshine -> Org -> Indent"
+  (interactive)
+  (let ((outshine-p (and (bound-and-true-p outshine-mode) 
+                         (outshine-on-heading-p)))
+        (org-p (and (derived-mode-p 'org-mode) 
+                    (org-at-heading-p))))
+    (cond
+     ;; 第一优先级：Yasnippet 展开
+     ((and (bound-and-true-p yas-minor-mode) (yas-expand)) t)
+     
+     ;; 第二优先级：如果是代码模式下的 Outshine 标题
+     (outshine-p (outshine-cycle))
+     
+     ;; 第三优先级：如果是真正的 Org 文件标题
+     (org-p (org-cycle))
+     
+     ;; 第四优先级：如果是 Org 表格
+     ((and (derived-mode-p 'org-mode) (org-at-table-p)) (org-table-next-field))
+     
+     ;; 默认：执行标准缩进
+     (t (indent-for-tab-command)))))
 
-;; 4. 如果你希望 Org-mode 的代码块也遵循 4 空格
-(with-eval-after-load 'org
-  (setq org-edit-src-content-indentation 4) ; 代码块内容缩进
-  (setq org-src-tab-acts-natively t))        ; TAB 在代码块内表现得像原生语言
+;; 3. 强制覆盖所有可能的 TAB 绑定，夺回控制权
+(with-eval-after-load 'evil
+  (define-key evil-insert-state-map (kbd "TAB") #'my-ultimate-tab)
+  (define-key evil-insert-state-map [tab] #'my-ultimate-tab))
 
-(with-eval-after-load 'org
-  (defun my-org-smart-tab ()
-    (interactive)
-    (cond
-     ;; 1. 优先尝试 Yasnippet 展开模板
-     ((and (bound-and-true-p yas-minor-mode)
-           (yas-expand))
-      t)
-     ;; 2. 如果在表格里，执行表格内跳转（自动对齐并跳到下个单元格）
-     ((org-at-table-p)
-      (org-table-next-field))
-     ;; 3. 如果在标题行，执行折叠/展开循环
-     ((org-at-heading-p)
-      (org-cycle))
-     ;; 4. 以上皆非时，执行普通的缩进（插入 4 个空格）
-     (t
-      (tab-to-tab-stop))))
+(global-set-key (kbd "TAB") #'my-ultimate-tab)
+(global-set-key [tab] #'my-ultimate-tab)
 
-  ;; 绑定到 Evil 插入模式
-  (define-key evil-insert-state-map (kbd "TAB") #'my-org-smart-tab)
-  ;; 绑定到 Org 模式本身的 TAB（有些场景下 Evil 会 fallback 回去）
-  (define-key org-mode-map (kbd "TAB") #'my-org-smart-tab))
+;; 4. 彻底解决 rx ** range error 的源头
+(with-eval-after-load 'outshine
+  (setq outshine-regexp ";; [;]+ "))
 ;;=================================================================
 ;; ---------------evil- surround---------------------------------
 ;;=================================================================

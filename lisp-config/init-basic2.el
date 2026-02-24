@@ -8,7 +8,7 @@
 (tool-bar-mode -1)                    ; 禁用工具栏
 (when (display-graphic-p) 
   (toggle-scroll-bar -1))             ; 禁用滚动条
-(global-display-line-numbers-mode 1)  ; 显示行号
+(global-display-line-numbers-mode -1)  ; 显示行号
 (setq display-line-numbers-type 'relative) ; 使用相对行号 (Evil用户必备)
 (column-number-mode t)                ; 在状态栏显示列号
 (global-hl-line-mode -1)              ; 禁用当前行高亮 (需要时设为 1)
@@ -373,46 +373,6 @@
 (add-hook 'dirvish-mode-hook (lambda () (display-line-numbers-mode -1)))
 
 
-
-
-;; ---------------subtree 修饰---------------
-
-;; (with-eval-after-load 'dired-subtree
-;;   ;; 1. 增加物理缩进：让子目录内容明显右移
-;;   (setq dired-subtree-line-prefix "    ┃ ") 
-  
-;;   ;; 2. 这里的重点：强制子目录在插入时也运行过滤钩子
-;;   (setq dired-subtree-use-filter t)
-  
-;;   ;; 3. 视觉补救：让子目录的文件名颜色变浅一点，和外层区分开
-;;   (custom-set-faces
-;;    '(dired-subtree-depth-1-face ((t (:foreground "#999999" :background nil))))))
-
-;; (defun my/clean-subtree-garbage ()
-;;   "强制清理 Subtree 展开后的隐藏文件"
-;;   (dired-omit-mode 1)           ; 确保 Omit 模式是开启的
-;;   (dired-omit-expunge))         ; 立即执行物理隐藏
-
-;; (add-hook 'dired-subtree-after-insert-hook #'my/clean-subtree-garbage)
-
-;; ;; 增大行间距，这在终端里能显著提升辨认度
-;; (setq-default line-spacing 0.2)
-
-;; (with-eval-after-load 'dired-subtree
-;;   (custom-set-faces
-;;    ;; 1. 将 Subtree 展开部分的引导线和文件名设为绿色
-;;    ;; :foreground "ForestGreen" 适合白色背景，既清晰又不刺眼
-;;    '(dired-subtree-depth-1-face ((t (:foreground "ForestGreen" :background nil :bold t))))
-;;    '(dired-subtree-depth-2-face ((t (:foreground "DarkGreen" :background nil :bold t))))
-;;    '(dired-subtree-depth-3-face ((t (:foreground "LimeGreen" :background nil :bold t))))
-   
-;;    ;; 2. 顺便把引导线颜色也强化一下
-;;    '(dired-subtree-line-prefix-face ((t (:foreground "ForestGreen")))))
-  
-;;   ;; 增加一点缩进宽度，让绿色引导线更明显
-;;   (setq dired-subtree-line-prefix "    ┃ "))
-
-
 ;;;====================================================
 ;;---------------翻译插件--------------------------
 ;;;====================================================
@@ -459,50 +419,70 @@
   :config
   (shackle-mode 1))
 
-;; 修复 Messages 窗口 q 退出
-(with-eval-after-load 'evil
-  ;; 1. 定义一个函数来强制覆盖绑定
-  (defun my-force-q-to-quit-messages ()
-    (evil-local-set-key 'normal (kbd "q") #'quit-window))
 
-  ;; 2. 将此函数挂载到 messages-buffer-mode
-  (add-hook 'messages-buffer-mode-hook #'my-force-q-to-quit-messages)
 
-  ;; 3. 特殊补丁：针对可能已经存在的 *Messages* 缓冲区立即生效
-  (when (get-buffer "*Messages*")
-    (with-current-buffer "*Messages*"
-      (my-force-q-to-quit-messages))))
-;;============================================================
-;; --------------------rime 配置 输入法-----------------------
-;;============================================================
-(use-package posframe :ensure t)
+(use-package popup
+  :ensure t)
 
-(setq rime-librime-root "/opt/homebrew")
-  ;; 1. 这一行必须放在 :init 块，确保 Emacs 启动时就知道默认输入法
- (setq default-input-method "rime")
- (use-package rime
+(use-package pyim
   :ensure t
+  :demand t
+  :bind
+  (("M-j" . toggle-input-method)
+   ("C-;" . pyim-delete-word-from-personal-buffer))
   :init
+  ;; 1. 在初始化阶段就声明默认输入法
+  (setq default-input-method "pyim")
   :config
-  ;; 2. 暴力解决：只要进入插入模式，就强行激活 Rime
-  (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "rime"))) 
-  (setq rime-user-data-dir "/Users/xieshuqiang/Library/Rime")
-   ;;【关键配置】开启 posframe 效果
-  (setq rime-show-candidate 'posframe)  
-  ;; 自动处理模式切换：从 Normal 进入 Insert 时尝试恢复输入法状态
-  (add-hook 'evil-insert-state-entry-hook #'rime-force-enable)
-  ;; 3. 强制指定默认方案为自然码
-  (setq rime-default-scheme "double_pinyin")) 
+  ;; 2. 核心：必须在 config 内部确保方案名称正确
+  (setq pyim-default-scheme 'ziranma-shuangpin)
 
-(with-eval-after-load 'rime
-  (setq rime-disable-predicates
-        '(
-          ;; 代码里不用中文
-          rime-predicate-prog-in-code-p
-          ;; 英文单词中不用中文中文
-          rime-predicate-after-alphabet-char-p
-          )))
+  ;; 3. 强制开启词库
+  (use-package pyim-basedict
+    :ensure t
+    :config (pyim-basedict-enable))
 
+  ;; 4. 终端显示方案
+  (require 'popup)
+  (setq pyim-page-tooltip 'popup)
+
+  ;; 5. 改进的自动切换：使用 lambda 并显式指定 "pyim"
+  ;; 我们添加一个延迟，确保 evil 已经完全切换进 insert 状态
+  (add-hook 'evil-insert-state-entry-hook 
+            (lambda () 
+              (set-input-method "pyim") ; 这一步比 activate-input-method 更直接
+              (setq pyim-default-scheme 'ziranma-shuangpin))) ; 再次确认方案
+
+  (add-hook 'evil-insert-state-exit-hook #'deactivate-input-method)
+
+  ;; 6. 断言逻辑
+  (setq-default pyim-english-input-switch-functions
+                '(pyim-probe-program-mode
+                  pyim-probe-after-code
+                  pyim-probe-isearch-mode)))
+ 
+;; --- 智能中英文切换断言修复 ---
+
+(defun my-pyim-probe-dashboard-scope ()
+  "如果处于 Dashboard 模式，强制英文。"
+  (derived-mode-p 'dashboard-mode))
+
+(defun my-pyim-probe-elisp-comment-start ()
+  "在 Elisp 模式下，如果光标在行首的分号上，强制英文。
+防止 ;;; 变成 ；；；"
+  (when (derived-mode-p 'emacs-lisp-mode)
+    (save-excursion
+      (skip-chars-backward ";")
+      (bolp))))
+
+(setq-default pyim-english-input-switch-functions
+              '(my-pyim-probe-dashboard-scope        ; 1. Dashboard 强制英文
+                my-pyim-probe-elisp-comment-start    ; 2. 防止分号标题变中文
+                pyim-probe-program-mode              ; 3. 编程模式默认英文
+                pyim-probe-isearch-mode              ; 4. 搜索默认英文
+                ;; 如果你希望在注释里打中文，保留下面这个，
+                ;; 但由于有了上面的 elisp-comment-start，它不会在行首触发
+                pyim-probe-after-code))
 
 ;; =========================================================
 ;; --------------hydra 看板配置，快捷键 菜单---------------
@@ -523,6 +503,13 @@
 
 ;; 绑定一个启动键，比如 M-o
 (global-set-key (kbd "M-o") 'hydra-surround/body)
+
+;; 支持鼠标
+
+;; 在 terminal Emacs (-nw) 中启用鼠标
+(xterm-mouse-mode 1)
+(mouse-wheel-mode 1)
+
 
 
 ;; explore file

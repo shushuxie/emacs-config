@@ -45,16 +45,6 @@
   (setq c-default-style "linux" 
         c-basic-offset 4))
 
-;; --- 5. 代码运行器 (Quickrun) ---
-(use-package quickrun
-  :bind ("<f5>" . quickrun)
-  :config
-  (quickrun-add-command "c/gcc"
-    '((:command . "gcc")
-      (:exec    . ("%c -o %e %s" "%e"))
-      (:description . "Compile C file with gcc and execute"))
-    :default "c"))
-
    ;; --- 6. Org-Babel 多语言执行 ---
   (with-eval-after-load 'org
     (org-babel-do-load-languages
@@ -133,5 +123,91 @@
           (lambda ()
             (setq-local tab-width 8)))
 
+;; ===================leetcode java 刷题==========================
+;; --- 1. Java 编程环境 (LSP + Java) ---
+(use-package lsp-mode
+  :ensure t
+  :hook (java-mode . lsp-deferred)
+  :commands lsp)
+
+;; lsp java 之前指定java 版本
+(setq lsp-java-java-path
+      "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java")
+
+(use-package lsp-java
+  :ensure t
+  :after lsp
+  :config
+  (setq lsp-java-server-install-dir "~/.emacs.d/.lsp/"
+        lsp-java-workspace-dir "~/.emacs.d/.lsp/workspace/"
+        lsp-java-java-path "/usr/bin/java"
+        lsp-java-vmargs
+        '("-Xms512m"
+          "-Xmx2g"
+          "-XX:+UseG1GC"
+          "-XX:MaxGCPauseMillis=200"
+          "-Dfile.encoding=UTF-8"))
+
+  ;; Apple Silicon 必须指定
+  (setq lsp-java-configuration-runtimes
+        '[(:name "JavaSE-17"
+           :path "/Library/Java/JavaVirtualMachines"
+           :default t)]))
+
+(setq lsp-java-jdtls-command
+      `("/usr/bin/java"
+        "-Declipse.application=org.eclipse.jdt.ls.core.id1"
+        "-Dosgi.bundles.defaultStartLevel=4"
+        "-Declipse.product=org.eclipse.jdt.ls.core.product"
+        "-Dlog.protocol=true"
+        "-Dlog.level=ALL"
+        "-Xms512m"
+        "-Xmx2g"
+        "-jar" ,(expand-file-name
+                 "plugins/org.eclipse.equinox.launcher_1.7.100.v20251111-0406.jar"
+                 "~/.emacs.d/.lsp/")
+        "-configuration" ,(expand-file-name
+                            "config_mac_arm"
+                            "~/.emacs.d/.lsp/")
+        "-data" ,(expand-file-name
+                  "workspace/"
+                  "~/.emacs.d/.lsp/")))
+
+
+;; --- 2. LeetCode 插件 ---=================================================
+(use-package leetcode
+  :ensure t
+  :custom
+  (leetcode-prefer-language "java")
+  (leetcode-save-solutions t)
+  (leetcode-directory "~/Documents/leetcode")) ; 存放代码和复盘笔记的根目录
+
+;; --- 3. 运行代码 (Quickrun) ---
+;; ===============================
+;; Quickrun Java 本地运行配置
+;; ===============================
+;; 1️⃣ 在 quickrun 加载之前，强制关闭临时文件机制（关键）
+(setq quickrun-use-tempfile nil)
+(setq quickrun-option-use-tempfile nil)
+
+(use-package quickrun
+  :ensure t
+  :bind ("C-c r" . quickrun)
+  :config
+  (quickrun-add-command "java"
+    '((:command . "sh")
+      ;; 逻辑：cd 目录 && 编译 && 运行 ; 无论结果如何都删掉生成的类文件
+      (:exec    . ("sh -c 'cd $(dirname %s) && javac -encoding UTF-8 $(basename %s) && java $(basename %s .java) ; rm -f $(basename %s .java).class'"))
+      (:tempfile . nil))
+    :default "java")
+
+  (setq quickrun-file-alist
+        (cons '("\\.java\\'" . "java")
+              (cl-remove-if (lambda (x) (string-match-p "\\.java\\'" (car x)))
+                            quickrun-file-alist))))
+
+;; 屏蔽 LSP 那些烦人的警告弹窗（终端里看这些很乱）
+(setq lsp-eldoc-render-all nil)
+(setq lsp-signature-auto-activate nil)
 
 (provide 'init-program)

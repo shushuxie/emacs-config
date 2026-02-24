@@ -26,8 +26,8 @@
 (fset 'evil-redirect-digit-argument 'ignore) ;; before evil-org loaded
 ;; evil 使tab失效
 (add-hook 'org-mode-hook 'my-org-evil-setup)
-(defun my-org-evil-setup ()
-  (define-key evil-normal-state-map (kbd "TAB") 'org-cycle))
+;; (defun my-org-evil-setup ()
+;;   (define-key evil-normal-state-map (kbd "TAB") 'org-cycle))
 
 (use-package evil-leader
   :ensure t
@@ -156,6 +156,9 @@
     "vv" 'org-toggle-inline-images       ;; 链接和图片切换
     "ee" 'eval-last-sexp                 ;; 执行elisp
     "zz" 'repeat                         ;; 重复操作,按z可以一直重复
+
+    "im" 'counsel-outline                  ;; 重复操作,按z可以一直重复
+
 
     ;; 书签
     "bm" 'bookmark-set                   ;; 设置书签
