@@ -1,13 +1,13 @@
 
 ;; ----- amx-history -----
 (
+ load-theme
  org-version
  package-refresh-contents
  eshell
  package-install
  package-list-packages
  toggle-debug-on-error
- scan-illegal-rx-in-dir
 )
 
 ;; ----- amx-data -----
@@ -30,7 +30,7 @@
  (package-autoremove . 18)
  (all-the-icons-install-fonts . 2)
  (lsp . 4)
- (load-theme . 401)
+ (load-theme . 404)
  (customize . 2)
  (theme-choose-variant . 1)
  (list-faces-display . 2)

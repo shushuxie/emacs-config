@@ -7,6 +7,11 @@
 auto-save-list/
 tramp
 .#*
+pyim/*
+pyim/dcache
+dirvish
+rime/*
+eclipse.jdt.ls
 
 ### --- 插件生成的缓存与历史 (重点) --- ###
 history/
@@ -18,6 +23,7 @@ projectile-bookmarks.eld
 knowledge/
 .lsp-session-v1
 .org-id-locations
+amx-items
 
 ### --- Undo-tree 专属干扰 --- ###
 *.~undo-tree~
