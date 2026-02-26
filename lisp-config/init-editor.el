@@ -1,29 +1,7 @@
 ;; -*- coding: utf-8 -*-
-;;; basic config include bootstra
 
-;; ==========================================
-;; 1. 界面与外观设置 (UI)
-;; ==========================================
-(setq inhibit-startup-message t)      ; 禁用启动闪屏
-(tool-bar-mode -1)                    ; 禁用工具栏
-(when (display-graphic-p) 
-  (toggle-scroll-bar -1))             ; 禁用滚动条
-(global-display-line-numbers-mode -1)  ; 显示行号
-(setq display-line-numbers-type 'relative) ; 使用相对行号 (Evil用户必备)
-(column-number-mode t)                ; 在状态栏显示列号
-(global-hl-line-mode -1)              ; 禁用当前行高亮 (需要时设为 1)
 
-;; 字体设置
-;;(set-face-attribute 'minibuffer-prompt nil :height 180) ; 提示符稍微大一点即可
-(when (display-graphic-p)
-  (defun my/minibuffer-font ()
-    (set-face-attribute 'default nil :height 150)
-    (set-face-attribute 'minibuffer-prompt nil :height 150))
-  (add-hook 'minibuffer-setup-hook #'my/minibuffer-font))
-
-;; ==========================================
-;; 2. 操作习惯设置 (Editing Behavior)
-;; ==========================================
+;;; ------------------操作习惯设置-------------------
 (fset 'yes-or-no-p 'y-or-n-p)         ; 将 yes/no 改为 y/n
 (setq confirm-kill-emacs #'yes-or-no-p) ; 退出时确认
 (electric-pair-mode t)                ; 自动补全括号
@@ -32,25 +10,15 @@
 (add-hook 'prog-mode-hook #'show-paren-mode) ; 编程模式高亮对应括号
 (add-hook 'prog-mode-hook #'hs-minor-mode)   ; 开启代码折叠
 
-;; ==========================================
-;; 3. 持久化与文件记录 (Persistence)
-;; ==========================================
+;;; ----------------------持久化与文件记录--------------
 (savehist-mode 1)                     ; 保存 Minibuffer 历史
 (save-place-mode 1)                   ; 记住上次打开文件时光标的位置
 (setq save-place-file (concat user-emacs-directory "places"))
 (setq-default save-place t)
 (setq create-lockfiles nil) ; 不再产生 .# 开头的临时锁定文件
 
-;; ==========================================
-;; 4. Org-mode 与 插件基础配置
-;; ==========================================
-(require 'org-tempo)                  ; 开启 <s Tab 快速插入代码块
-(setq org-confirm-babel-evaluate nil) ; 运行 Org 代码块时不询问确认
-(setq custom-safe-themes t)           ; 信任所有已安装的主题
 
-;; ==========================================
-;; 5. 系统编码
-;; ==========================================
+;;; ------------------------系统编码-----------------
 ;; 1. 语言环境设置
 (set-language-environment "UTF-8")
 ;; 2. 强制编码优先级，让 UTF-8 成为绝对首选
@@ -71,6 +39,7 @@
   ;; 确保粘贴时尝试以 utf-8 解码内容
   (setq-default selection-coding-system 'utf-8))
 
+;;; -------------------粘贴，剪贴板优化-----------------
 ;; 建议添加：纯文本粘贴函数
 ;; 如果遇到极个别顽固的乱码，可以用 M-x my-paste-plain-text 粘贴
 (defun my-paste-plain-text ()
@@ -78,40 +47,6 @@
   (interactive)
   (let ((coding-system-for-read 'utf-8))
     (insert (gui-get-selection 'CLIPBOARD 'COMPOUND_TEXT))))
-
-;; ==========================================
-;; 6. 调试与开发
-;; ==========================================
-(setq dap-lldb-debug-program '("/usr/local/bin/lldb-mi"))
-
-;; ==========================================
-;; 6. 系统相关
-;; ==========================================
-;; 提示音
-(require 'warnings)
-(add-hook 'after-init-hook
-          (lambda ()
-            (with-eval-after-load 'org
-              (add-to-list 'warning-suppress-types '(org-element-cache)))))
-;; 操作提示音关闭      
-(defun my-disable-bell-in-org-mode ()
-  "Disable bell in Org mode."
-  (setq-local ring-bell-function 'ignore))
-(add-hook 'org-mode-hook #'my-disable-bell-in-org-mode)
-
-;; 不要在当前目录生成 *~ 备份文件
-(setq make-backup-files nil)
-
-;; 不要在当前目录生成 #autosave# 交换文件
-(setq auto-save-default nil)
-
-;; 如果一定要备份，统一把它们丢进系统的临时文件夹
-(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
-
-;; 禁用 undo-tree 的自动保存历史功能（防止生成那些巨大的 .~undo-tree~ 文件）
-(with-eval-after-load 'undo-tree
-  (setq undo-tree-auto-save-history nil))
 
 ;;-----------------剪贴板，复制----------------
 (use-package osx-clipboard
@@ -127,109 +62,36 @@
 (setq select-enable-clipboard t)
 (setq select-enable-primary t)
 
-;; ==========================================
-;; 7. 全局快捷
-;; ==========================================
+;; -----------------系统相关，声音-----------------
+;; 提示音
+(require 'warnings)
+(add-hook 'after-init-hook
+          (lambda ()
+            (with-eval-after-load 'org
+              (add-to-list 'warning-suppress-types '(org-element-cache)))))
+;; 操作提示音关闭      
+(defun my-disable-bell-in-org-mode ()
+  "Disable bell in Org mode."
+  (setq-local ring-bell-function 'ignore))
+(add-hook 'org-mode-hook #'my-disable-bell-in-org-mode)
+
+;;; -----------------临时文件---------------------------
+;; 不要在当前目录生成 *~ 备份文件
+(setq make-backup-files nil)
+
+;; 不要在当前目录生成 #autosave# 交换文件
+(setq auto-save-default nil)
+
+;; 如果一定要备份，统一把它们丢进系统的临时文件夹
+(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+
+;; 禁用 undo-tree 的自动保存历史功能（防止生成那些巨大的 .~undo-tree~ 文件）
+(with-eval-after-load 'undo-tree
+  (setq undo-tree-auto-save-history nil))
+
+
 (global-set-key (kbd "M-/") 'hippie-expand);;自动补全
-(global-unset-key (kbd "C-j")) ; 释放 C-j，使其可以作为前缀键使用
-
-;; ===============================
-;; TAG标签功能
-;; ===============================
-(setq org-tag-alist
-      '(
-	(:startgroup)
-	;; 内容性质
-	("记录" . ?j)
-	("思考" . ?t)
-	("总结" . ?z)
-	("社会" . ?s)
-	(:endgroup)
-
-	(:startgroup)
-	;; 领域
-	("编程" . ?c)
-	("算法" . ?a)
-	("工具" . ?g)
-	("阅读" . ?r)
-	(:endgroup)
-
-	(:startgroup)
-	;; 状态/价值
-	("待整理" . ?d)
-	("重要" . ?i)
-	("长期" . ?l)
-	("个人" . ?p)
-	("情绪" . ?q)
-	(:endgroup)
-	))
-
-
-;; ==========================================
-;; mode line
-;; ==========================================
-;; ------------------------------------------
-;; 1. 暴力清理状态栏中的插件名 (Minor Mode Lighters)
-;; ------------------------------------------
-(defun my/clean-minor-mode-lighters ()
-  "强制删除状态栏中显示的所有 Minor Mode 缩写。"
-  (let ((quiet-modes '(yas-minor-mode 
-                       ivy-mode 
-                       company-mode 
-                       undo-tree-mode 
-                       flycheck-mode 
-                       git-gutter-mode 
-                       hs-minor-mode 
-                       projectile-mode
-                       eldoc-mode
-                       which-key-mode)))
-    (dolist (m quiet-modes)
-      (setq minor-mode-alist (assq-delete-all m minor-mode-alist)))))
-
-(add-hook 'after-init-hook #'my/clean-minor-mode-lighters)
-;; ------------------------------------------
-;; 2. 时间日期设置
-;; ------------------------------------------
-(setq display-time-format " %H:%M ")         ; 只显示 00:22 这种格式，因为后面已经有日期了
-(setq display-time-default-load-average nil) ; 禁用负载显示
-(setq display-time-day-and-date nil)         ; 禁用默认的日期（因为我们要自己排版）
-(display-time-mode 1)
-
-;; ------------------------------------------
-;; 3. 自定义状态栏布局 (极简版)
-;; ------------------------------------------
-(setq-default mode-line-format
-      '("%e"
-        mode-line-front-space
-        ;; 1. 状态与编码
-        " "
-        mode-line-mule-info
-        mode-line-modified
-        " "
-
-        ;; 2. 文件名与位置
-        mode-line-buffer-identification
-        "  "
-        mode-line-position
-
-        ;; 3. 模式信息 (例如 [ELisp/d])
-        "  [" (:eval (format-mode-line mode-name)) "] "
-
-        ;; 4. 弹簧：将后面的内容推向最右边
-        ;; 注意：如果你的 Git 分支名很长，可以把 35 这个数字调大一点
-        (:propertize " " display (space :align-to (- right 35)))
-
-        ;; 5. Git 信息 (VC Mode) - 动态颜色显示
-        (:eval (when vc-mode
-                 (let ((state-color (if (buffer-modified-p) 
-                                        "#F40009"   ; 已修改显示为暖红色
-                                      "#2ea44f")))  ; 干净状态显示为草绿色
-                   (propertize (format-mode-line vc-mode) 
-                               'face `(:foreground ,state-color :weight bold)))))
-        ;; 6. 日期时间 (年份放最后)
-        "  "
-        (:eval (format-time-string "%H:%M %Y-%m-%d"))
-        mode-line-end-spaces))
 
 ;;    Emacs      
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
@@ -303,9 +165,7 @@
 
 (savehist-mode 1)
 
-;;===========================================================
-;;---------* DIRD 配置 文件bgein *---------------------------
-;;===========================================================
+;;; ---------* DIRD 配置 文件bgein *---------------------------
 (use-package dirvish
   :ensure t
   :config
@@ -373,9 +233,7 @@
 (add-hook 'dirvish-mode-hook (lambda () (display-line-numbers-mode -1)))
 
 
-;;;====================================================
-;;---------------翻译插件--------------------------
-;;;====================================================
+;;; ---------------翻译插件--------------------------
 
 (use-package fanyi
   :ensure t
@@ -402,7 +260,7 @@
   
   (add-hook 'fanyi-show-fontification-hook #'my-fanyi-jump-to-window))
 
-;;==================buffer 管理============================== 
+;;; ==================buffer 管理============================== 
 (use-package shackle
   :ensure t
   :init
@@ -484,9 +342,7 @@
                 ;; 但由于有了上面的 elisp-comment-start，它不会在行首触发
                 pyim-probe-after-code))
 
-;; =========================================================
-;; --------------hydra 看板配置，快捷键 菜单---------------
-;; =========================================================
+;;; --------------hydra 看板配置，快捷键 菜单---------------
 (defhydra hydra-surround (:color blue :hint nil)
   "
   Surround 助手:
@@ -513,7 +369,7 @@
 
 
 ;; explore file
-(provide 'init-basic2)
+(provide 'init-editor)
 
 
 

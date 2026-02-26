@@ -1,4 +1,24 @@
 ;;; 一些关于ui的配置
+
+
+;;; ------------------ 1. 界面与外观设置 (UI)-------------
+(setq inhibit-startup-message t)      ; 禁用启动闪屏
+(tool-bar-mode -1)                    ; 禁用工具栏
+(when (display-graphic-p) 
+  (toggle-scroll-bar -1))             ; 禁用滚动条
+(global-display-line-numbers-mode -1)  ; 显示行号
+(setq display-line-numbers-type 'relative) ; 使用相对行号 (Evil用户必备)
+(column-number-mode t)                ; 在状态栏显示列号
+(global-hl-line-mode -1)              ; 禁用当前行高亮 (需要时设为 1)
+
+;;; ----------------------minibuffer 设置----------------
+;;(set-face-attribute 'minibuffer-prompt nil :height 180) ; 提示符稍微大一点即可
+(when (display-graphic-p)
+  (defun my/minibuffer-font ()
+    (set-face-attribute 'default nil :height 150)
+    (set-face-attribute 'minibuffer-prompt nil :height 150))
+  (add-hook 'minibuffer-setup-hook #'my/minibuffer-font))
+
 ;;; -----------------字体设置--------------------------------
 (condition-case err
     (set-face-attribute 'default nil :font "Hack Nerd Font Mono"
@@ -13,6 +33,7 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+
 ;;; ------------------------主题配置--------------------
  (use-package doom-themes
    :ensure t
@@ -26,9 +47,74 @@
    ; (load-theme 'doom-tomorrow-day t))
    ;(load-theme 'tsdh-dark t))
 
+(setq custom-safe-themes t)           ; 信任所有已安装的主题
 
 
-;; Ivy / Counsel 交互配置
+;;; ------------------------ mode line配置---------------
+;; ------------------------------------------
+;; 1. 暴力清理状态栏中的插件名 (Minor Mode Lighters)
+;; ------------------------------------------
+(defun my/clean-minor-mode-lighters ()
+  "强制删除状态栏中显示的所有 Minor Mode 缩写。"
+  (let ((quiet-modes '(yas-minor-mode 
+                       ivy-mode 
+                       company-mode 
+                       undo-tree-mode 
+                       flycheck-mode 
+                       git-gutter-mode 
+                       hs-minor-mode 
+                       projectile-mode
+                       eldoc-mode
+                       which-key-mode)))
+    (dolist (m quiet-modes)
+      (setq minor-mode-alist (assq-delete-all m minor-mode-alist)))))
+
+(add-hook 'after-init-hook #'my/clean-minor-mode-lighters)
+;; ------------------------------------------
+;; 2. 时间日期设置
+;; ------------------------------------------
+(setq display-time-format " %H:%M ")         ; 只显示 00:22 这种格式，因为后面已经有日期了
+(setq display-time-default-load-average nil) ; 禁用负载显示
+(setq display-time-day-and-date nil)         ; 禁用默认的日期（因为我们要自己排版）
+(display-time-mode 1)
+
+;; ------------------------------------------
+;; 3. 自定义状态栏布局 (极简版)
+;; ------------------------------------------
+(setq-default mode-line-format
+      '("%e"
+        mode-line-front-space
+        ;; 1. 状态与编码
+        " "
+        mode-line-mule-info
+        mode-line-modified
+        " "
+
+        ;; 2. 文件名与位置
+        mode-line-buffer-identification
+        "  "
+        mode-line-position
+
+        ;; 3. 模式信息 (例如 [ELisp/d])
+        "  [" (:eval (format-mode-line mode-name)) "] "
+
+        ;; 4. 弹簧：将后面的内容推向最右边
+        ;; 注意：如果你的 Git 分支名很长，可以把 35 这个数字调大一点
+        (:propertize " " display (space :align-to (- right 35)))
+
+        ;; 5. Git 信息 (VC Mode) - 动态颜色显示
+        (:eval (when vc-mode
+                 (let ((state-color (if (buffer-modified-p) 
+                                        "#F40009"   ; 已修改显示为暖红色
+                                      "#2ea44f")))  ; 干净状态显示为草绿色
+                   (propertize (format-mode-line vc-mode) 
+                               'face `(:foreground ,state-color :weight bold)))))
+        ;; 6. 日期时间 (年份放最后)
+        "  "
+        (:eval (format-time-string "%H:%M %Y-%m-%d"))
+        mode-line-end-spaces))
+
+;;; ---------- Ivy / Counsel 交互配置----------------------
 ;; 2. 增强后的 Ivy 配置
 (use-package ivy
   :ensure t
@@ -130,7 +216,7 @@
 (setq avy-background t)
 (setq avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)) ;; 左手主行编码
 
-;; =============================switch buffer 支持拼音===============
+;;; ----------------------switch buffer 支持拼音---------------
 (use-package orderless
   :ensure t
   :custom
@@ -143,9 +229,7 @@
 (add-to-list 'orderless-matching-styles 'completion--regex-pinyin)
 
 
-;; ========================================================
-;; -----------代码补全-------------------------
-;; ========================================================
+;;; -----------代码补全弹出框-------------------------
 ;; 1. 安装基础底层库
 (use-package posframe
   :ensure t)
@@ -180,9 +264,7 @@
   (setq ivy-posframe-border-width 2))
 
 
-;;===============================================
-;;---------------dashbord 启动页-----------------
-;;===============================================
+;;; ---------------dashbord 启动页-----------------
 (use-package dashboard
   :ensure t
   :config
@@ -205,7 +287,6 @@
                              (file-name-nondirectory (dashboard-expand-path-alist el alist)))))
                   (funcall orig-fun list-size))))
 
-;; ------------------------------------------优化显示文字效果
   ;; --- 3. 视觉强化：针对白色背景调色 ---
   (custom-set-faces
    ;; 文件名：纯黑、加粗、字号放大
@@ -224,11 +305,8 @@
 ;; 彻底移除 note: 等前缀，让 Agenda 变干净
 (setq dashboard-org-agenda-categories nil)
 
-;;===============================================
-;;---------------dashbord 启动页-----------------
-;;===============================================
 
-;; 其他 UI 增强
+;;; ----------------------- 其他 UI 增强---------------------------------
 (use-package winum :config (winum-mode 1))
 (use-package which-key :init (which-key-mode 1))
 ;; 嵌套括号显示不同的颜色
@@ -238,7 +316,7 @@
   (set-face-attribute 'mode-line nil :height 1.2)
   (set-face-attribute 'mode-line-inactive nil :height 1.2))
 
-;;; ===== 安全折叠 + Org-element 稳定配置 =====
+;;; ------------------------安全折叠 + Org-element 稳定配置 ------------------
 
 (use-package outshine
   :ensure t
@@ -290,5 +368,6 @@
     ;; 覆盖 Motion 模式 (Evil 在某些特殊 Buffer 用的模式)
     (define-key evil-motion-state-map (kbd "TAB") #'my-force-outshine-tab)
     (define-key evil-motion-state-map [tab] #'my-force-outshine-tab)))
+
 
 (provide 'init-ui)

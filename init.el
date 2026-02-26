@@ -23,13 +23,13 @@
 
 
 ;;; -------------------------加载的模块----------------------------
-(require 'init-org)
 (require 'init-packages)
-(require 'init-basic2)
+(require 'init-editor)
 (require 'init-ui)       ; 加载 UI 配置
 (require 'init-program)
 (require 'init-latex)
 (require 'init-evil)
+(require 'init-org)
 (require 'init-function) ;自己编写的函数
 
 (provide 'init)

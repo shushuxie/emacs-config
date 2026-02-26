@@ -2,12 +2,12 @@
 ;; ----- amx-history -----
 (
  load-theme
- org-version
- package-refresh-contents
- eshell
- package-install
- package-list-packages
- toggle-debug-on-error
+ org-remove-file
+ my/org-agenda-clean-non-org
+ org-agenda-todo
+ org-agenda-file-to-front
+ package-autoremove
+ list-packages
 )
 
 ;; ----- amx-data -----
@@ -27,10 +27,10 @@
  (dap-hydra . 2)
  (dap-debug-edit-template . 1)
  (lsp-mode . 9)
- (package-autoremove . 18)
+ (package-autoremove . 19)
  (all-the-icons-install-fonts . 2)
  (lsp . 4)
- (load-theme . 404)
+ (load-theme . 410)
  (customize . 2)
  (theme-choose-variant . 1)
  (list-faces-display . 2)
@@ -64,13 +64,13 @@
  (revert-buffer . 2)
  (describe-variable . 5)
  (line-number-mode . 2)
- (list-packages . 44)
+ (list-packages . 45)
  (eval-buffer . 221)
  (flycheck-mode . 3)
  (my-evil-delete-inner-word . 6)
  (org-agenda-switch-to . 2)
  (org-agenda-filter . 1)
- (org-agenda-file-to-front . 1)
+ (org-agenda-file-to-front . 2)
  (org-attach-open . 1)
  (org-open-at-point . 1)
  (dired . 4)
@@ -88,7 +88,7 @@
  (org-agenda-holidays . 1)
  (dired-display-file . 1)
  (org-cycle . 1)
- (org-version . 4)
+ (org-version . 5)
  (customize-variable . 1)
  (org-element-cache-reset . 2)
  (treemacs-advanced-helpful-hydra . 2)
@@ -121,7 +121,7 @@
  (package-install . 13)
  (dap-gdb-lldb-setup . 3)
  (dap-debug-restart . 1)
- (toggle-debug-on-error . 7)
+ (toggle-debug-on-error . 8)
  (quickrun . 52)
  (next-error . 1)
  (dap-debug . 34)
@@ -217,4 +217,10 @@
  (lsp-doctor . 2)
  (pyim-default-scheme . 4)
  (scan-illegal-rx-in-dir . 1)
+ (org-agenda-refile . 1)
+ (org-todo-list . 2)
+ (org-agenda-redo-all . 1)
+ (org-agenda-todo . 1)
+ (my/org-agenda-clean-non-org . 10)
+ (org-remove-file . 3)
 )

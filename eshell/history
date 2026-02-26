@@ -1,8 +1,3 @@
-./romaParse IV
-gcc 1-romaParseIntegra.c -o romaParse
-./romaParse IV
-./romaParse MCMXCIV
-ls 
 gcc 4-reverNums.c -o reverNums
 ls -la
 clear 
@@ -126,3 +121,8 @@ ls ~/Library/Rime/double_pinyin.schema.yaml
 cd
 cd Library/rime
 ls
+cd ~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/
+ls
+ll
+ls -a
+ls -la

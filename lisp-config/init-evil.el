@@ -19,16 +19,6 @@
   (define-key evil-insert-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
   (evil-escape-mode 1))
 
-;; 确保 Evil 模式已安装并启用
-(require 'evil)
-(evil-mode 1)
-;; 解决tevil函数报错
-(fset 'evil-redirect-digit-argument 'ignore) ;; before evil-org loaded
-;; evil 使tab失效
-(add-hook 'org-mode-hook 'my-org-evil-setup)
-;; (defun my-org-evil-setup ()
-;;   (define-key evil-normal-state-map (kbd "TAB") 'org-cycle))
-
 (use-package evil-leader
   :ensure t
   :after evil
@@ -56,8 +46,8 @@
     "kk" 'evil-select-brackets-content   ;; 选中括号中的内容
 
     ;; 窗口操作
-    "wv" 'split-window-right             ;; 垂直分割窗口
-    "ws" 'split-window-below             ;; 水平分割窗口
+    "w/" 'split-window-right             ;; 垂直分割窗口
+    "w-" 'split-window-below             ;; 水平分割窗口
     "wd" 'delete-window                  ;; 关闭窗口
     "oo" 'delete-other-windows           ;; 只保留当前窗口
     "wm" 'maximize-window                ;; 最大化窗口

@@ -1,4 +1,11 @@
 ;; -*- lexical-binding: t; -*-
+
+;; ==========================================
+;; 4. Org-mode 与 插件基础配置
+;; ==========================================
+(require 'org-tempo)                  ; 开启 <s Tab 快速插入代码块
+(setq org-confirm-babel-evaluate nil) ; 运行 Org 代码块时不询问确认
+
 ;;; lisp-config/init-org.el
 (defvar org-default-notes-file nil)
 ;; 禁用 org-element 在非 Org 缓冲区运行时的警告弹出
@@ -47,14 +54,13 @@
 
 
 ;; 顺便设置默认的笔记文件
-(setq org-default-notes-file "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org")
-  ;; 自动获取 expand-file-name 后的正确路径
-(setq org-agenda-files 
-      (list (expand-file-name "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org")
-            (expand-file-name "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/note.org")
-            (expand-file-name "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/inbox.org")
-            (expand-file-name "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/smallthings.org")
-            (expand-file-name "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/journal.org")))
+(setq org-agenda-files
+      (mapcar #'expand-file-name
+              '("~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org"
+                "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/note.org"
+                "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/inbox.org"
+                "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/smallthings.org"
+                "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/journal.org")))
 (setq org-capture-templates
       '(;; 【任务类】存入 iCloud/gtd.org
         ("t" "Todo" entry (file+headline "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/gtd.org" "Tasks")
@@ -77,6 +83,7 @@
          (file+datetree "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/journal.org")
          "* %?\n  时间: %U\n  链接: %a\n  %i")
         ))
+
 
 (defun my/org-smart-return ()
   "如果当前在复选框列表里，按回车自动创建新的复选框项。"
@@ -417,5 +424,43 @@
         ;; 插入模式下如果没选区，还是用简单的双写逻辑
         (define-key evil-insert-state-map (kbd key)
           `(lambda () (interactive) (insert ,c ,c) (backward-char 1)))))))
+
+
+;;; ---------------------- TAG标签功能--------------------
+(setq org-tag-alist
+      '(
+	(:startgroup)
+	;; 内容性质
+	("记录" . ?j)
+	("思考" . ?t)
+	("总结" . ?z)
+	("社会" . ?s)
+	(:endgroup)
+
+	(:startgroup)
+	;; 领域
+	("编程" . ?c)
+	("算法" . ?a)
+	("工具" . ?g)
+	("阅读" . ?r)
+	(:endgroup)
+
+	(:startgroup)
+	;; 状态/价值
+	("待整理" . ?d)
+	("重要" . ?i)
+	("长期" . ?l)
+	("个人" . ?p)
+	("情绪" . ?q)
+	(:endgroup)
+	))
+
+(defun my/org-agenda-clean-non-org ()
+  "清理 org-agenda-files 列表中非 .org 文件。"
+  (interactive)
+  (setq org-agenda-files
+        (cl-remove-if-not (lambda (f) (string-suffix-p ".org" f))
+                          org-agenda-files))
+  (message "清理完成，只保留 .org 文件: %s" org-agenda-files))     
 
 (provide 'init-org)

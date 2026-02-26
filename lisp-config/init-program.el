@@ -123,6 +123,9 @@
           (lambda ()
             (setq-local tab-width 8)))
 
+;;;-----------------------------调试与开发-----------------
+(setq dap-lldb-debug-program '("/usr/local/bin/lldb-mi"))
+
 ;; ===================leetcode java 刷题==========================
 ;; --- 1. Java 编程环境 (LSP + Java) ---
 (use-package lsp-mode
