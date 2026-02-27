@@ -1,12 +1,10 @@
 ;; -*- lexical-binding: t; -*-
 
-;; ==========================================
-;; 4. Org-mode 与 插件基础配置
-;; ==========================================
+;;; -----------Org-mode 与 插件基础配置--------------
 (require 'org-tempo)                  ; 开启 <s Tab 快速插入代码块
 (setq org-confirm-babel-evaluate nil) ; 运行 Org 代码块时不询问确认
 
-;;; lisp-config/init-org.el
+;;; -----------lisp-config/init-org.el---------------
 (defvar org-default-notes-file nil)
 ;; 禁用 org-element 在非 Org 缓冲区运行时的警告弹出
 (add-to-list 'warning-suppress-types '(org-element))
@@ -329,104 +327,7 @@
   (add-hook 'org-mode-hook (lambda () (setq org-download-image-dir "./images"))))
 
 
-;;; ===================tab 相关配置===============================   
-;; 1. 基础缩进设置
-(setq-default tab-width 4)
-(setq-default indent-tabs-mode nil)
-
-;; 2. 编写防御性极强的智能 TAB
-(defun my-ultimate-tab ()
-  "完全防御版 TAB：Yasnippet -> Outshine -> Org -> Indent"
-  (interactive)
-  (let ((outshine-p (and (bound-and-true-p outshine-mode) 
-                         (outshine-on-heading-p)))
-        (org-p (and (derived-mode-p 'org-mode) 
-                    (org-at-heading-p))))
-    (cond
-     ;; 第一优先级：Yasnippet 展开
-     ((and (bound-and-true-p yas-minor-mode) (yas-expand)) t)
-     
-     ;; 第二优先级：如果是代码模式下的 Outshine 标题
-     (outshine-p (outshine-cycle))
-     
-     ;; 第三优先级：如果是真正的 Org 文件标题
-     (org-p (org-cycle))
-     
-     ;; 第四优先级：如果是 Org 表格
-     ((and (derived-mode-p 'org-mode) (org-at-table-p)) (org-table-next-field))
-     
-     ;; 默认：执行标准缩进
-     (t (indent-for-tab-command)))))
-
-;; 3. 强制覆盖所有可能的 TAB 绑定，夺回控制权
-(with-eval-after-load 'evil
-  (define-key evil-insert-state-map (kbd "TAB") #'my-ultimate-tab)
-  (define-key evil-insert-state-map [tab] #'my-ultimate-tab))
-
-(global-set-key (kbd "TAB") #'my-ultimate-tab)
-(global-set-key [tab] #'my-ultimate-tab)
-
-;; 4. 彻底解决 rx ** range error 的源头
-(with-eval-after-load 'outshine
-  (setq outshine-regexp ";; [;]+ "))
-;;=================================================================
-;; ---------------evil- surround---------------------------------
-;;=================================================================
-(use-package evil-surround
-  :ensure t
-  :config
-  (global-evil-surround-mode 1)
-  
-  ;; 为 Org-mode 自定义快捷符号
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (push '(?b . ("*" . "*")) evil-surround-pairs-alist) ; b 代表 bold
-              (push '(?k . ("~" . "~")) evil-surround-pairs-alist) ; k 代表 code
-              (push '(?v . ("=" . "=")) evil-surround-pairs-alist) ; v 代表 verbatim
-              (push '(?s . ("+" . "+")) evil-surround-pairs-alist) ; s 代表 strike
-              (push '(?i . ("/" . "/")) evil-surround-pairs-alist) ; i 代表 italic
-              (push '(?u . ("_" . "_")) evil-surround-pairs-alist))))
-
-(with-eval-after-load 'org
-  ;; 核心函数：带空格检查的包裹
-  (defun my-org-smart-wrap (char)
-    "在包裹 CHAR 的同时，智能处理中文字符间的空格。"
-    (let* ((beg (region-beginning))
-           (end (region-end))
-           (char-before (char-before beg))
-           (char-after (char-after end)))
-      ;; 1. 处理结束位置：如果后面紧跟中文或非空白字符，插入空格
-      (save-excursion
-        (goto-char end)
-        (insert char)
-        (unless (or (eobp) ;; 文件末尾
-                    (memq (char-after) '(?\s ?\t ?\n ?\r)) ;; 已经是空格
-                    (memq (char-after) '(?点 ?, ?. ?? ?! ?: ?; ?\) ?\] ?\}))) ;; 标点
-          (insert " ")))
-      ;; 2. 处理起始位置：如果前面是中文或非空白字符，插入空格
-      (save-excursion
-        (goto-char beg)
-        (unless (or (bobp) ;; 文件开头
-                    (memq (char-before) '(?\s ?\t ?\n ?\r)) ;; 已经是空格
-                    (memq (char-before) '(?\( ?\[ ?\{))) ;; 标点
-          (insert " "))
-        (insert char))
-      (deactivate-mark)))
-
-  ;; 绑定快捷键 (使用宏确保字符正确传入)
-  (let ((bindings '(("M-b" . "*") ("M-i" . "/") ("M-u" . "_")
-                    ("M-s" . "+") ("M-k" . "~") ("M-v" . "="))))
-    (dolist (binding bindings)
-      (let ((key (car binding))
-            (c (cdr binding)))
-        (define-key evil-visual-state-map (kbd key)
-          `(lambda () (interactive) (my-org-smart-wrap ,c)))
-        ;; 插入模式下如果没选区，还是用简单的双写逻辑
-        (define-key evil-insert-state-map (kbd key)
-          `(lambda () (interactive) (insert ,c ,c) (backward-char 1)))))))
-
-
-;;; ---------------------- TAG标签功能--------------------
+;;; -----------TAG标签功能--------------------
 (setq org-tag-alist
       '(
 	(:startgroup)

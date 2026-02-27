@@ -1,7 +1,7 @@
 ;;; 一些关于ui的配置
 
 
-;;; ------------------ 1. 界面与外观设置 (UI)-------------
+;;; --------界面与外观设置 (UI)-------------
 (setq inhibit-startup-message t)      ; 禁用启动闪屏
 (tool-bar-mode -1)                    ; 禁用工具栏
 (when (display-graphic-p) 
@@ -11,7 +11,7 @@
 (column-number-mode t)                ; 在状态栏显示列号
 (global-hl-line-mode -1)              ; 禁用当前行高亮 (需要时设为 1)
 
-;;; ----------------------minibuffer 设置----------------
+;;; --------minibuffer 设置----------------
 ;;(set-face-attribute 'minibuffer-prompt nil :height 180) ; 提示符稍微大一点即可
 (when (display-graphic-p)
   (defun my/minibuffer-font ()
@@ -19,7 +19,7 @@
     (set-face-attribute 'minibuffer-prompt nil :height 150))
   (add-hook 'minibuffer-setup-hook #'my/minibuffer-font))
 
-;;; -----------------字体设置--------------------------------
+;;; --------字体设置--------------------------------
 (condition-case err
     (set-face-attribute 'default nil :font "Hack Nerd Font Mono"
                         :height 160)
@@ -34,15 +34,16 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
-;;; ------------------------主题配置--------------------
+;;; --------主题配置--------------------
  (use-package doom-themes
    :ensure t
    :config
    ;(load-theme 'doom-one-light t))
    ;(load-theme 'dracula t))
-   ;(load-theme 'leuven t))
+   (load-theme 'leuven t))
    ;; (load-theme 'modus-vivendi t)) ; 深色
-    (load-theme 'modus-operandi t)) ; 浅色
+    ;(load-theme 'modus-operandi t)) ; 浅色
+    ;; (load-theme 'doom-monokai-classic t)) ; 浅色
    ;(load-theme 'tsdh-light t))
    ; (load-theme 'doom-tomorrow-day t))
    ;(load-theme 'tsdh-dark t))
@@ -50,7 +51,7 @@
 (setq custom-safe-themes t)           ; 信任所有已安装的主题
 
 
-;;; ------------------------ mode line配置---------------
+;;; --------mode line配置---------------
 ;; ------------------------------------------
 ;; 1. 暴力清理状态栏中的插件名 (Minor Mode Lighters)
 ;; ------------------------------------------
@@ -114,7 +115,7 @@
         (:eval (format-time-string "%H:%M %Y-%m-%d"))
         mode-line-end-spaces))
 
-;;; ---------- Ivy / Counsel 交互配置----------------------
+;;; --------Ivy/Counsel 交互配置-------------
 ;; 2. 增强后的 Ivy 配置
 (use-package ivy
   :ensure t
@@ -216,7 +217,7 @@
 (setq avy-background t)
 (setq avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)) ;; 左手主行编码
 
-;;; ----------------------switch buffer 支持拼音---------------
+;;; --------switch buffer 支持拼音---------------
 (use-package orderless
   :ensure t
   :custom
@@ -229,7 +230,7 @@
 (add-to-list 'orderless-matching-styles 'completion--regex-pinyin)
 
 
-;;; -----------代码补全弹出框-------------------------
+;;; --------代码补全弹出框-------------------------
 ;; 1. 安装基础底层库
 (use-package posframe
   :ensure t)
@@ -264,7 +265,7 @@
   (setq ivy-posframe-border-width 2))
 
 
-;;; ---------------dashbord 启动页-----------------
+;;; --------dashbord 启动页-----------------
 (use-package dashboard
   :ensure t
   :config
@@ -306,7 +307,7 @@
 (setq dashboard-org-agenda-categories nil)
 
 
-;;; ----------------------- 其他 UI 增强---------------------------------
+;;; --------其他 UI 增强---------------------------------
 (use-package winum :config (winum-mode 1))
 (use-package which-key :init (which-key-mode 1))
 ;; 嵌套括号显示不同的颜色
@@ -316,7 +317,7 @@
   (set-face-attribute 'mode-line nil :height 1.2)
   (set-face-attribute 'mode-line-inactive nil :height 1.2))
 
-;;; ------------------------安全折叠 + Org-element 稳定配置 ------------------
+;;; --------安全折叠 + Org-element 稳定配置 ------------------
 
 (use-package outshine
   :ensure t
@@ -347,27 +348,27 @@
      ((derived-mode-p 'org-mode) (org-cycle))
      (t (indent-for-tab-command)))))
 
-(with-eval-after-load 'outshine
-  (defun my-force-outshine-tab ()
-    "在代码模式下强行执行折叠"
-    (interactive)
-    (if (outline-on-heading-p)
-        (outshine-cycle)
-      (indent-for-tab-command)))
+;; (with-eval-after-load 'outshine         
+;;   (defun my-force-outshine-tab ()
+;;     "在代码模式下强行执行折叠"
+;;     (interactive)
+;;     (if (outline-on-heading-p)
+;;         (outshine-cycle)
+;;       (indent-for-tab-command)))
 
-  ;; --- 针对 macOS GUI 的全键位覆盖 ---
-  (with-eval-after-load 'evil
-    ;; 覆盖 Normal 模式 (最关键)
-    (define-key evil-normal-state-map (kbd "TAB") #'my-force-outshine-tab)
-    (define-key evil-normal-state-map [tab] #'my-force-outshine-tab)
+;;   ;; --- 针对 macOS GUI 的全键位覆盖 ---
+;;   (with-eval-after-load 'evil
+;;     ;; 覆盖 Normal 模式 (最关键)
+;;     (define-key evil-normal-state-map (kbd "TAB") #'my-force-outshine-tab)
+;;     (define-key evil-normal-state-map [tab] #'my-force-outshine-tab)
     
-    ;; 覆盖 Insert 模式 (确保输入时也能折叠)
-    (define-key evil-insert-state-map (kbd "TAB") #'my-force-outshine-tab)
-    (define-key evil-insert-state-map [tab] #'my-force-outshine-tab)
+;;     ;; 覆盖 Insert 模式 (确保输入时也能折叠)
+;;     (define-key evil-insert-state-map (kbd "TAB") #'my-force-outshine-tab)
+;;     (define-key evil-insert-state-map [tab] #'my-force-outshine-tab)
 
-    ;; 覆盖 Motion 模式 (Evil 在某些特殊 Buffer 用的模式)
-    (define-key evil-motion-state-map (kbd "TAB") #'my-force-outshine-tab)
-    (define-key evil-motion-state-map [tab] #'my-force-outshine-tab)))
+;;     ;; 覆盖 Motion 模式 (Evil 在某些特殊 Buffer 用的模式)
+;;     (define-key evil-motion-state-map (kbd "TAB") #'my-force-outshine-tab)
+;;     (define-key evil-motion-state-map [tab] #'my-force-outshine-tab)))
 
 
 (provide 'init-ui)

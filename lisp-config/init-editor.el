@@ -1,7 +1,7 @@
 ;; -*- coding: utf-8 -*-
 
 
-;;; ------------------操作习惯设置-------------------
+;;; ----------操作习惯设置-------------------
 (fset 'yes-or-no-p 'y-or-n-p)         ; 将 yes/no 改为 y/n
 (setq confirm-kill-emacs #'yes-or-no-p) ; 退出时确认
 (electric-pair-mode t)                ; 自动补全括号
@@ -10,7 +10,7 @@
 (add-hook 'prog-mode-hook #'show-paren-mode) ; 编程模式高亮对应括号
 (add-hook 'prog-mode-hook #'hs-minor-mode)   ; 开启代码折叠
 
-;;; ----------------------持久化与文件记录--------------
+;;; ----------持久化与文件记录--------------
 (savehist-mode 1)                     ; 保存 Minibuffer 历史
 (save-place-mode 1)                   ; 记住上次打开文件时光标的位置
 (setq save-place-file (concat user-emacs-directory "places"))
@@ -18,7 +18,7 @@
 (setq create-lockfiles nil) ; 不再产生 .# 开头的临时锁定文件
 
 
-;;; ------------------------系统编码-----------------
+;;; ----------系统编码-----------------
 ;; 1. 语言环境设置
 (set-language-environment "UTF-8")
 ;; 2. 强制编码优先级，让 UTF-8 成为绝对首选
@@ -39,7 +39,7 @@
   ;; 确保粘贴时尝试以 utf-8 解码内容
   (setq-default selection-coding-system 'utf-8))
 
-;;; -------------------粘贴，剪贴板优化-----------------
+;;; ----------粘贴，剪贴板优化-----------------
 ;; 建议添加：纯文本粘贴函数
 ;; 如果遇到极个别顽固的乱码，可以用 M-x my-paste-plain-text 粘贴
 (defun my-paste-plain-text ()
@@ -62,7 +62,7 @@
 (setq select-enable-clipboard t)
 (setq select-enable-primary t)
 
-;; -----------------系统相关，声音-----------------
+;;; ----------系统相关，声音-----------------
 ;; 提示音
 (require 'warnings)
 (add-hook 'after-init-hook
@@ -75,7 +75,7 @@
   (setq-local ring-bell-function 'ignore))
 (add-hook 'org-mode-hook #'my-disable-bell-in-org-mode)
 
-;;; -----------------临时文件---------------------------
+;;; ----------临时文件---------------------------
 ;; 不要在当前目录生成 *~ 备份文件
 (setq make-backup-files nil)
 
@@ -165,7 +165,7 @@
 
 (savehist-mode 1)
 
-;;; ---------* DIRD 配置 文件bgein *---------------------------
+;;; ----------DIRD 配置 文件bgein *---------------------------
 (use-package dirvish
   :ensure t
   :config
@@ -233,7 +233,7 @@
 (add-hook 'dirvish-mode-hook (lambda () (display-line-numbers-mode -1)))
 
 
-;;; ---------------翻译插件--------------------------
+;;; ----------翻译插件--------------------------
 
 (use-package fanyi
   :ensure t
@@ -260,7 +260,7 @@
   
   (add-hook 'fanyi-show-fontification-hook #'my-fanyi-jump-to-window))
 
-;;; ==================buffer 管理============================== 
+;;; ----------buffer管理------------------------------ 
 (use-package shackle
   :ensure t
   :init
@@ -342,7 +342,148 @@
                 ;; 但由于有了上面的 elisp-comment-start，它不会在行首触发
                 pyim-probe-after-code))
 
-;;; --------------hydra 看板配置，快捷键 菜单---------------
+;;; ----------evil- surround--------------------------
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode 1)
+  
+  ;; 为 Org-mode 自定义快捷符号
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (push '(?b . ("*" . "*")) evil-surround-pairs-alist) ; b 代表 bold
+              (push '(?k . ("~" . "~")) evil-surround-pairs-alist) ; k 代表 code
+              (push '(?v . ("=" . "=")) evil-surround-pairs-alist) ; v 代表 verbatim
+              (push '(?s . ("+" . "+")) evil-surround-pairs-alist) ; s 代表 strike
+              (push '(?i . ("/" . "/")) evil-surround-pairs-alist) ; i 代表 italic
+              (push '(?u . ("_" . "_")) evil-surround-pairs-alist))))
+
+(with-eval-after-load 'org
+  ;; 核心函数：带空格检查的包裹
+  (defun my-org-smart-wrap (char)
+    "在包裹 CHAR 的同时，智能处理中文字符间的空格。"
+    (let* ((beg (region-beginning))
+           (end (region-end))
+           (char-before (char-before beg))
+           (char-after (char-after end)))
+      ;; 1. 处理结束位置：如果后面紧跟中文或非空白字符，插入空格
+      (save-excursion
+        (goto-char end)
+        (insert char)
+        (unless (or (eobp) ;; 文件末尾
+                    (memq (char-after) '(?\s ?\t ?\n ?\r)) ;; 已经是空格
+                    (memq (char-after) '(?点 ?, ?. ?? ?! ?: ?; ?\) ?\] ?\}))) ;; 标点
+          (insert " ")))
+      ;; 2. 处理起始位置：如果前面是中文或非空白字符，插入空格
+      (save-excursion
+        (goto-char beg)
+        (unless (or (bobp) ;; 文件开头
+                    (memq (char-before) '(?\s ?\t ?\n ?\r)) ;; 已经是空格
+                    (memq (char-before) '(?\( ?\[ ?\{))) ;; 标点
+          (insert " "))
+        (insert char))
+      (deactivate-mark)))
+
+  ;; 绑定快捷键 (使用宏确保字符正确传入)
+  (let ((bindings '(("M-b" . "*") ("M-i" . "/") ("M-u" . "_")
+                    ("M-s" . "+") ("M-k" . "~") ("M-v" . "="))))
+    (dolist (binding bindings)
+      (let ((key (car binding))
+            (c (cdr binding)))
+        (define-key evil-visual-state-map (kbd key)
+          `(lambda () (interactive) (my-org-smart-wrap ,c)))
+        ;; 插入模式下如果没选区，还是用简单的双写逻辑
+        (define-key evil-insert-state-map (kbd key)
+          `(lambda () (interactive) (insert ,c ,c) (backward-char 1)))))))
+
+
+;;; ----------tab 相关配置--------------------------   
+;;;; --------test----
+;; --- 1. 基础设置 ---
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
+
+;; --- 2. 插入模式 Smart TAB (优化版) ---
+(defun my-smart-tab ()
+  "插入模式：Yas > Org Table > Indent/Org-Cycle > Company Select."
+  (interactive)
+  (let* ((at-indent-pos (looking-back "^\\s-*" nil))
+         (is-org (derived-mode-p 'org-mode))
+         (company-active (and (bound-and-true-p company-mode) (company--active-p))))
+    (cond
+     ;; 1. Org 表格跳转
+     ((and is-org (org-at-table-p))
+      (org-table-next-field))
+
+     ;; 2. Yasnippet 展开/跳转 (如果成功展开则停止)
+     ((and (bound-and-true-p yas-minor-mode) (yas-expand)))
+
+     ;; 3. Org 特殊处理：非行首时优先交给 org-cycle (处理抽屉、链接、折叠)
+     ((and is-org (not at-indent-pos))
+      (org-cycle))
+
+     ;; 4. 缩进处理：行首强制 4 空格
+     (at-indent-pos
+      (insert-char ?\s 4))
+
+     ;; 5. Company 切换
+     (company-active
+      (company-select-next))
+
+     ;; 6. 默认缩进
+     (t
+      (indent-for-tab-command)))))
+
+;; --- 3. 普通模式 TAB (修复抽屉折叠的关键) ---
+(defun my-evil-normal-tab ()
+  "普通模式：修复 Org 抽屉、代码块折叠及 Outshine 支持。"
+  (interactive)
+  (cond
+   ;; Outshine 标题折叠 (用于编程模式)
+   ((and (bound-and-true-p outshine-mode) (outline-on-heading-p))
+    (outshine-cycle))
+
+   ;; Org-mode 全能折叠 (自动处理标题、抽屉 :PROPERTIES:、代码块 #+BEGIN_SRC)
+   ((derived-mode-p 'org-mode)
+    (org-cycle))
+
+   ;; 默认执行标准缩进或跳到行首
+   (t (indent-for-tab-command))))
+
+;; --- 4. 键位绑定 (针对 Evil 深度覆盖) ---
+(with-eval-after-load 'evil
+  ;; 插入模式绑定
+  (dolist (map (list evil-insert-state-map evil-emacs-state-map))
+    (define-key map (kbd "TAB") #'my-smart-tab)
+    (define-key map [tab]       #'my-smart-tab)
+    (define-key map (kbd "C-i") #'my-smart-tab))
+
+  ;; 普通模式绑定
+  (define-key evil-normal-state-map (kbd "TAB") #'my-evil-normal-tab)
+  (define-key evil-normal-state-map [tab]       #'my-evil-normal-tab)
+  (define-key evil-normal-state-map (kbd "C-i") #'my-evil-normal-tab)
+
+  ;; Company 弹出时保持 TAB 逻辑
+  (with-eval-after-load 'company
+    (define-key company-active-map (kbd "TAB") #'my-smart-tab)
+    (define-key company-active-map [tab]       #'my-smart-tab)
+    (define-key company-active-map (kbd "C-i") #'my-smart-tab)))
+
+;; --- 5. 插件与 Hook ---
+(add-hook 'prog-mode-hook #'outshine-mode)
+
+(with-eval-after-load 'outshine
+  (define-key outshine-mode-map (kbd "<backtab>") #'outshine-cycle-buffer))
+
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "<backtab>") #'org-cycle-global))
+
+;; 解决 Org-mode 本地优先级，确保使用我们的 my-smart-tab
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key (kbd "TAB") #'my-smart-tab)
+            (local-set-key [tab]       #'my-smart-tab)))
+;;; ----------hydra 看板配置，快捷键 菜单---------------
 (defhydra hydra-surround (:color blue :hint nil)
   "
   Surround 助手:
