@@ -1,4 +1,7 @@
 ;; -*- coding: utf-8 -*-
+;; 必须在 require 'evil 之前
+(setq evil-want-keybinding nil)
+
 (use-package evil
   :ensure t
   :init
@@ -131,6 +134,8 @@
     "cf" 'org-forward-heading-same-level ;; 下一个同级标题
     "cb" 'org-backward-heading-same-level;; 前一个同级标题 
     "ck" 'org-kill-note-or-show-branches ;; 折叠当前等级headline
+    "cs" 'org-schedule ;; 插入计划时间
+    "cd" 'org-deadline
     "c<" 'org-do-promote ; `C-c C-<'
     "c>" 'org-do-demote ; `C-c C->'
     "cxi" 'org-clock-in ; `C-c C-x C-i'

@@ -1,6 +1,8 @@
 ;;; 一些关于ui的配置
 
-
+;;; --------提示----------------------
+(setq byte-compile-warnings '(not obsolete))
+;; mini-modeline 也要改
 ;;; --------界面与外观设置 (UI)-------------
 (setq inhibit-startup-message t)      ; 禁用启动闪屏
 (tool-bar-mode -1)                    ; 禁用工具栏
@@ -11,21 +13,6 @@
 (column-number-mode t)                ; 在状态栏显示列号
 (global-hl-line-mode -1)              ; 禁用当前行高亮 (需要时设为 1)
 
-;;; --------minibuffer 设置----------------
-;;(set-face-attribute 'minibuffer-prompt nil :height 180) ; 提示符稍微大一点即可
-(when (display-graphic-p)
-  (defun my/minibuffer-font ()
-    (set-face-attribute 'default nil :height 150)
-    (set-face-attribute 'minibuffer-prompt nil :height 150))
-  (add-hook 'minibuffer-setup-hook #'my/minibuffer-font))
-
-;;; --------字体设置--------------------------------
-(condition-case err
-    (set-face-attribute 'default nil :font "Hack Nerd Font Mono"
-                        :height 160)
-  (error
-   (message "字体设置失败: %s" (error-message-string err))))
-
 ;; 基础 UI 优化，增加容错
 (setq inhibit-startup-message t) ; 关闭启动画面
 
@@ -33,6 +20,8 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+
+;;;; -------minibuffer---------------
 
 ;;; --------主题配置--------------------
  (use-package doom-themes
@@ -317,6 +306,21 @@
   (set-face-attribute 'mode-line nil :height 1.2)
   (set-face-attribute 'mode-line-inactive nil :height 1.2))
 
+;;; --------美化文字，高亮--------------------------------
+(use-package symbol-overlay
+  :ensure t
+  :bind (("M-i" . symbol-overlay-put)     ; 像荧光笔一样涂色
+         ("M-n" . symbol-overlay-jump-next) ; 跳到下一个同色词
+         ("M-p" . symbol-overlay-jump-prev) ; 跳到上一个
+         ("<f2>" . symbol-overlay-remove-all))) ; 一键擦除所有颜色
+
+;;;; ----------------ov-highlight-----------------
+(use-package ov-highlight
+  :ensure t
+  :init
+  (global-set-key (kbd "C-c h") #'ov-highlight/body)
+  :config
+  (setq ov-highlight-save-on-save t))
 ;;; --------安全折叠 + Org-element 稳定配置 ------------------
 
 (use-package outshine

@@ -1,32 +1,33 @@
-;;; package management
+;;; init-packages.el
 (require 'package)
-;; 1. 关键：关闭签名验证，解决 [已过期] 报错
+(require 'cl-lib)  ;; 移到前面
+
+;; 关闭签名验证
 (setq package-check-signature nil)
 
-;;(setq package-archives '(("gnu"    . "https://mirrors.sjtug.sjtu.edu.cn/elpa/gnu/")
-                         ;;("nongnu" . "https://mirrors.sjtug.sjtu.edu.cn/elpa/nongnu/")
-                         ;;("melpa"  . "https://mirrors.sjtug.sjtu.edu.cn/elpa/melpa/")))
+;; 设置镜像源
 (setq package-archives '(("gnu"    . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("nongnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
                          ("melpa"  . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
-;; 运行完上面这段后，务必再次执行：
-;; M-x package-refresh-contents
 
-;; 忽略本地过时的缓存，强制从服务器获取最新列表
-(setq package-check-signature nil) ; 如果遇到签名错误可以暂时关闭
-(package-initialize)
+;; 关键：初始化和刷新
+(package-initialize nil)  ;; nil 表示不自动刷新
+
+;; 只在没有包列表时刷新一次
 (unless package-archive-contents
   (package-refresh-contents))
 
+;; 安装 use-package（如果还没安装）
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-;(require 'use-package)
-;(setq use-package-always-ensure t) ; 以后所有的 use-package 默认都会自动下载
-(eval-when-compile
-  (require 'use-package))
-(setq use-package-always-ensure t)  ;; 自动安装缺失包
+;; 加载 use-package
+(require 'use-package)
 
-;; 列表开始...
-;; 基础工具
+;; ★★★ 关键：设置为 t，这样后面的 use-package 都会自动安装 ★★★
+(setq use-package-always-ensure t)
+;;;; --------------- 基础列表----------------------------
 (use-package amx)
 (use-package ace-window)
 (use-package mwim)
@@ -79,36 +80,25 @@
 
 ; 记录输入命令的频率，优先显示
 (use-package amx
-  :ensure t
   :init (amx-mode))
 
-(use-package ace-window
-  :ensure t
-  :bind (("C-x o" . 'ace-window)))
+(use-package ace-window)
 
-(use-package mwim
-  :ensure t
-  :bind
-  ("C-a" . mwim-beginning-of-code-or-line)
-  ("C-e" . mwim-end-of-code-or-line))
+(use-package mwim)
 
 (use-package smart-mode-line
-  :ensure t
   :init (sml/setup))
 
 (use-package good-scroll
-  :ensure t
   :if window-system          ; 在图形化界面时才使用这个插件
   :init (good-scroll-mode))
 
 (use-package marginalia
-  :ensure t
   :init (marginalia-mode)
   :bind (:map minibuffer-local-map
 			  ("M-A" . marginalia-cycle)))
 
 (use-package undo-tree
-  :ensure t
   :init (global-undo-tree-mode)
   :after hydra
   :bind ("C-x C-h u" . hydra-undo-tree/body)
@@ -123,7 +113,6 @@
   ("q"   nil "quit" :color blue)))
 
 (use-package highlight-symbol
-  :ensure t
   :init (highlight-symbol-mode)
     :bind ("<f5>" . highlight-symbol)) ;; 按下 F3 键就可高亮当前符号
 
@@ -142,38 +131,18 @@
 (savehist-mode 1)
 (recentf-mode 1)
 
-;; 4. 既然你有 rg，确保 Projectile 这样配置来过滤 elpa
-;; (use-package projectile
-;;   :ensure t
-;;   :config
-;;   (setq projectile-indexing-method 'alien)
-;;   (setq projectile-globally-ignored-directories '("elpa" "emacs-cache" ".git"))
-;;   (projectile-mode +1))
-
-;; (use-package counsel-projectile
-;;   :ensure t
-;;   :after (projectile ivy) ; 确保在 projectile 和 ivy 加载后再激活
-;;   :config
-;;   (counsel-projectile-mode 1)
-  
-  ;; 核心：让 counsel-projectile 明确使用我们的拼音匹配器
-  ;; (add-to-list 'ivy-re-builders-alist '(counsel-projectile-find-file . my-ivy-re-builder-pinyin))
-  ;; (add-to-list 'ivy-re-builders-alist '(counsel-projectile-find-dir . my-ivy-re-builder-pinyin))
-  ;; (add-to-list 'ivy-re-builders-alist '(counsel-projectile-switch-project . my-ivy-re-builder-pinyin)))
-
 
 ;(require 'treemacs)
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once)
-  :ensure t)
+  )
 
 
 (use-package treemacs-magit
   :after (treemacs magit)
-    :ensure t)
+    )
 
 (use-package treemacs-projectile
-  :ensure t
   :after (treemacs projectile)
   :config
   (require 'treemacs-projectile))
@@ -192,5 +161,5 @@
 (setq org-image-actual-width nil)       ; 允许图片根据窗口大小缩放，不会大得离谱
 (setq org-display-remote-inline-images 'cache) ; 如果有远程图片则缓存
 
-;; 
+;;; ------------END----------------------------- 
 (provide 'init-packages)

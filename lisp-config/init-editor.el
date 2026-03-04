@@ -277,8 +277,16 @@
   :config
   (shackle-mode 1))
 
+;;;; ----------- message 窗口管理-----------
+(defun my/quit-window-dwim ()
+  (interactive)
+  (quit-window t))
 
+(with-eval-after-load 'messages
+  (evil-define-key 'normal messages-buffer-mode-map
+    (kbd "q") #'my/quit-window-dwim))
 
+;;; ----------输入法配置------------
 (use-package popup
   :ensure t)
 
@@ -318,8 +326,10 @@
                 '(pyim-probe-program-mode
                   pyim-probe-after-code
                   pyim-probe-isearch-mode)))
+;;;; ----popup 美化-----------------
+;; ========== Pyim popup 美化 ==========
  
-;; --- 智能中英文切换断言修复 ---
+;;;; --- 智能中英文切换断言修复 ---
 
 (defun my-pyim-probe-dashboard-scope ()
   "如果处于 Dashboard 模式，强制英文。"
@@ -341,6 +351,7 @@
                 ;; 如果你希望在注释里打中文，保留下面这个，
                 ;; 但由于有了上面的 elisp-comment-start，它不会在行首触发
                 pyim-probe-after-code))
+
 
 ;;; ----------evil- surround--------------------------
 (use-package evil-surround
@@ -372,7 +383,7 @@
         (insert char)
         (unless (or (eobp) ;; 文件末尾
                     (memq (char-after) '(?\s ?\t ?\n ?\r)) ;; 已经是空格
-                    (memq (char-after) '(?点 ?, ?. ?? ?! ?: ?; ?\) ?\] ?\}))) ;; 标点
+                    (memq (char-after) '(?点 ?, ?. ?? ?! ?: ?\; ?\) ?\] ?\}))) ;; 标点
           (insert " ")))
       ;; 2. 处理起始位置：如果前面是中文或非空白字符，插入空格
       (save-excursion
@@ -397,7 +408,7 @@
           `(lambda () (interactive) (insert ,c ,c) (backward-char 1)))))))
 
 
-;;; ----------tab 相关配置--------------------------   
+;;; ----------tab配置--------------------------   
 ;;;; --------test----
 ;; --- 1. 基础设置 ---
 (setq-default tab-width 4)
@@ -435,20 +446,53 @@
       (indent-for-tab-command)))))
 
 ;; --- 3. 普通模式 TAB (修复抽屉折叠的关键) ---
+;; (defun my-evil-normal-tab ()
+;;   "普通模式：修复 Org 抽屉、代码块折叠及 Outshine 支持。"
+;;   (interactive)
+;;   (cond
+;;     ;; 1. Treemacs 支持 (展开/折叠节点)
+;;    ((derived-mode-p 'treemacs-mode)
+;;     (treemacs-TAB-action))
+
+;;    ;; 2. Magit 支持 (展开/折叠 Section)
+;;    ((derived-mode-p 'magit-mode)
+;;     (magit-section-toggle (magit-current-section)))
+
+;;    ;; Outshine 标题折叠 (用于编程模式)
+;;    ((and (bound-and-true-p outshine-mode) (outline-on-heading-p))
+;;     (outshine-cycle))
+
+;;    ;; Org-mode 全能折叠 (自动处理标题、抽屉 :PROPERTIES:、代码块 #+BEGIN_SRC)
+;;    ((derived-mode-p 'org-mode)
+;;     (org-cycle))
+
+;;    ;; 默认执行标准缩进或跳到行首
+;;    (t (indent-for-tab-command))))
 (defun my-evil-normal-tab ()
   "普通模式：修复 Org 抽屉、代码块折叠及 Outshine 支持。"
   (interactive)
   (cond
-   ;; Outshine 标题折叠 (用于编程模式)
+   ;; Treemacs 支持
+   ((derived-mode-p 'treemacs-mode)
+    (treemacs-TAB-action))
+
+   ;; Magit 支持 (只在可折叠 buffer)
+   ((and (derived-mode-p 'magit-mode)
+         (not buffer-read-only)
+         (magit-current-section))
+    (magit-section-toggle (magit-current-section)))
+
+   ;; Outshine 标题折叠
    ((and (bound-and-true-p outshine-mode) (outline-on-heading-p))
     (outshine-cycle))
 
-   ;; Org-mode 全能折叠 (自动处理标题、抽屉 :PROPERTIES:、代码块 #+BEGIN_SRC)
+   ;; Org-mode 全能折叠
    ((derived-mode-p 'org-mode)
     (org-cycle))
 
    ;; 默认执行标准缩进或跳到行首
    (t (indent-for-tab-command))))
+
 
 ;; --- 4. 键位绑定 (针对 Evil 深度覆盖) ---
 (with-eval-after-load 'evil
@@ -468,6 +512,11 @@
     (define-key company-active-map (kbd "TAB") #'my-smart-tab)
     (define-key company-active-map [tab]       #'my-smart-tab)
     (define-key company-active-map (kbd "C-i") #'my-smart-tab)))
+
+(use-package evil-collection
+  :after (evil magit)
+  :config
+  (evil-collection-init 'magit))
 
 ;; --- 5. 插件与 Hook ---
 (add-hook 'prog-mode-hook #'outshine-mode)
@@ -509,7 +558,7 @@
 
 
 
-;; explore file
+;;;--------------end explore file----------------
 (provide 'init-editor)
 
 

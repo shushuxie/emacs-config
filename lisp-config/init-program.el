@@ -94,9 +94,9 @@
 
   ;; 3. 配置颜色：使用你喜欢的 GitHub 绿和可口可乐红
   (custom-set-faces
-   '(diff-hl-insert ((t (:foreground "#2ea44f" :background nil))))
-   '(diff-hl-delete ((t (:foreground "#F40009" :background nil))))
-   '(diff-hl-change ((t (:foreground "blue" :background nil)))))
+   '(diff-hl-insert ((t (:foreground "#2ea44f" :background 'unspecified))))
+   '(diff-hl-delete ((t (:foreground "#F40009" :background 'unspecified))))
+   '(diff-hl-change ((t (:foreground "blue" :background 'unspecified)))))
 
   ;; 4. 实时更新（只要打字就更新状态）
   (diff-hl-flydiff-mode t))
